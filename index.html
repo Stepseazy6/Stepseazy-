@@ -1904,7 +1904,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
-const ADMIN_PASSWORD = "1234";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Example handler: attach to any form with id="orderForm"
@@ -1922,6 +1921,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+<div class="login-modal" id="loginModal" style="display:none;">
+  <div class="login-content">
+    <span class="login-close" onclick="closeLogin()">×</span>
+    <h3 class="login-title">Admin Login</h3>
+    <p class="login-subtitle">Enter password to access admin panel</p>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="adminLoginPass" placeholder="Enter password">
+    </div>
+    <button class="login-btn" onclick="adminLogin()">Login</button>
+  </div>
+</div>
+  <script>
 
+const ADMIN_REAL_PASSWORD = "Bhai1234"; // strong password
+const ADMIN_HASH = btoa(ADMIN_REAL_PASSWORD); // encoded version
+
+function adminLogin() {
+    const pass = document.getElementById("adminLoginPass").value;
+
+    if (!pass) {
+        alert("Please enter password");
+        return;
+    }
+
+    // compare encoded password
+    const encoded = btoa(pass);
+
+    if (encoded === ADMIN_HASH) {
+        localStorage.setItem("isAdmin", "true");
+        closeLogin();
+        showAdminPanel();
+    } else {
+        alert("Wrong password!");
+    }
+}
+
+function showAdminPanel() {
+    try {
+        document.getElementById("adminPanel").style.display = "block";
+    } catch(e) {
+        console.log("Admin panel not found:", e);
+    }
+}
+
+function closeLogin() {
+    document.getElementById("loginModal").style.display = "none";
+}
+
+  </script>
 </body>
 </html>
