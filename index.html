@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step'sEazy - Mobile Repair & Accessories | Boisar & Palghar</title>
+<!-- ✅ ADDED: SEO Meta Tags -->
+<meta name="description" content="Step'sEazy - Fast mobile repair & accessories in Boisar & Palghar. Free pickup & delivery. Display, battery, back panel repair in 30-45 min.">
+<meta name="keywords" content="mobile repair boisar, phone repair palghar, mobile accessories, display replacement, battery replacement">
+<meta name="author" content="Step'sEazy">
+
+<!-- ✅ ADDED: Google Fonts for Premium Look -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f8faff;
+  --primary-1:#6fa8f5; /* soft blue */
+  --primary-2:#8b6cf6; /* soft purple */
+  --accent:#7c7aac;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --premium-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gold-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+/* ---------- General Styles ---------- */
+*{box-sizing:border-box}
+body { 
+  margin:0; 
+  font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif; 
+  background:var(--bg); 
+  color:#2d3748; 
+  -webkit-font-smoothing:antialiased; 
+  -moz-osx-font-smoothing:grayscale;
+  font-weight: 400;
+  line-height: 1.6;
+}
+header { 
+  background:var(--premium-gradient); 
+  padding:12px 24px; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  box-shadow:0 8px 32px rgba(99,102,241,0.15); 
+  position:sticky; 
+  top:0; 
+  z-index:1000; 
+  backdrop-filter: blur(10px);
+}
+header h1 { 
+  margin:0; 
+  color:#fff; 
+  font-size:20px; 
+  letter-spacing:0.5px;
+  font-weight: 700;
+}
+nav a { 
+  color:rgba(255,255,255,0.95); 
+  margin:0 12px; 
+  text-decoration:none; 
+  font-weight:600; 
+  font-size:13px; 
+  transition: all 0.3s ease; 
+  padding:8px 16px; 
+  border-radius:8px; 
+}
+nav a:hover { 
+  text-decoration:none; 
+  background:rgba(255,255,255,0.15); 
+  transform: translateY(-2px); 
+}
+.page { display:none; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.active { display:block; }
+.container{max-width:1100px;margin:0 auto;padding:0 18px}
+
+/* ✅ ADDED: Premium Phone Box Styles */
+.phone-box {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,255,0.98));
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 
+    0 15px 35px rgba(79,84,125,0.08),
+    0 5px 15px rgba(0,0,0,0.03),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.8);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.phone-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--premium-gradient);
+}
+
+.phone-box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+}
+
+.phone-box:hover::after {
+  left: 100%;
+}
+
+.phone-box:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 
+    0 25px 50px rgba(79,84,125,0.15),
+    0 15px 30px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.phone-box img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+}
+
+.phone-box:hover img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 12px 25px rgba(0,0,0,0.15));
+}
+
+.phone-box h4 {
+  margin: 18px 0 8px;
+  color: #2d3748;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.phone-box .price {
+  font-size: 17px;
+  color: var(--primary-2);
+  font-weight: 800;
+  margin: 8px 0;
+  background: var(--premium-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.phone-box p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ✅ ADDED: Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--premium-gradient);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transform: translateX(400px);
+  transition: transform 0.4s ease;
+  z-index: 10000;
+  font-weight: 600;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+/* ✅ ADDED: Login Modal Styles */
+.login-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.login-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  animation: modalSlideIn 0.4s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+@keyframes modalSlideIn {
+  from { opacity:0; transform:scale(0.8); }
+  to { opacity:1; transform:scale(1); }
+}
+
+.login-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.login-close:hover {
+  color: #ef4444;
+}
+
+.login-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: var(--premium-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+  color: var(--muted);
+  margin-bottom: 30px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* ✅ ADDED: Admin Panel Styles */
+.admin-panel {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--primary-2);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.admin-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-section h4 {
+  color: var(--primary-2);
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.admin-btn {
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 5px;
+  transition: all 0.3s ease;
+  font-size: 13px;
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124,122,172,0.3);
+}
+
+.admin-btn.secondary {
+  background: #6b7280;
+}
+
+.admin-btn.danger {
+  background: #ef4444;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 13px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-2);
+  box-shadow: 0 0 0 3px rgba(139, 108, 246, 0.1);
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(124,122,172,0.3);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.stat-item {
+  background: var(--bg);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  background: var(--premium-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ✅ ADDED: New Rented Laptop Button Styles */
+.rented-laptop-btn {
+  background: var(--gold-gradient);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+  letter-spacing: 0.3px;
+}
+
+.rented-laptop-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+
+.rented-laptop-btn:hover::before {
+  left: 100%;
+}
+
+.rented-laptop-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(255,107,107,0.4);
+}
+
+.rented-laptop-btn:active {
+  transform: translateY(-1px);
+}
+
+/* ---------- NEW: Floating Action Buttons ---------- */
+.floating-buttons {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.floating-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  animation: float 3s infinite ease-in-out;
+  backdrop-filter: blur(10px);
+}
+
+.floating-btn.call {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  animation-delay: 0s;
+}
+
+.floating-btn.whatsapp {
+  background: var(--premium-gradient);
+  animation-delay: 0.2s;
+}
+
+.floating-btn.complaint {
+  background: linear-gradient(135deg, #ff6b6b, #ffa726);
+  animation-delay: 0.4s;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ---------- Hero (Modern Gradient + Neumorphism mix) ---------- */
+.hero {
+  text-align:center;
+  padding:80px 20px;
+  margin-top:18px;
+  border-radius:24px;
+  color:white;
+  background: var(--premium-gradient);
+  box-shadow: 0 20px 40px rgba(99,102,241,0.15), inset 0 -6px 30px rgba(255,255,255,0.06);
+  transform: translateY(0);
+  transition: transform 0.25s ease;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  top:-50%; left:-50%;
+  width:200%; height:200%;
+  background:radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%);
+  background-size:50px 50px;
+  animation:float 20s linear infinite;
+  pointer-events:none;
+}
+.hero:hover{ transform: translateY(-4px); }
+.hero h2 { 
+  font-size:36px; 
+  margin-bottom:14px; 
+  line-height:1.1; 
+  text-shadow:0 4px 18px rgba(0,0,0,0.08); 
+  position:relative; 
+  z-index:2;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.hero p { 
+  font-size:16px; 
+  margin-bottom:22px; 
+  opacity:0.95; 
+  position:relative; 
+  z-index:2;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+.btn { 
+  padding:14px 28px; 
+  background:rgba(255,255,255,0.15); 
+  color:#fff; 
+  border:none; 
+  border-radius:12px; 
+  font-size:14px; 
+  cursor:pointer; 
+  box-shadow: 0 8px 20px rgba(124,122,172,0.18), 0 2px 6px rgba(0,0,0,0.06); 
+  transition: transform .18s ease, box-shadow .18s ease; 
+  position:relative; 
+  z-index:2;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+}
+.btn:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 12px 26px rgba(124,122,172,0.22); 
+  background: rgba(255,255,255,0.2);
+}
+.btn.secondary{ background:transparent; border:1px solid rgba(255,255,255,0.3); }
+
+/* ---------- NEW: Tagline Banner ---------- */
+.tagline-banner {
+  background:var(--gold-gradient);
+  color:white;
+  text-align:center;
+  padding:14px;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:1px;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+}
+.tagline-banner::after {
+  content:'✨';
+  position:absolute;
+  right:20px;
+  animation: sparkle 2s infinite;
+}
+@keyframes sparkle { 0%,100% { opacity:0.5; transform:scale(1); } 50% { opacity:1; transform:scale(1.2); } }
+
+/* ---------- Sections (neumorphic cards) ---------- */
+section { padding:60px 20px; max-width:1100px; margin:36px auto; }
+h3 { 
+  text-align:center; 
+  font-size:28px; 
+  margin-bottom:30px; 
+  color:#2d3748; 
+  position:relative;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+h3::after {
+  content:'';
+  position:absolute;
+  bottom:-12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:60px;
+  height:4px;
+  background:var(--premium-gradient);
+  border-radius:2px;
+}
+.services, .product-grid, .team-container, .laptops-grid { 
+  display:grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); 
+  gap:25px; 
+}
+.team-member {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,255,0.98));
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  box-shadow: 0 15px 35px rgba(79,84,125,0.08);
+  border: 1px solid rgba(255,255,255,0.8);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.team-member::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--premium-gradient);
+}
+
+.team-member:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(79,84,125,0.12);
+}
+
+.team-member img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+}
+
+.team-member:hover img {
+  transform: scale(1.05);
+}
+
+.team-member h4 {
+  margin: 18px 0 8px;
+  color: #2d3748;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.team-member p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ---------- NEW: Stats Counter ---------- */
+.stats-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:25px;
+  margin:40px auto;
+  max-width:1100px;
+  padding:0 20px;
+}
+.stat-card {
+  background:white;
+  padding:30px 25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-number {
+  font-size:38px;
+  font-weight:800;
+  background:var(--premium-gradient);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+.stat-label {
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- NEW: Small Map on Homepage ---------- */
+.small-map-container {
+  background:white;
+  padding:35px;
+  border-radius:20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  margin:40px auto;
+  max-width:1100px;
+  border: 1px solid rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+}
+.small-map { 
+  height:300px; 
+  width:100%; 
+  border-radius:15px; 
+  box-shadow:0 8px 25px rgba(0,0,0,0.1);
+  border:2px solid rgba(111,168,245,0.2);
+}
+
+/* ---------- NEW: Professional E-commerce Styles ---------- */
+.ecommerce-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.ecommerce-header h3 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.ecommerce-header p {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.product-card-ecom {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255,255,255,0.8);
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.product-card-ecom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--premium-gradient);
+}
+
+.product-card-ecom:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  padding: 20px;
+  transition: all 0.4s ease;
+}
+
+.product-card-ecom:hover .product-image {
+  transform: scale(1.08);
+}
+
+.product-info {
+  padding: 25px;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #2d3748;
+  letter-spacing: -0.2px;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--premium-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+
+.product-delivery {
+  font-size: 11px;
+  color: #25D366;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.quantity-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+  border-color: var(--primary-2);
+  transform: scale(1.1);
+}
+
+.quantity-input {
+  width: 45px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 6px;
+  font-weight: 600;
+}
+
+.buy-now-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.buy-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(124,122,172,0.3);
+}
+
+/* ---------- NEW: Laptop Rental Styles ---------- */
+.laptop-card {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255,255,255,0.8);
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.laptop-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gold-gradient);
+}
+
+.laptop-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.laptop-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  padding: 25px;
+  transition: all 0.4s ease;
+}
+
+.laptop-card:hover .laptop-image {
+  transform: scale(1.08);
+}
+
+.laptop-info {
+  padding: 25px;
+}
+
+.laptop-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #2d3748;
+  letter-spacing: -0.2px;
+}
+
+.laptop-specs {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.laptop-price {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+}
+
+.rent-now-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--gold-gradient);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.rent-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255,107,107,0.3);
+}
+
+/* ---------- NEW: Order Summary ---------- */
+.order-summary {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  margin-top: 30px;
+  border: 1px solid rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+}
+
+.order-summary h4 {
+  margin-bottom: 20px;
+  color: #2d3748;
+  font-weight: 700;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #e2e8f0;
+}
+
+/* ---------- Footer ---------- */
+footer { 
+  background:var(--premium-gradient); 
+  color:#fff; 
+  padding:25px; 
+  text-align:center; 
+  margin-top:28px; 
+  border-top-left-radius:20px; 
+  border-top-right-radius:20px; 
+  position:relative; 
+  overflow:hidden; 
+  backdrop-filter: blur(10px);
+}
+footer::before { 
+  content:''; 
+  position:absolute; 
+  top:0; 
+  left:0; 
+  width:100%; 
+  height:100%; 
+  background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>'); 
+  background-size:cover; 
+}
+footer p { 
+  margin:6px; 
+  font-size:13px; 
+  position:relative; 
+  z-index:2;
+  font-weight: 400;
+}
+.social-icons a { 
+  margin:0 8px; 
+  display:inline-block; 
+  color:#fff; 
+  font-size:18px; 
+  text-decoration:none; 
+  transition: transform 0.3s ease; 
+  position:relative; 
+  z-index:2; 
+}
+.social-icons a:hover { 
+  transform: translateY(-3px) scale(1.1); 
+}
+
+/* Responsive tweaks */
+@media (max-width:740px){ 
+  .hero h2{font-size:28px} 
+  .hero{padding:48px 16px} 
+  header{padding:10px 14px; flex-direction:column; gap:10px;}
+  nav{display:flex; flex-wrap:wrap; justify-content:center; gap:8px;}
+  nav a{margin:0 6px; font-size:12px; padding:6px 12px;}
+  .hero-cta{flex-direction:column; align-items:center;}
+  .stats-container{grid-template-columns:1fr;}
+  .small-map{height:200px;}
+  .floating-buttons { bottom: 15px; right: 15px; }
+  .floating-btn { width: 50px; height: 50px; font-size: 18px; }
+  .login-content { padding: 30px 20px; }
+  .hero-buttons { flex-direction: column; gap: 10px; }
+  .rented-laptop-btn { margin: 5px 0; }
+  .services, .product-grid, .team-container, .laptops-grid { 
+    grid-template-columns: 1fr; 
+    gap: 20px; 
+  }
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+
+<!-- ✅ ADDED: Login Modal -->
+<div id="loginModal" class="login-modal">
+  <div class="login-content">
+    <span class="login-close" onclick="closeLogin()">&times;</span>
+    <div class="login-title">🔧 Admin Login</div>
+    <div class="login-subtitle">Enter your credentials to access admin panel</div>
+    
+    <div class="form-group">
+      <label for="adminEmail">📧 Company Email</label>
+      <input type="email" id="adminEmail" placeholder="Enter company email" autocomplete="off">
+    </div>
+    
+    <div class="form-group">
+      <label for="adminPassword">🔒 Password</label>
+      <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="off">
+    </div>
+    
+    <button class="login-btn" onclick="loginToAdmin()">🚀 Login to Admin Panel</button>
+    
+    <div style="margin-top: 15px; font-size: 12px; color: var(--muted);">
+      <strong>Demo Credentials:</strong><br>
+      Email: admin@gmail.com<br>
+      Password: 1234
+    </div>
+  </div>
+</div>
+
+<!-- ---------- MAIN CONTENT ---------- -->
+<div id="mainContent">
+
+<!-- ---------- NEW: Tagline Banner ---------- -->
+<div class="tagline-banner">
+  🎯 No stress - Take rest | Repair in 30-45 min | Accessories in 15-20 min
+</div>
+
+<header>
+  <h1>Step'sEazy</h1>
+  <nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('services')">Services</a>
+    <!-- ✅ UPDATED: Accessories Shop Name -->
+    <a href="#" onclick="showPage('accessoriesShop')">Accessories Shop</a>
+    <a href="#" onclick="showPage('about')">About Us</a>
+    <!-- ✅ ADDED: Laptop Rental Page -->
+    <a href="#" onclick="showPage('laptopRental')">💻 Laptop Rental</a>
+    <!-- ✅ UPDATED: Admin Link with Login -->
+    <a href="#" onclick="openAdminLogin()" style="background:rgba(255,255,255,0.2);">🔧 Admin</a>
+  </nav>
+</header>
+
+<!-- ---------- USER PAGES ---------- -->
+
+<div id="home" class="page active">
+  <div class="hero container">
+    <h2>Fast & Affordable Mobile Repairs — <span class="badge">Free Pickup</span></h2>
+    <p>Display, Battery, Back Panel & Accessories — Free Pickup & Delivery in Boisar & Palghar</p>
+    
+    <!-- ✅ UPDATED: Buttons moved below features cards -->
+    
+    <!-- small features row -->
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap">
+      <div class="phone-box" style="max-width:260px; text-align:left; display:flex;gap:12px;align-items:center;">
+        <div style="width:56px;height:56px;border-radius:12px;background:var(--premium-gradient);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;box-shadow:0 8px 20px rgba(124,122,172,0.3);">⚡</div>
+        <div>
+          <strong style="font-size:14px;">30-45 Min Repair</strong>
+          <div style="font-size:12px;color:var(--muted)">Most repairs completed superfast</div>
+        </div>
+      </div>
+
+      <div class="phone-box" style="max-width:260px; text-align:left; display:flex;gap:12px;align-items:center;">
+        <div style="width:56px;height:56px;border-radius:12px;background:var(--premium-gradient);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;box-shadow:0 8px 20px rgba(124,122,172,0.3);">🚚</div>
+        <div>
+          <strong style="font-size:14px;">15-20 Min Delivery</strong>
+          <div style="font-size:12px;color:var(--muted)">Accessories delivered at doorstep</div>
+        </div>
+      </div>
+
+      <div class="phone-box" style="max-width:260px; text-align:left; display:flex;gap:12px;align-items:center;">
+        <div style="width:56px;height:56px;border-radius:12px;background:var(--premium-gradient);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;box-shadow:0 8px 20px rgba(124,122,172,0.3);">🔒</div>
+        <div>
+          <strong style="font-size:14px;">OTP Verification</strong>
+          <div style="font-size:12px;color:var(--muted)">Secure pickup & delivery process</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ UPDATED: Buttons Section - Moved below features and above Our Services -->
+    <div class="hero-buttons" style="margin: 40px 0 30px 0; text-align: center;">
+      <button class="btn" onclick="showPage('services')" style="margin: 0 10px;">📱 Our Services</button>
+      <!-- ✅ UPDATED: Accessories Shop Name -->
+      <button class="btn secondary" onclick="showPage('accessoriesShop')" style="margin: 0 10px;">🛍️ Accessories Shop</button>
+      <!-- ✅ ADDED: New Rented Laptop Button -->
+      <button class="rented-laptop-btn" onclick="showPage('laptopRental')">
+        💻 Laptop Rental
+      </button>
+    </div>
+  </div>
+
+  <!-- ---------- NEW: Stats Section ---------- -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number" id="happyCustomers">500+</div>
+      <div class="stat-label">Happy Customers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="phonesRepaired">1200+</div>
+      <div class="stat-label">Phones Repaired</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="warrantyClaims">98%</div>
+      <div class="stat-label">Satisfaction Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="serviceCities">2</div>
+      <div class="stat-label">Cities Served</div>
+    </div>
+  </div>
+
+  <section>
+    <h3>Our Services</h3>
+    <div class="services container">
+      <!-- ✅ UPDATED: All cards converted to premium phone boxes -->
+      <div class="phone-box">
+        <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjByZXBhaXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Display Replacement">
+        <h4>Display Replacement</h4>
+        <p class="price">Starting ₹1200</p>
+        <p>Original & compatible displays available for all models.</p>
+      </div>
+      <div class="phone-box">
+        <img src="https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBiYXR0ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Battery Replacement">
+        <h4>Battery Replacement</h4>
+        <p class="price">Starting ₹700</p>
+        <p>High quality batteries with 6 months warranty.</p>
+      </div>
+      <div class="phone-box">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Back Panel Repair">
+        <h4>Back Panel & Body</h4>
+        <p class="price">Starting ₹800</p>
+        <p>Full body replacements & panel painting.</p>
+      </div>
+      <div class="phone-box">
+        <img src="https://images.unsplash.com/photo-1605789538467-fbea1b8f71cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBhY2Nlc3Nvcmllc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Accessories">
+        <h4>Smartphone Accessories</h4>
+        <p class="price">Starting ₹199</p>
+        <p>Chargers, earphones, cases & more.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- NEW: Small Map Section ---------- -->
+  <section class="small-map-container">
+    <h3>Our Service Areas</h3>
+    <p style="text-align:center; color:var(--muted); margin-bottom:20px; font-size:14px;">Serving Boisar & Palghar with free pickup and delivery</p>
+    <div id="smallMap" class="small-map"></div>
+  </section>
+</div>
+
+<div id="services" class="page">
+  <section>
+    <h3>All Services & Pricing</h3>
+    <div class="services container">
+      <div class="phone-box">
+        <h4>📱 Display Replacement</h4>
+        <p class="price">₹1200 - ₹5000</p>
+        <p>Original & compatible displays</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>All brands supported</li>
+          <li>30-45 minutes repair</li>
+          <li>6 months warranty</li>
+        </ul>
+      </div>
+      <div class="phone-box">
+        <h4>🔋 Battery Replacement</h4>
+        <p class="price">₹700 - ₹2500</p>
+        <p>High quality batteries</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>Long lasting performance</li>
+          <li>30 minutes replacement</li>
+          <li>6 months warranty</li>
+        </ul>
+      </div>
+      <div class="phone-box">
+        <h4>🔧 Back Panel & Body</h4>
+        <p class="price">₹800 - ₹3000</p>
+        <p>Complete body solutions</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>Panel replacement</li>
+          <li>Color matching</li>
+          <li>45 minutes service</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ---------- NEW: PROFESSIONAL E-COMMERCE ACCESSORIES SHOP ---------- -->
+<div id="accessoriesShop" class="page">
+  <section>
+    <div class="ecommerce-header">
+      <!-- ✅ UPDATED: Accessories Shop Name -->
+      <h3>🛍️ Accessories Shop</h3>
+      <p>Premium smartphone accessories with 15-20 minutes delivery in Boisar & Palghar</p>
+    </div>
+
+    <div class="product-grid container" id="accessoriesGrid"></div>
+
+    <!-- Order Summary -->
+    <div class="order-summary" id="orderSummary" style="display:none;">
+      <h4>📦 Your Order Summary</h4>
+      <div id="orderItems"></div>
+      <div class="order-total">
+        <span>Total:</span>
+        <span id="orderTotal">₹0</span>
+      </div>
+      <button class="buy-now-btn" onclick="placeOrder()" style="margin-top:15px;">🛒 Place Order via WhatsApp</button>
+    </div>
+  </section>
+</div>
+
+<!-- ✅ ADDED: LAPTOP RENTAL PAGE -->
+<div id="laptopRental" class="page">
+  <section>
+    <div class="ecommerce-header">
+      <h3>💻 Laptop Rental</h3>
+      <p>Premium laptops for rent starting from ₹199 for 2 hours. Perfect for work, studies, or emergencies.</p>
+    </div>
+
+    <div class="laptops-grid container">
+      <div class="laptop-card">
+        <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Dell Laptop" class="laptop-image">
+        <div class="laptop-info">
+          <div class="laptop-title">Dell Inspiron 15</div>
+          <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD • 15.6" FHD</div>
+          <div class="laptop-price">₹299 / 2 hours</div>
+          <button class="rent-now-btn" onclick="rentLaptop('Dell Inspiron 15', 299)">💻 Rent Now</button>
+        </div>
+      </div>
+
+      <div class="laptop-card">
+        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="HP Laptop" class="laptop-image">
+        <div class="laptop-info">
+          <div class="laptop-title">HP Pavilion 14</div>
+          <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD • 14" FHD</div>
+          <div class="laptop-price">₹399 / 2 hours</div>
+          <button class="rent-now-btn" onclick="rentLaptop('HP Pavilion 14', 399)">💻 Rent Now</button>
+        </div>
+      </div>
+
+      <div class="laptop-card">
+        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Lenovo Laptop" class="laptop-image">
+        <div class="laptop-info">
+          <div class="laptop-title">Lenovo IdeaPad 3</div>
+          <div class="laptop-specs">Intel i3 • 8GB RAM • 1TB HDD • 15.6" HD</div>
+          <div class="laptop-price">₹199 / 2 hours</div>
+          <button class="rent-now-btn" onclick="rentLaptop('Lenovo IdeaPad 3', 199)">💻 Rent Now</button>
+        </div>
+      </div>
+
+      <div class="laptop-card">
+        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="MacBook" class="laptop-image">
+        <div class="laptop-info">
+          <div class="laptop-title">Apple MacBook Air</div>
+          <div class="laptop-specs">M1 Chip • 8GB RAM • 256GB SSD • 13.3" Retina</div>
+          <div class="laptop-price">₹599 / 2 hours</div>
+          <button class="rent-now-btn" onclick="rentLaptop('Apple MacBook Air', 599)">💻 Rent Now</button>
+        </div>
+      </div>
+
+      <div class="laptop-card">
+        <img src="https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Asus Laptop" class="laptop-image">
+        <div class="laptop-info">
+          <div class="laptop-title">ASUS VivoBook 15</div>
+          <div class="laptop-specs">Intel i7 • 16GB RAM • 1TB SSD • 15.6" FHD</div>
+          <div class="laptop-price">₹499 / 2 hours</div>
+          <button class="rent-now-btn" onclick="rentLaptop('ASUS VivoBook 15', 499)">💻 Rent Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="about" class="page">
+  <section>
+    <h3>About Step'sEazy</h3>
+    <div class="about-container container">
+      <div class="about-text">
+        <p style="font-size:15px; line-height:1.7; color:#4a5568;">Step'sEazy is Boisar & Palghar's most trusted mobile repair and accessories service. We specialize in superfast display, battery, and body repairs with free pickup and delivery. Our mission is to make mobile repairs hassle-free with our "No stress - Take rest" philosophy.</p>
+      </div>
+      
+      <div class="team-container">
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zm91bmRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Founder">
+          <h4>Founder</h4>
+          <p>Anurag.DK.Varma - Leading the mobile repair revolution in Boisar & Palghar.</p>
+        </div>
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGVjaG5pY2lhbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Tech Expert">
+          <h4>Technical Head</h4>
+          <p>Expert in mobile repairs with 5+ years experience.</p>
+        </div>
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGRlbGl2ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Delivery Manager">
+          <h4>Delivery Manager</h4>
+          <p>Ensuring 15-20 minutes accessories delivery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ✅ ADDED: ADMIN MANAGEMENT PAGE -->
+<div id="admin" class="page">
+  <section>
+    <h3>🔧 Admin Management Panel</h3>
+    
+    <div class="admin-panel">
+      <!-- Quick Stats -->
+      <div class="admin-section">
+        <h4>📊 Quick Stats</h4>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value" id="totalOrders">0</div>
+            <div class="stat-label">Today's Orders</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalRevenue">₹0</div>
+            <div class="stat-label">Today's Revenue</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="pendingRepairs">0</div>
+            <div class="stat-label">Pending Repairs</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="newCustomers">0</div>
+            <div class="stat-label">New Customers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Management -->
+      <div class="admin-section">
+        <h4>🛍️ Manage Products</h4>
+        <button class="admin-btn" onclick="addNewProduct()">➕ Add New Product</button>
+        <button class="admin-btn secondary" onclick="updatePrices()">💰 Update Prices</button>
+        <button class="admin-btn secondary" onclick="manageInventory()">📦 Manage Inventory</button>
+        
+        <div id="productForm" style="display:none; margin-top:15px;">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="productName" placeholder="Enter product name">
+          </div>
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" id="productPrice" placeholder="Enter price">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="productCategory">
+              <option value="charging">Charging</option>
+              <option value="audio">Audio</option>
+              <option value="protection">Protection</option>
+              <option value="accessories">Accessories</option>
+            </select>
+          </div>
+          <button class="admin-btn" onclick="saveProduct()">💾 Save Product</button>
+          <button class="admin-btn secondary" onclick="cancelProduct()">❌ Cancel</button>
+        </div>
+      </div>
+
+      <!-- Order Management -->
+      <div class="admin-section">
+        <h4>📦 Order Management</h4>
+        <button class="admin-btn" onclick="viewAllOrders()">👁️ View All Orders</button>
+        <button class="admin-btn secondary" onclick="updateOrderStatus()">🔄 Update Status</button>
+        <button class="admin-btn" onclick="exportOrders()">📄 Export Orders</button>
+      </div>
+
+      <!-- Customer Management -->
+      <div class="admin-section">
+        <h4>👥 Customer Management</h4>
+        <button class="admin-btn" onclick="viewCustomers()">📋 View Customers</button>
+        <button class="admin-btn secondary" onclick="sendBulkMessage()">📢 Send Bulk Message</button>
+        <button class="admin-btn" onclick="checkFeedback()">⭐ Check Feedback</button>
+      </div>
+
+      <!-- Repair Management -->
+      <div class="admin-section">
+        <h4>🔧 Repair Management</h4>
+        <button class="admin-btn" onclick="addRepairJob()">➕ Add Repair Job</button>
+        <button class="admin-btn secondary" onclick="updateRepairStatus()">📊 Update Repair Status</button>
+        <button class="admin-btn" onclick="viewRepairHistory()">📋 Repair History</button>
+      </div>
+
+      <!-- Settings -->
+      <div class="admin-section">
+        <h4>⚙️ Settings</h4>
+        <button class="admin-btn" onclick="updateBusinessInfo()">🏢 Update Business Info</button>
+        <button class="admin-btn secondary" onclick="manageStaff()">👨‍💼 Manage Staff</button>
+        <button class="admin-btn" onclick="backupData()">💾 Backup Data</button>
+        <button class="admin-btn danger" onclick="logoutAdmin()">🚪 Logout</button>
+      </div>
+
+      <!-- Reports -->
+      <div class="admin-section">
+        <h4>📈 Reports & Analytics</h4>
+        <button class="admin-btn" onclick="generateSalesReport()">📊 Sales Report</button>
+        <button class="admin-btn secondary" onclick="viewRevenueChart()">📈 Revenue Chart</button>
+        <button class="admin-btn" onclick="customerAnalytics()">👥 Customer Analytics</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>© 2025 Step'sEazy - All Rights Reserved</p>
+  <div class="social-icons">
+    <a href="tel:+91-9359122677" target="_blank">📞</a>
+    <a href="https://wa.me/919359122677" target="_blank">💬</a>
+  </div>
+  <p>Made with ❤ in Boisar | No stress - Take rest</p>
+</footer>
+
+</div>
+
+<!-- ---------- NEW: FLOATING ACTION BUTTONS ---------- -->
+<div class="floating-buttons">
+  <a href="tel:+91-9359122677" class="floating-btn call" title="Call Now">📞</a>
+  <a href="https://wa.me/919359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
+  <a href="https://wa.me/919359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+// ---------- GLOBAL VARIABLES ----------
+let cart = [];
+let adminData = {
+  totalOrders: 15,
+  totalRevenue: 12500,
+  pendingRepairs: 8,
+  newCustomers: 5
+};
+
+let isAdminLoggedIn = false;
+
+// ✅ ADDED: Laptop Rental Function
+function rentLaptop(laptopName, price) {
+  let message = `💻 *LAPTOP RENTAL REQUEST - Step'sEazy*%0A%0A`;
+  message += `*Laptop:* ${laptopName}%0A`;
+  message += `*Rental Price:* ₹${price} for 2 hours%0A%0A`;
+  message += `I want to rent this laptop. Please deliver to my address in Boisar/Palghar.%0A%0A`;
+  message += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  showNotification(`💻 ${laptopName} rental request sent!`);
+}
+
+// ✅ ADDED: Login Functions
+function openAdminLogin() {
+  document.getElementById('loginModal').style.display = 'flex';
+}
+
+function closeLogin() {
+  document.getElementById('loginModal').style.display = 'none';
+  // Clear form
+  document.getElementById('adminEmail').value = '';
+  document.getElementById('adminPassword').value = '';
+}
+
+function loginToAdmin() {
+  const email = document.getElementById('adminEmail').value;
+  const password = document.getElementById('adminPassword').value;
+  
+  // Check credentials
+  if(email === 'admin@gmail.com' && password === '1234') {
+    isAdminLoggedIn = true;
+    closeLogin();
+    showPage('admin');
+    showNotification('✅ Welcome to Admin Panel!');
+  } else {
+    showNotification('❌ Invalid email or password!');
+    // Shake animation for wrong credentials
+    document.getElementById('adminEmail').style.animation = 'shake 0.5s';
+    document.getElementById('adminPassword').style.animation = 'shake 0.5s';
+    setTimeout(() => {
+      document.getElementById('adminEmail').style.animation = '';
+      document.getElementById('adminPassword').style.animation = '';
+    }, 500);
+  }
+}
+
+function logoutAdmin() {
+  isAdminLoggedIn = false;
+  showPage('home');
+  showNotification('👋 Logged out from Admin Panel');
+}
+
+// Add shake animation for wrong login
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+`;
+document.head.appendChild(style);
+
+// ---------- PAGE NAV ----------
+function showPage(id){ 
+  // Check if trying to access admin without login
+  if(id === 'admin' && !isAdminLoggedIn) {
+    openAdminLogin();
+    return;
+  }
+  
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
+  document.getElementById(id).classList.add('active'); 
+  window.scrollTo(0,0); 
+  
+  if(id === 'accessoriesShop') {
+    loadAccessoriesShop();
+  }
+  if(id === 'admin' && isAdminLoggedIn) {
+    loadAdminPanel();
+  }
+}
+
+// ✅ ADDED: Admin Panel Functions
+function loadAdminPanel() {
+  // Update stats
+  document.getElementById('totalOrders').textContent = adminData.totalOrders;
+  document.getElementById('totalRevenue').textContent = '₹' + adminData.totalRevenue;
+  document.getElementById('pendingRepairs').textContent = adminData.pendingRepairs;
+  document.getElementById('newCustomers').textContent = adminData.newCustomers;
+}
+
+function addNewProduct() {
+  document.getElementById('productForm').style.display = 'block';
+  showNotification('➕ Add new product form opened');
+}
+
+function saveProduct() {
+  const name = document.getElementById('productName').value;
+  const price = document.getElementById('productPrice').value;
+  const category = document.getElementById('productCategory').value;
+  
+  if(name && price) {
+    showNotification(`✅ Product "${name}" added successfully!`);
+    document.getElementById('productForm').style.display = 'none';
+    // Clear form
+    document.getElementById('productName').value = '';
+    document.getElementById('productPrice').value = '';
+  } else {
+    showNotification('❌ Please fill all fields');
+  }
+}
+
+function cancelProduct() {
+  document.getElementById('productForm').style.display = 'none';
+  showNotification('Product addition cancelled');
+}
+
+function updatePrices() {
+  showNotification('💰 Price update feature activated');
+}
+
+function manageInventory() {
+  showNotification('📦 Inventory management opened');
+}
+
+function viewAllOrders() {
+  showNotification('👁️ Loading all orders...');
+}
+
+function updateOrderStatus() {
+  showNotification('🔄 Order status update panel opened');
+}
+
+function exportOrders() {
+  showNotification('📄 Exporting orders to Excel...');
+}
+
+function viewCustomers() {
+  showNotification('📋 Loading customer database...');
+}
+
+function sendBulkMessage() {
+  showNotification('📢 Bulk message panel opened');
+}
+
+function checkFeedback() {
+  showNotification('⭐ Loading customer feedback...');
+}
+
+function addRepairJob() {
+  showNotification('➕ Add new repair job form opened');
+}
+
+function updateRepairStatus() {
+  showNotification('📊 Repair status update panel opened');
+}
+
+function viewRepairHistory() {
+  showNotification('📋 Loading repair history...');
+}
+
+function updateBusinessInfo() {
+  showNotification('🏢 Business info update panel opened');
+}
+
+function manageStaff() {
+  showNotification('👨‍💼 Staff management panel opened');
+}
+
+function backupData() {
+  showNotification('💾 Creating data backup...');
+}
+
+function generateSalesReport() {
+  showNotification('📊 Generating sales report...');
+}
+
+function viewRevenueChart() {
+  showNotification('📈 Loading revenue charts...');
+}
+
+function customerAnalytics() {
+  showNotification('👥 Loading customer analytics...');
+}
+
+// ---------- Professional Accessories Shop ----------
+const accessories = [
+  {id: 1, name: "Fast USB Charger", price: 499, img: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjaGFyZ2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
+  {id: 2, name: "Premium Earphones", price: 699, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "audio"},
+  {id: 3, name: "Designer Mobile Cover", price: 299, img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBjb3ZlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "protection"},
+  {id: 4, name: "Tempered Glass", price: 199, img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGhvbmUlMjBzY3JlZW4lMjBwcm90ZWN0b3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "protection"},
+  {id: 5, name: "Power Bank 10000mAh", price: 999, img: "https://images.unsplash.com/photo-1609592071365-1a0d1ccee7e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG93ZXIlMjBiYW5rfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "charging"},
+  {id: 6, name: "Data Cable 2m", price: 249, img: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNifGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
+  {id: 7, name: "Wireless Earbuds", price: 1299, img: "https://images.unsplash.com/photo-1590658165737-15a047b8b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "audio"},
+  {id: 8, name: "Car Phone Holder", price: 399, img: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyJTIwcGhvbmUlMjBob2xkZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "accessories"}
+];
+
+function loadAccessoriesShop() {
+  const grid = document.getElementById('accessoriesGrid');
+  grid.innerHTML = '';
+  
+  accessories.forEach(product => {
+    const productCard = document.createElement('div');
+    productCard.className = 'product-card-ecom';
+    productCard.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" class="product-image">
+      <div class="product-info">
+        <div class="product-title">${product.name}</div>
+        <div class="product-price">₹${product.price}</div>
+        <div class="product-delivery">🚚 ${product.delivery} delivery</div>
+        
+        <div class="quantity-selector">
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
+          <input type="text" class="quantity-input" id="qty-${product.id}" value="0" readonly>
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
+        </div>
+        
+        <button class="buy-now-btn" onclick="addToCart(${product.id})">
+          🛒 Add to Cart
+        </button>
+      </div>
+    `;
+    grid.appendChild(productCard);
+  });
+}
+
+function updateQuantity(productId, change) {
+  const input = document.getElementById(`qty-${productId}`);
+  let currentQty = parseInt(input.value) || 0;
+  currentQty = Math.max(0, currentQty + change);
+  input.value = currentQty;
+}
+
+function addToCart(productId) {
+  const input = document.getElementById(`qty-${productId}`);
+  const quantity = parseInt(input.value) || 0;
+  
+  if(quantity === 0) {
+    alert('Please select quantity first!');
+    return;
+  }
+  
+  const product = accessories.find(p => p.id === productId);
+  const existingItem = cart.find(item => item.id === productId);
+  
+  if(existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      img: product.img
+    });
+  }
+  
+  // Reset quantity
+  input.value = '0';
+  
+  updateOrderSummary();
+  showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
+}
+
+function updateOrderSummary() {
+  const orderSummary = document.getElementById('orderSummary');
+  const orderItems = document.getElementById('orderItems');
+  const orderTotal = document.getElementById('orderTotal');
+  
+  if(cart.length === 0) {
+    orderSummary.style.display = 'none';
+    return;
+  }
+  
+  orderSummary.style.display = 'block';
+  orderItems.innerHTML = '';
+  
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    const orderItem = document.createElement('div');
+    orderItem.className = 'order-item';
+    orderItem.innerHTML = `
+      <span>${item.quantity} x ${item.name}</span>
+      <span>₹${itemTotal}</span>
+    `;
+    orderItems.appendChild(orderItem);
+  });
+  
+  orderTotal.textContent = `₹${total}`;
+}
+
+function placeOrder() {
+  if(cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+  
+  let orderMessage = `🛍️ *NEW ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    orderMessage += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
+  });
+  
+  orderMessage += `%0A*Total: ₹${total}*%0A%0A`;
+  orderMessage += `Please deliver to my address in Boisar/Palghar.%0A`;
+  orderMessage += `Expected delivery: 15-20 minutes.%0A%0A`;
+  orderMessage += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/919359122677?text=${orderMessage}`;
+  window.open(whatsappURL, '_blank');
+  
+  // Clear cart after order
+  cart = [];
+  updateOrderSummary();
+  showNotification('✅ Order placed successfully! Check WhatsApp.');
+}
+
+// ✅ ADDED: Notification Function (Working Now)
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.innerHTML = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 100);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => document.body.removeChild(notification), 400);
+  }, 3000);
+}
+
+// ✅ UPDATED: Better Map Coordinates
+function initSmallMap(){
+  const map = L.map('smallMap').setView([19.800,72.760],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+  
+  let branches=[
+    {name:"Step'sEazy Boisar", lat:19.800, lon:72.760},
+    {name:"Step'sEazy Palghar", lat:19.695, lon:72.765}
+  ];
+  
+  branches.forEach(b=>{ 
+    L.marker([b.lat,b.lon]).addTo(map)
+      .bindPopup(`<strong>${b.name}</strong><br>📞 9359122677<br>🚚 Free Pickup & Delivery`);
+  });
+}
+
+// ---------- NEW: Animated Stats Counter ----------
+function animateStats() {
+  const stats = [
+    { element: 'happyCustomers', target: 500, current: 0 },
+    { element: 'phonesRepaired', target: 1200, current: 0 },
+    { element: 'warrantyClaims', target: 98, current: 0 },
+    { element: 'serviceCities', target: 2, current: 0 }
+  ];
+  
+  stats.forEach(stat => {
+    const increment = stat.target / 50;
+    const timer = setInterval(() => {
+      stat.current += increment;
+      if(stat.current >= stat.target){
+        stat.current = stat.target;
+        clearInterval(timer);
+      }
+      document.getElementById(stat.element).textContent = 
+        stat.element === 'warrantyClaims' ? 
+        Math.floor(stat.current) + '%' : 
+        Math.floor(stat.current) + '+';
+    }, 40);
+  });
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  initSmallMap();
+  
+  const statsSection = document.getElementById('home');
+  if(statsSection){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animateStats();
+        }
+      });
+    });
+    observer.observe(statsSection);
+  }
+  
+  // Close modal when clicking outside
+  document.getElementById('loginModal').addEventListener('click', function(e) {
+    if(e.target === this) {
+      closeLogin();
+    }
+  });
+  
+  // Enter key support for login
+  document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+      loginToAdmin();
+    }
+  });
+});
+</script>
+
+<!-- Supabase Integration -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
+const ADMIN_PASSWORD = "1234";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Example handler: attach to any form with id="orderForm"
+document.addEventListener('DOMContentLoaded', () => {
+  const orderForm = document.getElementById('orderForm');
+  if(orderForm){
+    orderForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(orderForm);
+      const data = Object.fromEntries(formData.entries());
+      const { error } = await supabase.from('orders').insert([data]);
+      if(error) alert('Error saving order');
+      else alert('Order saved!');
+    });
+  }
+});
+</script>
+
+</body>
+</html>
