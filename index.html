@@ -2054,6 +2054,69 @@ Thank you 😊`;
 }
 </script>
 
+<body>
+<!-- BOOKING POPUP FORM -->
+<div id="bookingModal" style="
+  display:none; 
+  position:fixed; 
+  top:0; left:0; 
+  width:100%; 
+  height:100%; 
+  background:rgba(0,0,0,0.6); 
+  backdrop-filter:blur(4px); 
+  justify-content:center; 
+  align-items:center; 
+  z-index:9999;
+">
+  <div style="
+    background:white; 
+    padding:25px; 
+    width:90%; 
+    max-width:380px; 
+    border-radius:20px; 
+    box-shadow:0 0 25px rgba(0,0,0,0.3);
+    position:relative;
+  ">
+  
+    <span onclick="closeBookingForm()" style="
+      position:absolute; 
+      top:10px; 
+      right:15px; 
+      font-size:24px; 
+      cursor:pointer;">
+      ×
+    </span>
+
+    <h3 style="margin:0 0 10px 0; font-size:20px;">
+      📱 Book This Service
+    </h3>
+
+    <p id="selectedService" style="font-weight:bold; margin-bottom:15px;"></p>
+
+    <input id="custName" type="text" placeholder="Your Name" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
+    
+    <input id="custPhone" type="text" placeholder="Phone Number" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
+    
+    <input id="custModel" type="text" placeholder="Smartphone Model" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
+    
+    <input id="custRefNo" type="text" placeholder="Reference Number" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
+    
+    <button onclick="submitBooking()" style="
+      width:100%; 
+      padding:14px; 
+      background:#007bff; 
+      color:white; 
+      border:none; 
+      border-radius:12px;
+      font-size:16px;
+      cursor:pointer;">
+      📩 Submit Booking
+    </button>
+
+    <p id="locStatus" style="font-size:12px; margin-top:10px; color:gray;"></p>
+
+  </div>
+</div>
 </body>
 </html>
   
