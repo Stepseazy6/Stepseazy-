@@ -1063,7 +1063,7 @@ footer p {
     <div style="margin-top: 15px; font-size: 12px; color: var(--muted);">
       <strong>Demo Credentials:</strong><br>
       Email: admin@gmail.com<br>
-      Password: 1234
+      Password:xxxx
     </div>
   </div>
 </div>
@@ -1469,7 +1469,7 @@ footer p {
 <div class="floating-buttons">
   <a href="tel:+91-9359122677" class="floating-btn call" title="Call Now">📞</a>
   <a href="https://wa.me/919359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
-  <a href="https://wa.me/919359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
+  <a href="https://wa.me/918050269752?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -1491,7 +1491,8 @@ function rentLaptop(laptopName, price) {
   message += `*Laptop:* ${laptopName}%0A`;
   message += `*Rental Price:* ₹${price} for 2 hours%0A%0A`;
   message += `I want to rent this laptop. Please deliver to my address in Boisar/Palghar.%0A%0A`;
-  message += `Thank you! 😊`;
+  message += `what's your name 😊`;
+  message += `Thank you! 😊`; 
   
   const whatsappURL = `https://wa.me/919359122677?text=${message}`;
   window.open(whatsappURL, '_blank');
@@ -1901,12 +1902,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Supabase Integration -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+/* ---------------- SUPABASE SETTINGS ---------------- */
 const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Example handler: attach to any form with id="orderForm"
+// Save form data to Supabase (if form exists)
 document.addEventListener('DOMContentLoaded', () => {
   const orderForm = document.getElementById('orderForm');
   if(orderForm){
@@ -1915,61 +1918,142 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(orderForm);
       const data = Object.fromEntries(formData.entries());
       const { error } = await supabase.from('orders').insert([data]);
-      if(error) alert('Error saving order');
-      else alert('Order saved!');
+      if(error) alert('❌ Error saving order');
+      else alert('✔ Order saved!');
     });
   }
 });
 </script>
+
+
+<!-- ADMIN LOGIN POPUP -->
 <div class="login-modal" id="loginModal" style="display:none;">
   <div class="login-content">
     <span class="login-close" onclick="closeLogin()">×</span>
     <h3 class="login-title">Admin Login</h3>
     <p class="login-subtitle">Enter password to access admin panel</p>
+
     <div class="form-group">
       <label>Password</label>
       <input type="password" id="adminLoginPass" placeholder="Enter password">
     </div>
+
     <button class="login-btn" onclick="adminLogin()">Login</button>
   </div>
 </div>
-  <script>
 
-const ADMIN_REAL_PASSWORD = "Bhai1234"; // strong password
-const ADMIN_HASH = btoa(ADMIN_REAL_PASSWORD); // encoded version
+
+<script>
+/* ---------------- ADMIN AUTH ---------------- */
+const ADMIN_REAL_PASSWORD = "Bhai1234";
+const ADMIN_HASH = btoa(ADMIN_REAL_PASSWORD);
 
 function adminLogin() {
-    const pass = document.getElementById("adminLoginPass").value;
+  const pass = document.getElementById("adminLoginPass").value;
 
-    if (!pass) {
-        alert("Please enter password");
-        return;
-    }
+  if (!pass) {
+    alert("Please enter password");
+    return;
+  }
 
-    // compare encoded password
-    const encoded = btoa(pass);
+  const encoded = btoa(pass);
 
-    if (encoded === ADMIN_HASH) {
-        localStorage.setItem("isAdmin", "true");
-        closeLogin();
-        showAdminPanel();
-    } else {
-        alert("Wrong password!");
-    }
+  if (encoded === ADMIN_HASH) {
+    localStorage.setItem("isAdmin", "true");
+    closeLogin();
+    showAdminPanel();
+  } else {
+    alert("Wrong password!");
+  }
 }
 
 function showAdminPanel() {
-    try {
-        document.getElementById("adminPanel").style.display = "block";
-    } catch(e) {
-        console.log("Admin panel not found:", e);
-    }
+  try {
+    document.getElementById("adminPanel").style.display = "block";
+  } catch(e) {
+    console.log("Admin panel not found:", e);
+  }
 }
 
 function closeLogin() {
-    document.getElementById("loginModal").style.display = "none";
+  document.getElementById("loginModal").style.display = "none";
 }
 
-  </script>
+
+/* ---------------- BOOKING SYSTEM ---------------- */
+
+let userLocation = "";
+
+// open booking popup
+function openBookingForm(serviceName) {
+  document.getElementById("bookingModal").style.display = "flex";
+  document.getElementById("selectedService").innerHTML = "Service: " + serviceName;
+  getLiveLocation();
+}
+
+// close popup
+function closeBookingForm() {
+  document.getElementById("bookingModal").style.display = "none";
+}
+
+// fetch live location
+function getLiveLocation() {
+  document.getElementById("locStatus").innerHTML = "Fetching live location...";
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        let lat = pos.coords.latitude;
+        let lon = pos.coords.longitude;
+
+        userLocation = `https://maps.google.com/?q=${lat},${lon}`;
+        document.getElementById("locStatus").innerHTML = "📍 Location attached";
+      },
+      () => {
+        userLocation = "Location not allowed";
+        document.getElementById("locStatus").innerHTML = "❌ Location access denied";
+      }
+    );
+  }
+}
+
+// submit booking to WhatsApp
+function submitBooking() {
+  let name = document.getElementById("custName").value;
+  let phone = document.getElementById("custPhone").value;
+  let model = document.getElementById("custModel").value;
+  let ref = document.getElementById("custRefNo").value;
+
+  let service = document
+    .getElementById("selectedService")
+    .innerHTML.replace("Service: ", "");
+
+  if (!name || !phone || !model || !ref) {
+    alert("Please fill all details.");
+    return;
+  }
+
+  let msg =
+`📲 *New Service Booking - Step'sEazy*
+
+🛠️ *Service:* ${service}
+👤 *Name:* ${name}
+📞 *Phone:* ${phone}
+📱 *Model:* ${model}
+🔖 *Reference No:* ${ref}
+
+📍 *Customer Location:* 
+${userLocation}
+
+Thank you 😊`;
+
+  let url = `https://wa.me/918050269752?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+
+  closeBookingForm();
+}
+</script>
+
 </body>
 </html>
+  
