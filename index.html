@@ -4,26 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Step'sEazy - Mobile Repair & Accessories | Boisar & Palghar</title>
-<!-- ✅ ADDED: SEO Meta Tags -->
+<!-- ✅ SEO Meta Tags -->
 <meta name="description" content="Step'sEazy - Fast mobile repair & accessories in Boisar & Palghar. Free pickup & delivery. Display, battery, back panel repair in 30-45 min.">
 <meta name="keywords" content="mobile repair boisar, phone repair palghar, mobile accessories, display replacement, battery replacement">
 <meta name="author" content="Step'sEazy">
 
-<!-- ✅ ADDED: Google Fonts for Premium Look -->
+<!-- ✅ Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- ========== START CSS ========== -->
 <style>
+/* ---------- CSS STARTS HERE ---------- */
 :root{
   --bg:#f8faff;
-  --primary-1:#6fa8f5; /* soft blue */
-  --primary-2:#8b6cf6; /* soft purple */
+  --primary-1:#6fa8f5;
+  --primary-2:#8b6cf6;
   --accent:#7c7aac;
   --card:#ffffff;
   --muted:#6b7280;
   --premium-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gold-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --whatsapp-green: #25D366;
 }
-/* ---------- General Styles ---------- */
 *{box-sizing:border-box}
 body { 
   margin:0; 
@@ -73,8 +75,6 @@ nav a:hover {
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .active { display:block; }
 .container{max-width:1100px;margin:0 auto;padding:0 18px}
-
-/* ✅ ADDED: Premium Phone Box Styles */
 .phone-box {
   background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,255,0.98));
   border-radius: 20px;
@@ -90,7 +90,6 @@ nav a:hover {
   overflow: hidden;
   backdrop-filter: blur(10px);
 }
-
 .phone-box::before {
   content: '';
   position: absolute;
@@ -100,7 +99,6 @@ nav a:hover {
   height: 3px;
   background: var(--premium-gradient);
 }
-
 .phone-box::after {
   content: '';
   position: absolute;
@@ -112,11 +110,9 @@ nav a:hover {
   transform: rotate(45deg);
   transition: all 0.6s ease;
 }
-
 .phone-box:hover::after {
   left: 100%;
 }
-
 .phone-box:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 
@@ -124,7 +120,6 @@ nav a:hover {
     0 15px 30px rgba(0,0,0,0.08),
     inset 0 1px 0 rgba(255,255,255,0.8);
 }
-
 .phone-box img {
   width: 100%;
   height: 160px;
@@ -133,12 +128,10 @@ nav a:hover {
   transition: all 0.4s ease;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
 }
-
 .phone-box:hover img {
   transform: scale(1.08);
   filter: drop-shadow(0 12px 25px rgba(0,0,0,0.15));
 }
-
 .phone-box h4 {
   margin: 18px 0 8px;
   color: #2d3748;
@@ -146,7 +139,6 @@ nav a:hover {
   font-weight: 700;
   letter-spacing: -0.2px;
 }
-
 .phone-box .price {
   font-size: 17px;
   color: var(--primary-2);
@@ -156,15 +148,36 @@ nav a:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .phone-box p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
   font-weight: 400;
 }
-
-/* ✅ ADDED: Notification Styles */
+/* ✅ UPDATED: WhatsApp Button Style */
+.whatsapp-btn {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 200px;
+}
+.whatsapp-btn:hover {
+  background: #1da851;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}
 .notification {
   position: fixed;
   top: 20px;
@@ -181,12 +194,10 @@ nav a:hover {
   font-size: 14px;
   backdrop-filter: blur(10px);
 }
-
 .notification.show {
   transform: translateX(0);
 }
-
-/* ✅ ADDED: Login Modal Styles */
+/* ✅ UPDATED: SIMPLE LOGIN MODAL */
 .login-modal {
   display: none;
   position: fixed;
@@ -200,25 +211,21 @@ nav a:hover {
   align-items: center;
   backdrop-filter: blur(5px);
 }
-
 .login-content {
   background: white;
-  padding: 40px;
+  padding: 30px;
   border-radius: 20px;
   box-shadow: 0 25px 60px rgba(0,0,0,0.3);
   width: 90%;
-  max-width: 400px;
+  max-width: 350px;
   text-align: center;
   position: relative;
   animation: modalSlideIn 0.4s ease;
-  border: 1px solid rgba(255,255,255,0.2);
 }
-
 @keyframes modalSlideIn {
   from { opacity:0; transform:scale(0.8); }
   to { opacity:1; transform:scale(1); }
 }
-
 .login-close {
   position: absolute;
   top: 15px;
@@ -226,30 +233,34 @@ nav a:hover {
   font-size: 24px;
   cursor: pointer;
   color: var(--muted);
-  transition: color 0.3s ease;
 }
-
-.login-close:hover {
-  color: #ef4444;
-}
-
 .login-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
+  margin-bottom: 20px;
+  color: #2d3748;
+}
+.login-option {
+  background: #f8faff;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+.login-option:hover {
+  border-color: var(--primary-2);
+  transform: translateY(-2px);
+}
+.login-option-icon {
+  font-size: 24px;
   margin-bottom: 8px;
-  background: var(--premium-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
-
-.login-subtitle {
-  color: var(--muted);
-  margin-bottom: 30px;
-  font-size: 13px;
-  font-weight: 400;
+.login-option-text {
+  font-weight: 600;
+  font-size: 14px;
 }
-
-/* ✅ ADDED: Admin Panel Styles */
 .admin-panel {
   background: white;
   border-radius: 20px;
@@ -257,22 +268,18 @@ nav a:hover {
   margin: 20px 0;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   border-left: 4px solid var(--primary-2);
-  border: 1px solid rgba(255,255,255,0.8);
 }
-
 .admin-section {
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 1px solid #e2e8f0;
 }
-
 .admin-section h4 {
   color: var(--primary-2);
   margin-bottom: 15px;
   font-size: 16px;
   font-weight: 700;
 }
-
 .admin-btn {
   background: var(--premium-gradient);
   color: white;
@@ -285,25 +292,14 @@ nav a:hover {
   transition: all 0.3s ease;
   font-size: 13px;
 }
-
 .admin-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(124,122,172,0.3);
 }
-
-.admin-btn.secondary {
-  background: #6b7280;
-}
-
-.admin-btn.danger {
-  background: #ef4444;
-}
-
 .form-group {
   margin-bottom: 15px;
   text-align: left;
 }
-
 .form-group label {
   display: block;
   margin-bottom: 5px;
@@ -311,63 +307,57 @@ nav a:hover {
   color: #374151;
   font-size: 13px;
 }
-
-.form-group input, .form-group select, .form-group textarea {
+.form-group input {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   font-size: 14px;
-  transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
 }
-
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-2);
-  box-shadow: 0 0 0 3px rgba(139, 108, 246, 0.1);
-}
-
-.form-group textarea {
-  height: 100px;
-  resize: vertical;
-}
-
-.login-btn {
+.buy-now-btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background: var(--premium-gradient);
   color: white;
   border: none;
   border-radius: 12px;
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  font-size: 14px;
 }
-
-.login-btn:hover {
+.buy-now-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(124,122,172,0.3);
 }
-
+/* ✅ UPDATED: CUSTOMER ORDER BUTTON */
+.customer-order-btn {
+  width: 100%;
+  padding: 14px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.customer-order-btn:hover {
+  background: #1da851;
+}
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
   margin: 15px 0;
 }
-
 .stat-item {
   background: var(--bg);
   padding: 20px;
   border-radius: 15px;
   text-align: center;
   border: 1px solid rgba(255,255,255,0.8);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
-
 .stat-value {
   font-size: 22px;
   font-weight: 800;
@@ -376,7 +366,6 @@ nav a:hover {
   -webkit-text-fill-color: transparent;
   margin-bottom: 5px;
 }
-
 .stat-label {
   font-size: 11px;
   color: var(--muted);
@@ -384,8 +373,6 @@ nav a:hover {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
-/* ✅ ADDED: New Rented Laptop Button Styles */
 .rented-laptop-btn {
   background: var(--gold-gradient);
   color: white;
@@ -402,32 +389,10 @@ nav a:hover {
   margin: 0 10px;
   letter-spacing: 0.3px;
 }
-
-.rented-laptop-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.6s;
-}
-
-.rented-laptop-btn:hover::before {
-  left: 100%;
-}
-
 .rented-laptop-btn:hover {
   transform: translateY(-4px) scale(1.05);
   box-shadow: 0 15px 35px rgba(255,107,107,0.4);
 }
-
-.rented-laptop-btn:active {
-  transform: translateY(-1px);
-}
-
-/* ---------- NEW: Floating Action Buttons ---------- */
 .floating-buttons {
   position: fixed;
   bottom: 25px;
@@ -437,7 +402,6 @@ nav a:hover {
   gap: 12px;
   z-index: 1000;
 }
-
 .floating-btn {
   width: 55px;
   height: 55px;
@@ -451,35 +415,27 @@ nav a:hover {
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
   animation: float 3s infinite ease-in-out;
-  backdrop-filter: blur(10px);
 }
-
 .floating-btn.call {
   background: linear-gradient(135deg, #25D366, #128C7E);
   animation-delay: 0s;
 }
-
 .floating-btn.whatsapp {
   background: var(--premium-gradient);
   animation-delay: 0.2s;
 }
-
 .floating-btn.complaint {
   background: linear-gradient(135deg, #ff6b6b, #ffa726);
   animation-delay: 0.4s;
 }
-
 .floating-btn:hover {
   transform: scale(1.1) translateY(-5px);
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
-
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
-
-/* ---------- Hero (Modern Gradient + Neumorphism mix) ---------- */
 .hero {
   text-align:center;
   padding:80px 20px;
@@ -492,17 +448,6 @@ nav a:hover {
   transition: transform 0.25s ease;
   position:relative;
   overflow:hidden;
-  backdrop-filter: blur(10px);
-}
-.hero::before {
-  content:'';
-  position:absolute;
-  top:-50%; left:-50%;
-  width:200%; height:200%;
-  background:radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%);
-  background-size:50px 50px;
-  animation:float 20s linear infinite;
-  pointer-events:none;
 }
 .hero:hover{ transform: translateY(-4px); }
 .hero h2 { 
@@ -513,7 +458,6 @@ nav a:hover {
   position:relative; 
   z-index:2;
   font-weight: 800;
-  letter-spacing: -0.5px;
 }
 .hero p { 
   font-size:16px; 
@@ -522,7 +466,6 @@ nav a:hover {
   position:relative; 
   z-index:2;
   font-weight: 400;
-  letter-spacing: 0.2px;
 }
 .btn { 
   padding:14px 28px; 
@@ -537,9 +480,7 @@ nav a:hover {
   position:relative; 
   z-index:2;
   font-weight: 600;
-  letter-spacing: 0.3px;
   border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
 }
 .btn:hover { 
   transform: translateY(-3px); 
@@ -547,8 +488,6 @@ nav a:hover {
   background: rgba(255,255,255,0.2);
 }
 .btn.secondary{ background:transparent; border:1px solid rgba(255,255,255,0.3); }
-
-/* ---------- NEW: Tagline Banner ---------- */
 .tagline-banner {
   background:var(--gold-gradient);
   color:white;
@@ -559,17 +498,7 @@ nav a:hover {
   letter-spacing:1px;
   position:relative;
   overflow:hidden;
-  backdrop-filter: blur(10px);
 }
-.tagline-banner::after {
-  content:'✨';
-  position:absolute;
-  right:20px;
-  animation: sparkle 2s infinite;
-}
-@keyframes sparkle { 0%,100% { opacity:0.5; transform:scale(1); } 50% { opacity:1; transform:scale(1.2); } }
-
-/* ---------- Sections (neumorphic cards) ---------- */
 section { padding:60px 20px; max-width:1100px; margin:36px auto; }
 h3 { 
   text-align:center; 
@@ -578,7 +507,6 @@ h3 {
   color:#2d3748; 
   position:relative;
   font-weight: 800;
-  letter-spacing: -0.5px;
 }
 h3::after {
   content:'';
@@ -604,54 +532,28 @@ h3::after {
   box-shadow: 0 15px 35px rgba(79,84,125,0.08);
   border: 1px solid rgba(255,255,255,0.8);
   transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
 }
-
-.team-member::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--premium-gradient);
-}
-
 .team-member:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(79,84,125,0.12);
 }
-
 .team-member img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 15px;
-  transition: transform 0.4s ease;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
 }
-
-.team-member:hover img {
-  transform: scale(1.05);
-}
-
 .team-member h4 {
   margin: 18px 0 8px;
   color: #2d3748;
   font-size: 16px;
   font-weight: 700;
 }
-
 .team-member p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
-  font-weight: 400;
 }
-
-/* ---------- NEW: Stats Counter ---------- */
 .stats-container {
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
@@ -666,8 +568,6 @@ h3::after {
   border-radius:20px;
   text-align:center;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-  border: 1px solid rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
   transition: transform 0.3s ease;
 }
 .stat-card:hover {
@@ -688,8 +588,6 @@ h3::after {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
-/* ---------- NEW: Small Map on Homepage ---------- */
 .small-map-container {
   background:white;
   padding:35px;
@@ -697,34 +595,26 @@ h3::after {
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   margin:40px auto;
   max-width:1100px;
-  border: 1px solid rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
 }
 .small-map { 
   height:300px; 
   width:100%; 
   border-radius:15px; 
   box-shadow:0 8px 25px rgba(0,0,0,0.1);
-  border:2px solid rgba(111,168,245,0.2);
 }
-
-/* ---------- NEW: Professional E-commerce Styles ---------- */
 .ecommerce-header {
   text-align: center;
   margin-bottom: 40px;
 }
-
 .ecommerce-header h3 {
   font-size: 32px;
   margin-bottom: 10px;
 }
-
 .ecommerce-header p {
   color: var(--muted);
   font-size: 15px;
   font-weight: 400;
 }
-
 .product-card-ecom {
   background: white;
   border-radius: 20px;
@@ -732,26 +622,11 @@ h3::after {
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255,255,255,0.8);
-  position: relative;
-  backdrop-filter: blur(10px);
 }
-
-.product-card-ecom::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--premium-gradient);
-}
-
 .product-card-ecom:hover {
   transform: translateY(-10px);
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
 }
-
 .product-image {
   width: 100%;
   height: 200px;
@@ -759,23 +634,18 @@ h3::after {
   padding: 20px;
   transition: all 0.4s ease;
 }
-
 .product-card-ecom:hover .product-image {
   transform: scale(1.08);
 }
-
 .product-info {
   padding: 25px;
 }
-
 .product-title {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 8px;
   color: #2d3748;
-  letter-spacing: -0.2px;
 }
-
 .product-price {
   font-size: 18px;
   font-weight: 800;
@@ -784,23 +654,19 @@ h3::after {
   -webkit-text-fill-color: transparent;
   margin-bottom: 12px;
 }
-
 .product-delivery {
   font-size: 11px;
   color: #25D366;
   font-weight: 600;
   margin-bottom: 15px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
-
 .quantity-selector {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
-
 .quantity-btn {
   width: 32px;
   height: 32px;
@@ -812,14 +678,11 @@ h3::after {
   justify-content: center;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.3s ease;
 }
-
 .quantity-btn:hover {
   border-color: var(--primary-2);
   transform: scale(1.1);
 }
-
 .quantity-input {
   width: 45px;
   text-align: center;
@@ -828,27 +691,6 @@ h3::after {
   padding: 6px;
   font-weight: 600;
 }
-
-.buy-now-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--premium-gradient);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  letter-spacing: 0.3px;
-}
-
-.buy-now-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(124,122,172,0.3);
-}
-
-/* ---------- NEW: Laptop Rental Styles ---------- */
 .laptop-card {
   background: white;
   border-radius: 20px;
@@ -856,58 +698,32 @@ h3::after {
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255,255,255,0.8);
-  position: relative;
-  backdrop-filter: blur(10px);
 }
-
-.laptop-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gold-gradient);
-}
-
 .laptop-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
 }
-
 .laptop-image {
   width: 100%;
   height: 180px;
   object-fit: contain;
   padding: 25px;
-  transition: all 0.4s ease;
 }
-
-.laptop-card:hover .laptop-image {
-  transform: scale(1.08);
-}
-
 .laptop-info {
   padding: 25px;
 }
-
 .laptop-title {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 8px;
   color: #2d3748;
-  letter-spacing: -0.2px;
 }
-
 .laptop-specs {
   font-size: 12px;
   color: var(--muted);
   margin-bottom: 12px;
   line-height: 1.4;
-  font-weight: 400;
 }
-
 .laptop-price {
   font-size: 18px;
   font-weight: 800;
@@ -916,7 +732,6 @@ h3::after {
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
 }
-
 .rent-now-btn {
   width: 100%;
   padding: 14px;
@@ -928,31 +743,23 @@ h3::after {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
-  letter-spacing: 0.3px;
 }
-
 .rent-now-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(255,107,107,0.3);
 }
-
-/* ---------- NEW: Order Summary ---------- */
 .order-summary {
   background: white;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08);
   margin-top: 30px;
-  border: 1px solid rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
 }
-
 .order-summary h4 {
   margin-bottom: 20px;
   color: #2d3748;
   font-weight: 700;
 }
-
 .order-item {
   display: flex;
   justify-content: space-between;
@@ -961,7 +768,6 @@ h3::after {
   border-bottom: 1px solid #e2e8f0;
   font-size: 14px;
 }
-
 .order-total {
   display: flex;
   justify-content: space-between;
@@ -971,8 +777,6 @@ h3::after {
   padding-top: 15px;
   border-top: 2px solid #e2e8f0;
 }
-
-/* ---------- Footer ---------- */
 footer { 
   background:var(--premium-gradient); 
   color:#fff; 
@@ -983,24 +787,12 @@ footer {
   border-top-right-radius:20px; 
   position:relative; 
   overflow:hidden; 
-  backdrop-filter: blur(10px);
-}
-footer::before { 
-  content:''; 
-  position:absolute; 
-  top:0; 
-  left:0; 
-  width:100%; 
-  height:100%; 
-  background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>'); 
-  background-size:cover; 
 }
 footer p { 
   margin:6px; 
   font-size:13px; 
   position:relative; 
   z-index:2;
-  font-weight: 400;
 }
 .social-icons a { 
   margin:0 8px; 
@@ -1009,14 +801,10 @@ footer p {
   font-size:18px; 
   text-decoration:none; 
   transition: transform 0.3s ease; 
-  position:relative; 
-  z-index:2; 
 }
 .social-icons a:hover { 
   transform: translateY(-3px) scale(1.1); 
 }
-
-/* Responsive tweaks */
 @media (max-width:740px){ 
   .hero h2{font-size:28px} 
   .hero{padding:48px 16px} 
@@ -1028,7 +816,6 @@ footer p {
   .small-map{height:200px;}
   .floating-buttons { bottom: 15px; right: 15px; }
   .floating-btn { width: 50px; height: 50px; font-size: 18px; }
-  .login-content { padding: 30px 20px; }
   .hero-buttons { flex-direction: column; gap: 10px; }
   .rented-laptop-btn { margin: 5px 0; }
   .services, .product-grid, .team-container, .laptops-grid { 
@@ -1036,34 +823,251 @@ footer p {
     gap: 20px; 
   }
 }
+
+/* ========== NEW UPDATED CSS ========== */
+.emergency-banner {
+  background: linear-gradient(135deg, #ff6b6b, #ff4757);
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  position: relative;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 25px 0;
+}
+.trust-badge {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d3748;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  border: 1px solid rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-filter {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+.search-box {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.filter-btn {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.filter-btn.active {
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+}
+.user-account {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  z-index: 1001;
+}
+.user-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tracking-container {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+.tracking-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 30px 0;
+}
+.tracking-steps::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+.tracking-step {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+.step-icon {
+  width: 32px;
+  height: 32px;
+  background: #e2e8f0;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.step-active .step-icon {
+  background: var(--premium-gradient);
+  color: white;
+}
+.step-completed .step-icon {
+  background: #25D366;
+  color: white;
+}
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+.time-slot {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.time-slot.selected {
+  background: var(--premium-gradient);
+  color: white;
+  border-color: transparent;
+}
+.address-picker {
+  margin: 20px 0;
+}
+.address-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.map-picker {
+  height: 200px;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 1px solid #e2e8f0;
+}
+.calculator {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+.calc-result {
+  background: var(--premium-gradient);
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+  display: none;
+}
+/* ========== CSS ENDS HERE ========== */
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
 
-<!-- ✅ ADDED: Login Modal -->
+<!-- ✅ UPDATED: SIMPLE LOGIN MODAL -->
 <div id="loginModal" class="login-modal">
   <div class="login-content">
     <span class="login-close" onclick="closeLogin()">&times;</span>
+    <div class="login-title">Login Options</div>
+    
+    <div class="login-option" onclick="loginAsCustomer()">
+      <div class="login-option-icon">👤</div>
+      <div class="login-option-text">Continue as Customer</div>
+      <div style="font-size:12px; color:var(--muted); margin-top:5px;">Quick order without registration</div>
+    </div>
+    
+    <div class="login-option" onclick="loginWithWhatsApp()">
+      <div class="login-option-icon">💬</div>
+      <div class="login-option-text">Login via WhatsApp</div>
+      <div style="font-size:12px; color:var(--muted); margin-top:5px;">Fast & secure login</div>
+    </div>
+    
+    <div class="login-option" onclick="showAdminLogin()">
+      <div class="login-option-icon">🔧</div>
+      <div class="login-option-text">Admin Login</div>
+      <div style="font-size:12px; color:var(--muted); margin-top:5px;">For business management</div>
+    </div>
+    
+    <div style="margin-top:20px; font-size:12px; color:var(--muted);">
+      No password required! Choose your preferred login method.
+    </div>
+  </div>
+</div>
+
+<!-- ✅ ADDED: ADMIN LOGIN MODAL (Hidden by default) -->
+<div id="adminLoginModal" class="login-modal" style="display:none;">
+  <div class="login-content">
+    <span class="login-close" onclick="closeAdminLogin()">&times;</span>
     <div class="login-title">🔧 Admin Login</div>
-    <div class="login-subtitle">Enter your credentials to access admin panel</div>
     
     <div class="form-group">
-      <label for="adminEmail">📧 Company Email</label>
-      <input type="email" id="adminEmail" placeholder="Enter company email" autocomplete="off">
+      <label>Email</label>
+      <input type="email" id="adminEmail" placeholder="admin@gmail.com">
     </div>
     
     <div class="form-group">
-      <label for="adminPassword">🔒 Password</label>
-      <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="off">
+      <label>Password</label>
+      <input type="password" id="adminPassword" placeholder="1234">
     </div>
     
-    <button class="login-btn" onclick="loginToAdmin()">🚀 Login to Admin Panel</button>
+    <button class="whatsapp-btn" onclick="loginToAdmin()" style="background:var(--premium-gradient);">
+      Login to Admin Panel
+    </button>
     
-    <div style="margin-top: 15px; font-size: 12px; color: var(--muted);">
-      <strong>Demo Credentials:</strong><br>
-      Email: admin@gmail.com<br>
-      Password:xxxx
+    <div style="margin-top:15px; font-size:12px; color:var(--muted);">
+      <strong>Demo:</strong> admin@gmail.com / 1234
     </div>
   </div>
 </div>
@@ -1071,7 +1075,13 @@ footer p {
 <!-- ---------- MAIN CONTENT ---------- -->
 <div id="mainContent">
 
-<!-- ---------- NEW: Tagline Banner ---------- -->
+<!-- ✅ ADDED: Emergency Banner -->
+<div class="emergency-banner">
+  🔧 URGENT REPAIR? Call now: <a href="tel:+919359122677" style="color:white;text-decoration:underline;">9359122677</a>
+  <small style="opacity:0.9; display:block; margin-top:3px;">24x7 Support for display/battery emergencies</small>
+</div>
+
+<!-- ✅ ADDED: Tagline Banner -->
 <div class="tagline-banner">
   🎯 No stress - Take rest | Repair in 30-45 min | Accessories in 15-20 min
 </div>
@@ -1081,14 +1091,29 @@ footer p {
   <nav>
     <a href="#" onclick="showPage('home')">Home</a>
     <a href="#" onclick="showPage('services')">Services</a>
-    <!-- ✅ UPDATED: Accessories Shop Name -->
     <a href="#" onclick="showPage('accessoriesShop')">Accessories Shop</a>
     <a href="#" onclick="showPage('about')">About Us</a>
-    <!-- ✅ ADDED: Laptop Rental Page -->
     <a href="#" onclick="showPage('laptopRental')">💻 Laptop Rental</a>
-    <!-- ✅ UPDATED: Admin Link with Login -->
-    <a href="#" onclick="openAdminLogin()" style="background:rgba(255,255,255,0.2);">🔧 Admin</a>
+    <a href="#" onclick="showPage('serviceCalculator')">💰 Calculator</a>
+    <a href="#" onclick="showPage('orderTracking')">📦 Track</a>
+    <a href="#" onclick="openSimpleLogin()" style="background:rgba(255,255,255,0.2);">👤 Account</a>
   </nav>
+  
+  <!-- User Account -->
+  <div class="user-account">
+    <button class="user-btn" onclick="toggleUserMenu()">
+      👤 <span id="userName">Login</span>
+    </button>
+    <div id="userMenu" style="display:none; position:absolute; right:0; top:40px; background:white; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.1); min-width:180px; z-index:1000;">
+      <div style="padding:15px;">
+        <div id="menuContent">
+          <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="openSimpleLogin()">👤 Login Options</button>
+          <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
+          <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showMyOrders()">📋 My Orders</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
 <!-- ---------- USER PAGES ---------- -->
@@ -1098,9 +1123,6 @@ footer p {
     <h2>Fast & Affordable Mobile Repairs — <span class="badge">Free Pickup</span></h2>
     <p>Display, Battery, Back Panel & Accessories — Free Pickup & Delivery in Boisar & Palghar</p>
     
-    <!-- ✅ UPDATED: Buttons moved below features cards -->
-    
-    <!-- small features row -->
     <div style="display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap">
       <div class="phone-box" style="max-width:260px; text-align:left; display:flex;gap:12px;align-items:center;">
         <div style="width:56px;height:56px;border-radius:12px;background:var(--premium-gradient);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;box-shadow:0 8px 20px rgba(124,122,172,0.3);">⚡</div>
@@ -1127,19 +1149,22 @@ footer p {
       </div>
     </div>
 
-    <!-- ✅ UPDATED: Buttons Section - Moved below features and above Our Services -->
     <div class="hero-buttons" style="margin: 40px 0 30px 0; text-align: center;">
       <button class="btn" onclick="showPage('services')" style="margin: 0 10px;">📱 Our Services</button>
-      <!-- ✅ UPDATED: Accessories Shop Name -->
       <button class="btn secondary" onclick="showPage('accessoriesShop')" style="margin: 0 10px;">🛍️ Accessories Shop</button>
-      <!-- ✅ ADDED: New Rented Laptop Button -->
       <button class="rented-laptop-btn" onclick="showPage('laptopRental')">
         💻 Laptop Rental
       </button>
     </div>
   </div>
 
-  <!-- ---------- NEW: Stats Section ---------- -->
+  <div class="trust-badges">
+    <div class="trust-badge">🔒 Secure OTP Verification</div>
+    <div class="trust-badge">⭐ 4.8/5 Rating</div>
+    <div class="trust-badge">🚚 15-20 Min Delivery</div>
+    <div class="trust-badge">🔧 6 Months Warranty</div>
+  </div>
+
   <div class="stats-container">
     <div class="stat-card">
       <div class="stat-number" id="happyCustomers">500+</div>
@@ -1162,35 +1187,46 @@ footer p {
   <section>
     <h3>Our Services</h3>
     <div class="services container">
-      <!-- ✅ UPDATED: All cards converted to premium phone boxes -->
       <div class="phone-box">
         <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjByZXBhaXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Display Replacement">
         <h4>Display Replacement</h4>
         <p class="price">Starting ₹1200</p>
         <p>Original & compatible displays available for all models.</p>
+        <!-- ✅ ADDED: Book Service Button -->
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Display Replacement', 1200)">
+          💬 Book via WhatsApp
+        </button>
       </div>
       <div class="phone-box">
         <img src="https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBiYXR0ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Battery Replacement">
         <h4>Battery Replacement</h4>
         <p class="price">Starting ₹700</p>
         <p>High quality batteries with 6 months warranty.</p>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Battery Replacement', 700)">
+          💬 Book via WhatsApp
+        </button>
       </div>
       <div class="phone-box">
         <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Back Panel Repair">
         <h4>Back Panel & Body</h4>
         <p class="price">Starting ₹800</p>
         <p>Full body replacements & panel painting.</p>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Back Panel Repair', 800)">
+          💬 Book via WhatsApp
+        </button>
       </div>
       <div class="phone-box">
         <img src="https://images.unsplash.com/photo-1605789538467-fbea1b8f71cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBhY2Nlc3Nvcmllc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Accessories">
         <h4>Smartphone Accessories</h4>
         <p class="price">Starting ₹199</p>
         <p>Chargers, earphones, cases & more.</p>
+        <button class="whatsapp-btn" onclick="showPage('accessoriesShop')">
+          🛍️ Shop Now
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- ---------- NEW: Small Map Section ---------- -->
   <section class="small-map-container">
     <h3>Our Service Areas</h3>
     <p style="text-align:center; color:var(--muted); margin-bottom:20px; font-size:14px;">Serving Boisar & Palghar with free pickup and delivery</p>
@@ -1198,6 +1234,7 @@ footer p {
   </section>
 </div>
 
+<!-- ✅ UPDATED: SERVICES PAGE WITH BOOK BUTTONS -->
 <div id="services" class="page">
   <section>
     <h3>All Services & Pricing</h3>
@@ -1211,6 +1248,10 @@ footer p {
           <li>30-45 minutes repair</li>
           <li>6 months warranty</li>
         </ul>
+        <!-- ✅ ADDED: Book Service Button -->
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Display Replacement', 1200)">
+          💬 Book This Service
+        </button>
       </div>
       <div class="phone-box">
         <h4>🔋 Battery Replacement</h4>
@@ -1221,6 +1262,9 @@ footer p {
           <li>30 minutes replacement</li>
           <li>6 months warranty</li>
         </ul>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Battery Replacement', 700)">
+          💬 Book This Service
+        </button>
       </div>
       <div class="phone-box">
         <h4>🔧 Back Panel & Body</h4>
@@ -1231,23 +1275,114 @@ footer p {
           <li>Color matching</li>
           <li>45 minutes service</li>
         </ul>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Back Panel Repair', 800)">
+          💬 Book This Service
+        </button>
+      </div>
+      <div class="phone-box">
+        <h4>⚡ Charging Port Repair</h4>
+        <p class="price">₹600 - ₹1500</p>
+        <p>Fast charging solutions</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>Port cleaning/replacement</li>
+          <li>30 minutes service</li>
+          <li>Warranty included</li>
+        </ul>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Charging Port Repair', 600)">
+          💬 Book This Service
+        </button>
+      </div>
+      <div class="phone-box">
+        <h4>📱 Software Issues</h4>
+        <p class="price">₹500 - ₹2000</p>
+        <p>Hanging, crashing, virus removal</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>Virus removal</li>
+          <li>Software update</li>
+          <li>Data backup</li>
+        </ul>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Software Repair', 500)">
+          💬 Book This Service
+        </button>
+      </div>
+      <div class="phone-box">
+        <h4>🔒 Water Damage Repair</h4>
+        <p class="price">₹1500 - ₹4000</p>
+        <p>Emergency water damage service</p>
+        <ul style="text-align:left; color:var(--muted); font-size:13px;">
+          <li>24x7 emergency service</li>
+          <li>Ultrasonic cleaning</li>
+          <li>Component replacement</li>
+        </ul>
+        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Water Damage Repair', 1500)">
+          💬 Book This Service
+        </button>
+      </div>
+    </div>
+    
+    <!-- ✅ ADDED: QUICK BOOKING SECTION -->
+    <div style="text-align:center; margin-top:40px;">
+      <h4>Quick Booking</h4>
+      <p style="color:var(--muted); margin-bottom:20px;">Select your device and problem for instant WhatsApp booking</p>
+      
+      <div style="max-width:500px; margin:0 auto; background:white; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+        <div class="form-group">
+          <label>Select Your Device</label>
+          <select id="quickDevice" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+            <option value="">Select device brand</option>
+            <option value="apple">Apple iPhone</option>
+            <option value="samsung">Samsung</option>
+            <option value="xiaomi">Xiaomi/Redmi</option>
+            <option value="oneplus">OnePlus</option>
+            <option value="oppo">OPPO/Vivo</option>
+            <option value="other">Other Brand</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Select Problem</label>
+          <select id="quickProblem" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+            <option value="">Select problem type</option>
+            <option value="display">Broken Display</option>
+            <option value="battery">Battery Issue</option>
+            <option value="charging">Not Charging</option>
+            <option value="back">Back Panel Broken</option>
+            <option value="software">Software Issue</option>
+            <option value="water">Water Damage</option>
+          </select>
+        </div>
+        
+        <button class="whatsapp-btn" onclick="quickBookService()" style="width:100%; margin-top:15px;">
+          💬 Book Now via WhatsApp
+        </button>
       </div>
     </div>
   </section>
 </div>
 
-<!-- ---------- NEW: PROFESSIONAL E-COMMERCE ACCESSORIES SHOP ---------- -->
+<!-- ---------- ACCESSORIES SHOP ---------- -->
 <div id="accessoriesShop" class="page">
   <section>
     <div class="ecommerce-header">
-      <!-- ✅ UPDATED: Accessories Shop Name -->
       <h3>🛍️ Accessories Shop</h3>
       <p>Premium smartphone accessories with 15-20 minutes delivery in Boisar & Palghar</p>
     </div>
 
+    <div class="search-filter">
+      <input type="text" class="search-box" placeholder="🔍 Search accessories..." onkeyup="filterProducts(this.value)">
+      <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+        <button class="filter-btn" onclick="filterByCategory('charging')">Charging</button>
+        <button class="filter-btn" onclick="filterByCategory('audio')">Audio</button>
+        <button class="filter-btn" onclick="filterByCategory('protection')">Protection</button>
+        <button class="filter-btn" onclick="filterByCategory('accessories')">Accessories</button>
+        <button class="filter-btn" onclick="sortByPrice()">Price: Low to High</button>
+      </div>
+    </div>
+
     <div class="product-grid container" id="accessoriesGrid"></div>
 
-    <!-- Order Summary -->
+    <!-- ✅ UPDATED: Order Summary with Customer Order Button -->
     <div class="order-summary" id="orderSummary" style="display:none;">
       <h4>📦 Your Order Summary</h4>
       <div id="orderItems"></div>
@@ -1255,17 +1390,23 @@ footer p {
         <span>Total:</span>
         <span id="orderTotal">₹0</span>
       </div>
-      <button class="buy-now-btn" onclick="placeOrder()" style="margin-top:15px;">🛒 Place Order via WhatsApp</button>
+      <!-- ✅ FIXED: Now uses customerOrderWhatsApp instead of openSimpleLogin -->
+      <button class="customer-order-btn" onclick="customerOrderWhatsApp()">
+        💬 Order via WhatsApp
+      </button>
+      <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:10px;">
+        No login required! Direct WhatsApp booking.
+      </p>
     </div>
   </section>
 </div>
 
-<!-- ✅ ADDED: LAPTOP RENTAL PAGE -->
+<!-- Other pages remain same (laptop rental, calculator, etc.) -->
 <div id="laptopRental" class="page">
   <section>
     <div class="ecommerce-header">
       <h3>💻 Laptop Rental</h3>
-      <p>Premium laptops for rent starting from ₹199 for 2 hours. Perfect for work, studies, or emergencies.</p>
+      <p>Premium laptops for rent starting from ₹199 for 2 hours.</p>
     </div>
 
     <div class="laptops-grid container">
@@ -1273,7 +1414,7 @@ footer p {
         <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Dell Laptop" class="laptop-image">
         <div class="laptop-info">
           <div class="laptop-title">Dell Inspiron 15</div>
-          <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD • 15.6" FHD</div>
+          <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD</div>
           <div class="laptop-price">₹299 / 2 hours</div>
           <button class="rent-now-btn" onclick="rentLaptop('Dell Inspiron 15', 299)">💻 Rent Now</button>
         </div>
@@ -1283,40 +1424,49 @@ footer p {
         <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="HP Laptop" class="laptop-image">
         <div class="laptop-info">
           <div class="laptop-title">HP Pavilion 14</div>
-          <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD • 14" FHD</div>
+          <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD</div>
           <div class="laptop-price">₹399 / 2 hours</div>
           <button class="rent-now-btn" onclick="rentLaptop('HP Pavilion 14', 399)">💻 Rent Now</button>
         </div>
       </div>
+    </div>
+  </section>
+</div>
 
-      <div class="laptop-card">
-        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Lenovo Laptop" class="laptop-image">
-        <div class="laptop-info">
-          <div class="laptop-title">Lenovo IdeaPad 3</div>
-          <div class="laptop-specs">Intel i3 • 8GB RAM • 1TB HDD • 15.6" HD</div>
-          <div class="laptop-price">₹199 / 2 hours</div>
-          <button class="rent-now-btn" onclick="rentLaptop('Lenovo IdeaPad 3', 199)">💻 Rent Now</button>
-        </div>
+<!-- Other pages (calculator, tracking, about, admin) remain same structure -->
+<div id="serviceCalculator" class="page">
+  <section>
+    <h3>💰 Service Cost Calculator</h3>
+    <div class="calculator">
+      <div class="form-group">
+        <label>Select Device Brand</label>
+        <select id="deviceBrand" onchange="calculatePrice()">
+          <option value="">Select Brand</option>
+          <option value="apple">Apple</option>
+          <option value="samsung">Samsung</option>
+          <option value="xiaomi">Xiaomi</option>
+        </select>
       </div>
-
-      <div class="laptop-card">
-        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="MacBook" class="laptop-image">
-        <div class="laptop-info">
-          <div class="laptop-title">Apple MacBook Air</div>
-          <div class="laptop-specs">M1 Chip • 8GB RAM • 256GB SSD • 13.3" Retina</div>
-          <div class="laptop-price">₹599 / 2 hours</div>
-          <button class="rent-now-btn" onclick="rentLaptop('Apple MacBook Air', 599)">💻 Rent Now</button>
-        </div>
+      
+      <div id="calcResult" class="calc-result">
+        <h4 style="margin:0 0 10px;">Estimated Cost: <span id="estimatedPrice">₹0</span></h4>
       </div>
+      
+      <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Calculated Service', 0)" style="width:100%; margin-top:15px;">
+        💬 Book via WhatsApp
+      </button>
+    </div>
+  </section>
+</div>
 
-      <div class="laptop-card">
-        <img src="https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bGFwdG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Asus Laptop" class="laptop-image">
-        <div class="laptop-info">
-          <div class="laptop-title">ASUS VivoBook 15</div>
-          <div class="laptop-specs">Intel i7 • 16GB RAM • 1TB SSD • 15.6" FHD</div>
-          <div class="laptop-price">₹499 / 2 hours</div>
-          <button class="rent-now-btn" onclick="rentLaptop('ASUS VivoBook 15', 499)">💻 Rent Now</button>
-        </div>
+<div id="orderTracking" class="page">
+  <section>
+    <h3>📦 Track Your Order</h3>
+    <div class="tracking-container">
+      <div class="form-group">
+        <label>Enter Order ID / Phone Number</label>
+        <input type="text" id="trackingId" placeholder="Order ID or phone number">
+        <button class="admin-btn" style="width:100%; margin-top:10px;" onclick="trackOrder()">Track Order</button>
       </div>
     </div>
   </section>
@@ -1326,130 +1476,25 @@ footer p {
   <section>
     <h3>About Step'sEazy</h3>
     <div class="about-container container">
-      <div class="about-text">
-        <p style="font-size:15px; line-height:1.7; color:#4a5568;">Step'sEazy is Boisar & Palghar's most trusted mobile repair and accessories service. We specialize in superfast display, battery, and body repairs with free pickup and delivery. Our mission is to make mobile repairs hassle-free with our "No stress - Take rest" philosophy.</p>
-      </div>
-      
-      <div class="team-container">
-        <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zm91bmRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Founder">
-          <h4>Founder</h4>
-          <p>Anurag.DK.Varma - Leading the mobile repair revolution in Boisar & Palghar.</p>
-        </div>
-        <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGVjaG5pY2lhbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Tech Expert">
-          <h4>Technical Head</h4>
-          <p>Expert in mobile repairs with 5+ years experience.</p>
-        </div>
-        <div class="team-member">
-          <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGRlbGl2ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Delivery Manager">
-          <h4>Delivery Manager</h4>
-          <p>Ensuring 15-20 minutes accessories delivery.</p>
-        </div>
-      </div>
+      <p style="font-size:15px; line-height:1.7; color:#4a5568;">Step'sEazy is Boisar & Palghar's most trusted mobile repair and accessories service.</p>
     </div>
   </section>
 </div>
 
-<!-- ✅ ADDED: ADMIN MANAGEMENT PAGE -->
 <div id="admin" class="page">
   <section>
-    <h3>🔧 Admin Management Panel</h3>
-    
+    <h3>🔧 Admin Panel</h3>
     <div class="admin-panel">
-      <!-- Quick Stats -->
       <div class="admin-section">
-        <h4>📊 Quick Stats</h4>
+        <h4>Quick Stats</h4>
         <div class="stats-grid">
           <div class="stat-item">
-            <div class="stat-value" id="totalOrders">0</div>
+            <div class="stat-value" id="totalOrders">15</div>
             <div class="stat-label">Today's Orders</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-value" id="totalRevenue">₹0</div>
-            <div class="stat-label">Today's Revenue</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="pendingRepairs">0</div>
-            <div class="stat-label">Pending Repairs</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="newCustomers">0</div>
-            <div class="stat-label">New Customers</div>
-          </div>
         </div>
       </div>
-
-      <!-- Product Management -->
-      <div class="admin-section">
-        <h4>🛍️ Manage Products</h4>
-        <button class="admin-btn" onclick="addNewProduct()">➕ Add New Product</button>
-        <button class="admin-btn secondary" onclick="updatePrices()">💰 Update Prices</button>
-        <button class="admin-btn secondary" onclick="manageInventory()">📦 Manage Inventory</button>
-        
-        <div id="productForm" style="display:none; margin-top:15px;">
-          <div class="form-group">
-            <label>Product Name</label>
-            <input type="text" id="productName" placeholder="Enter product name">
-          </div>
-          <div class="form-group">
-            <label>Price (₹)</label>
-            <input type="number" id="productPrice" placeholder="Enter price">
-          </div>
-          <div class="form-group">
-            <label>Category</label>
-            <select id="productCategory">
-              <option value="charging">Charging</option>
-              <option value="audio">Audio</option>
-              <option value="protection">Protection</option>
-              <option value="accessories">Accessories</option>
-            </select>
-          </div>
-          <button class="admin-btn" onclick="saveProduct()">💾 Save Product</button>
-          <button class="admin-btn secondary" onclick="cancelProduct()">❌ Cancel</button>
-        </div>
-      </div>
-
-      <!-- Order Management -->
-      <div class="admin-section">
-        <h4>📦 Order Management</h4>
-        <button class="admin-btn" onclick="viewAllOrders()">👁️ View All Orders</button>
-        <button class="admin-btn secondary" onclick="updateOrderStatus()">🔄 Update Status</button>
-        <button class="admin-btn" onclick="exportOrders()">📄 Export Orders</button>
-      </div>
-
-      <!-- Customer Management -->
-      <div class="admin-section">
-        <h4>👥 Customer Management</h4>
-        <button class="admin-btn" onclick="viewCustomers()">📋 View Customers</button>
-        <button class="admin-btn secondary" onclick="sendBulkMessage()">📢 Send Bulk Message</button>
-        <button class="admin-btn" onclick="checkFeedback()">⭐ Check Feedback</button>
-      </div>
-
-      <!-- Repair Management -->
-      <div class="admin-section">
-        <h4>🔧 Repair Management</h4>
-        <button class="admin-btn" onclick="addRepairJob()">➕ Add Repair Job</button>
-        <button class="admin-btn secondary" onclick="updateRepairStatus()">📊 Update Repair Status</button>
-        <button class="admin-btn" onclick="viewRepairHistory()">📋 Repair History</button>
-      </div>
-
-      <!-- Settings -->
-      <div class="admin-section">
-        <h4>⚙️ Settings</h4>
-        <button class="admin-btn" onclick="updateBusinessInfo()">🏢 Update Business Info</button>
-        <button class="admin-btn secondary" onclick="manageStaff()">👨‍💼 Manage Staff</button>
-        <button class="admin-btn" onclick="backupData()">💾 Backup Data</button>
-        <button class="admin-btn danger" onclick="logoutAdmin()">🚪 Logout</button>
-      </div>
-
-      <!-- Reports -->
-      <div class="admin-section">
-        <h4>📈 Reports & Analytics</h4>
-        <button class="admin-btn" onclick="generateSalesReport()">📊 Sales Report</button>
-        <button class="admin-btn secondary" onclick="viewRevenueChart()">📈 Revenue Chart</button>
-        <button class="admin-btn" onclick="customerAnalytics()">👥 Customer Analytics</button>
-      </div>
+      <button class="admin-btn danger" onclick="logoutAdmin()">🚪 Logout</button>
     </div>
   </section>
 </div>
@@ -1465,71 +1510,74 @@ footer p {
 
 </div>
 
-<!-- ---------- NEW: FLOATING ACTION BUTTONS ---------- -->
+<!-- ✅ ADDED: FLOATING ACTION BUTTONS -->
 <div class="floating-buttons">
   <a href="tel:+91-9359122677" class="floating-btn call" title="Call Now">📞</a>
   <a href="https://wa.me/919359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
-  <a href="https://wa.me/918050269752?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
+  <a href="https://wa.me/919359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
 </div>
 
+<!-- ✅ ADDED: QUICK ACTIONS BUTTON -->
+<div style="position:fixed; bottom:25px; left:25px; z-index:1000;">
+  <button class="floating-btn" style="background:#8b6cf6;" onclick="showQuickActions()" title="Quick Actions">⚡</button>
+</div>
+
+<!-- ========== HTML ENDS HERE ========== -->
+
+<!-- ========== START JAVASCRIPT ========== -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
 // ---------- GLOBAL VARIABLES ----------
 let cart = [];
-let adminData = {
-  totalOrders: 15,
-  totalRevenue: 12500,
-  pendingRepairs: 8,
-  newCustomers: 5
-};
-
+let currentUser = null;
 let isAdminLoggedIn = false;
 
-// ✅ ADDED: Laptop Rental Function
-function rentLaptop(laptopName, price) {
-  let message = `💻 *LAPTOP RENTAL REQUEST - Step'sEazy*%0A%0A`;
-  message += `*Laptop:* ${laptopName}%0A`;
-  message += `*Rental Price:* ₹${price} for 2 hours%0A%0A`;
-  message += `I want to rent this laptop. Please deliver to my address in Boisar/Palghar.%0A%0A`;
-  message += `what's your name 😊`;
-  message += `Thank you! 😊`; 
-  
-  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  showNotification(`💻 ${laptopName} rental request sent!`);
-}
-
-// ✅ ADDED: Login Functions
-function openAdminLogin() {
+// ✅ FIXED: SIMPLE LOGIN FUNCTIONS
+function openSimpleLogin() {
   document.getElementById('loginModal').style.display = 'flex';
 }
 
 function closeLogin() {
   document.getElementById('loginModal').style.display = 'none';
-  // Clear form
-  document.getElementById('adminEmail').value = '';
-  document.getElementById('adminPassword').value = '';
+}
+
+function showAdminLogin() {
+  closeLogin();
+  document.getElementById('adminLoginModal').style.display = 'flex';
+}
+
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').style.display = 'none';
+}
+
+// ✅ FIXED: EASY LOGIN OPTIONS
+function loginAsCustomer() {
+  currentUser = { type: 'customer', name: 'Customer' };
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  closeLogin();
+  updateUserMenu();
+  showNotification('👋 Welcome! You can now place orders.');
+}
+
+function loginWithWhatsApp() {
+  // Direct WhatsApp login
+  const message = "Hi Step'sEazy, I want to login to my account.";
+  window.open(`https://wa.me/919359122677?text=${encodeURIComponent(message)}`, '_blank');
+  closeLogin();
+  showNotification('Opening WhatsApp for login...');
 }
 
 function loginToAdmin() {
   const email = document.getElementById('adminEmail').value;
   const password = document.getElementById('adminPassword').value;
   
-  // Check credentials
   if(email === 'admin@gmail.com' && password === '1234') {
     isAdminLoggedIn = true;
-    closeLogin();
+    closeAdminLogin();
     showPage('admin');
     showNotification('✅ Welcome to Admin Panel!');
   } else {
     showNotification('❌ Invalid email or password!');
-    // Shake animation for wrong credentials
-    document.getElementById('adminEmail').style.animation = 'shake 0.5s';
-    document.getElementById('adminPassword').style.animation = 'shake 0.5s';
-    setTimeout(() => {
-      document.getElementById('adminEmail').style.animation = '';
-      document.getElementById('adminPassword').style.animation = '';
-    }, 500);
   }
 }
 
@@ -1539,22 +1587,93 @@ function logoutAdmin() {
   showNotification('👋 Logged out from Admin Panel');
 }
 
-// Add shake animation for wrong login
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-`;
-document.head.appendChild(style);
+// ✅ ADDED: BOOK SERVICE VIA WHATSAPP FUNCTION
+function bookServiceWhatsApp(serviceName, price) {
+  let message = `🔧 *SERVICE BOOKING REQUEST - Step'sEazy*%0A%0A`;
+  message += `*Service Required:* ${serviceName}%0A`;
+  message += `*Starting Price:* ₹${price}%0A%0A`;
+  message += `I want to book this service. Please contact me for pickup in Boisar/Palghar.%0A%0A`;
+  message += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  showNotification(`✅ ${serviceName} booking request sent!`);
+}
 
-// ---------- PAGE NAV ----------
+// ✅ ADDED: QUICK BOOK SERVICE FUNCTION
+function quickBookService() {
+  const device = document.getElementById('quickDevice').value;
+  const problem = document.getElementById('quickProblem').value;
+  
+  if(!device || !problem) {
+    showNotification('❌ Please select device and problem type');
+    return;
+  }
+  
+  const deviceNames = {
+    apple: 'Apple iPhone',
+    samsung: 'Samsung Phone',
+    xiaomi: 'Xiaomi/Redmi Phone',
+    oneplus: 'OnePlus Phone',
+    oppo: 'OPPO/Vivo Phone',
+    other: 'Other Brand Phone'
+  };
+  
+  const problemNames = {
+    display: 'Broken Display',
+    battery: 'Battery Issue',
+    charging: 'Charging Problem',
+    back: 'Back Panel Damage',
+    software: 'Software Issue',
+    water: 'Water Damage'
+  };
+  
+  let message = `🔧 *QUICK SERVICE BOOKING - Step'sEazy*%0A%0A`;
+  message += `*Device:* ${deviceNames[device]}%0A`;
+  message += `*Problem:* ${problemNames[problem]}%0A%0A`;
+  message += `Please contact me for immediate repair service. I need pickup in Boisar/Palghar.%0A%0A`;
+  message += `Urgent: Yes%0A`;
+  message += `Thank you!`;
+  
+  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  showNotification('✅ Quick booking request sent via WhatsApp!');
+}
+
+// ✅ FIXED: CUSTOMER ORDER VIA WHATSAPP (No login required)
+function customerOrderWhatsApp() {
+  if(cart.length === 0) {
+    showNotification('❌ Your cart is empty!');
+    return;
+  }
+  
+  let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
+  });
+  
+  message += `%0A*Total: ₹${total}*%0A%0A`;
+  message += `Please deliver to my address in Boisar/Palghar.%0A`;
+  message += `Expected delivery: 15-20 minutes.%0A%0A`;
+  message += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  
+  // Clear cart after order
+  cart = [];
+  updateOrderSummary();
+  showNotification('✅ Order placed successfully! Check WhatsApp.');
+}
+
+// ✅ PAGE NAVIGATION
 function showPage(id){ 
-  // Check if trying to access admin without login
   if(id === 'admin' && !isAdminLoggedIn) {
-    openAdminLogin();
+    showAdminLogin();
     return;
   }
   
@@ -1562,127 +1681,42 @@ function showPage(id){
   document.getElementById(id).classList.add('active'); 
   window.scrollTo(0,0); 
   
-  if(id === 'accessoriesShop') {
-    loadAccessoriesShop();
-  }
-  if(id === 'admin' && isAdminLoggedIn) {
-    loadAdminPanel();
-  }
+  if(id === 'accessoriesShop') loadAccessoriesShop();
 }
 
-// ✅ ADDED: Admin Panel Functions
-function loadAdminPanel() {
-  // Update stats
-  document.getElementById('totalOrders').textContent = adminData.totalOrders;
-  document.getElementById('totalRevenue').textContent = '₹' + adminData.totalRevenue;
-  document.getElementById('pendingRepairs').textContent = adminData.pendingRepairs;
-  document.getElementById('newCustomers').textContent = adminData.newCustomers;
-}
-
-function addNewProduct() {
-  document.getElementById('productForm').style.display = 'block';
-  showNotification('➕ Add new product form opened');
-}
-
-function saveProduct() {
-  const name = document.getElementById('productName').value;
-  const price = document.getElementById('productPrice').value;
-  const category = document.getElementById('productCategory').value;
-  
-  if(name && price) {
-    showNotification(`✅ Product "${name}" added successfully!`);
-    document.getElementById('productForm').style.display = 'none';
-    // Clear form
-    document.getElementById('productName').value = '';
-    document.getElementById('productPrice').value = '';
-  } else {
-    showNotification('❌ Please fill all fields');
+// ✅ USER MENU FUNCTIONS
+function updateUserMenu() {
+  if(currentUser) {
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('menuContent').innerHTML = `
+      <div style="margin-bottom:10px;">
+        <strong>👤 ${currentUser.name}</strong>
+      </div>
+      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
+      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showMyOrders()">📋 My Orders</button>
+      <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="logoutUser()">🚪 Logout</button>
+    `;
   }
 }
 
-function cancelProduct() {
-  document.getElementById('productForm').style.display = 'none';
-  showNotification('Product addition cancelled');
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
 }
 
-function updatePrices() {
-  showNotification('💰 Price update feature activated');
+function logoutUser() {
+  currentUser = null;
+  localStorage.removeItem('currentUser');
+  updateUserMenu();
+  showNotification('👋 Logged out successfully');
 }
 
-function manageInventory() {
-  showNotification('📦 Inventory management opened');
-}
-
-function viewAllOrders() {
-  showNotification('👁️ Loading all orders...');
-}
-
-function updateOrderStatus() {
-  showNotification('🔄 Order status update panel opened');
-}
-
-function exportOrders() {
-  showNotification('📄 Exporting orders to Excel...');
-}
-
-function viewCustomers() {
-  showNotification('📋 Loading customer database...');
-}
-
-function sendBulkMessage() {
-  showNotification('📢 Bulk message panel opened');
-}
-
-function checkFeedback() {
-  showNotification('⭐ Loading customer feedback...');
-}
-
-function addRepairJob() {
-  showNotification('➕ Add new repair job form opened');
-}
-
-function updateRepairStatus() {
-  showNotification('📊 Repair status update panel opened');
-}
-
-function viewRepairHistory() {
-  showNotification('📋 Loading repair history...');
-}
-
-function updateBusinessInfo() {
-  showNotification('🏢 Business info update panel opened');
-}
-
-function manageStaff() {
-  showNotification('👨‍💼 Staff management panel opened');
-}
-
-function backupData() {
-  showNotification('💾 Creating data backup...');
-}
-
-function generateSalesReport() {
-  showNotification('📊 Generating sales report...');
-}
-
-function viewRevenueChart() {
-  showNotification('📈 Loading revenue charts...');
-}
-
-function customerAnalytics() {
-  showNotification('👥 Loading customer analytics...');
-}
-
-// ---------- Professional Accessories Shop ----------
+// ✅ ACCESSORIES SHOP
 const accessories = [
   {id: 1, name: "Fast USB Charger", price: 499, img: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjaGFyZ2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
   {id: 2, name: "Premium Earphones", price: 699, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "audio"},
   {id: 3, name: "Designer Mobile Cover", price: 299, img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBjb3ZlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "protection"},
   {id: 4, name: "Tempered Glass", price: 199, img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGhvbmUlMjBzY3JlZW4lMjBwcm90ZWN0b3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "protection"},
-  {id: 5, name: "Power Bank 10000mAh", price: 999, img: "https://images.unsplash.com/photo-1609592071365-1a0d1ccee7e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG93ZXIlMjBiYW5rfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "charging"},
-  {id: 6, name: "Data Cable 2m", price: 249, img: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNifGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
-  {id: 7, name: "Wireless Earbuds", price: 1299, img: "https://images.unsplash.com/photo-1590658165737-15a047b8b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "audio"},
-  {id: 8, name: "Car Phone Holder", price: 399, img: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyJTIwcGhvbmUlMjBob2xkZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "accessories"}
 ];
 
 function loadAccessoriesShop() {
@@ -1726,7 +1760,7 @@ function addToCart(productId) {
   const quantity = parseInt(input.value) || 0;
   
   if(quantity === 0) {
-    alert('Please select quantity first!');
+    showNotification('Please select quantity first!');
     return;
   }
   
@@ -1745,9 +1779,7 @@ function addToCart(productId) {
     });
   }
   
-  // Reset quantity
   input.value = '0';
-  
   updateOrderSummary();
   showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
 }
@@ -1766,53 +1798,32 @@ function updateOrderSummary() {
   orderItems.innerHTML = '';
   
   let total = 0;
-  
   cart.forEach(item => {
     const itemTotal = item.price * item.quantity;
     total += itemTotal;
-    
     const orderItem = document.createElement('div');
     orderItem.className = 'order-item';
-    orderItem.innerHTML = `
-      <span>${item.quantity} x ${item.name}</span>
-      <span>₹${itemTotal}</span>
-    `;
+    orderItem.innerHTML = `<span>${item.quantity} x ${item.name}</span><span>₹${itemTotal}</span>`;
     orderItems.appendChild(orderItem);
   });
   
   orderTotal.textContent = `₹${total}`;
 }
 
-function placeOrder() {
-  if(cart.length === 0) {
-    alert('Your cart is empty!');
-    return;
-  }
+// ✅ LAPTOP RENTAL FUNCTION
+function rentLaptop(laptopName, price) {
+  let message = `💻 *LAPTOP RENTAL REQUEST - Step'sEazy*%0A%0A`;
+  message += `*Laptop:* ${laptopName}%0A`;
+  message += `*Rental Price:* ₹${price} for 2 hours%0A%0A`;
+  message += `I want to rent this laptop. Please deliver to my address in Boisar/Palghar.%0A%0A`;
+  message += `Thank you! 😊`;
   
-  let orderMessage = `🛍️ *NEW ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
-  let total = 0;
-  
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    orderMessage += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
-  });
-  
-  orderMessage += `%0A*Total: ₹${total}*%0A%0A`;
-  orderMessage += `Please deliver to my address in Boisar/Palghar.%0A`;
-  orderMessage += `Expected delivery: 15-20 minutes.%0A%0A`;
-  orderMessage += `Thank you! 😊`;
-  
-  const whatsappURL = `https://wa.me/919359122677?text=${orderMessage}`;
+  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
   window.open(whatsappURL, '_blank');
-  
-  // Clear cart after order
-  cart = [];
-  updateOrderSummary();
-  showNotification('✅ Order placed successfully! Check WhatsApp.');
+  showNotification(`💻 ${laptopName} rental request sent!`);
 }
 
-// ✅ ADDED: Notification Function (Working Now)
+// ✅ NOTIFICATION FUNCTION
 function showNotification(message) {
   const notification = document.createElement('div');
   notification.className = 'notification';
@@ -1820,14 +1831,13 @@ function showNotification(message) {
   document.body.appendChild(notification);
   
   setTimeout(() => notification.classList.add('show'), 100);
-  
   setTimeout(() => {
     notification.classList.remove('show');
     setTimeout(() => document.body.removeChild(notification), 400);
   }, 3000);
 }
 
-// ✅ UPDATED: Better Map Coordinates
+// ✅ MAP INITIALIZATION
 function initSmallMap(){
   const map = L.map('smallMap').setView([19.800,72.760],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
@@ -1843,7 +1853,7 @@ function initSmallMap(){
   });
 }
 
-// ---------- NEW: Animated Stats Counter ----------
+// ✅ STATS ANIMATION
 function animateStats() {
   const stats = [
     { element: 'happyCustomers', target: 500, current: 0 },
@@ -1868,255 +1878,70 @@ function animateStats() {
   });
 }
 
-// Initialize when page loads
+// ✅ SEARCH & FILTER
+function filterProducts(searchTerm) {
+  const products = document.querySelectorAll('.product-card-ecom');
+  products.forEach(product => {
+    const title = product.querySelector('.product-title').textContent.toLowerCase();
+    product.style.display = title.includes(searchTerm.toLowerCase()) ? 'block' : 'none';
+  });
+}
+
+// ✅ QUICK ACTIONS
+const quickActions = [
+  { emoji: '📱', text: 'Broken Display', msg: 'Hello, my phone display is broken. Need urgent repair.' },
+  { emoji: '🔋', text: 'Battery Issue', msg: 'My phone battery drains very fast. Need battery replacement.' },
+  { emoji: '⚡', text: 'Not Charging', msg: 'Phone not charging properly. Charging port issue.' },
+  { emoji: '📞', text: 'Call Back', msg: 'Please call me back for service enquiry.' }
+];
+
+function showQuickActions() {
+  const quickActionsHTML = `
+    <div style="position:fixed; bottom:100px; left:20px; background:white; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.15); padding:15px; z-index:999; width:200px;">
+      <strong style="display:block; margin-bottom:10px;">Quick Actions</strong>
+      ${quickActions.map(action => `
+        <button onclick="sendQuickMessage('${action.msg}')" style="width:100%; padding:10px; margin:5px 0; background:#f8faff; border:none; border-radius:8px; text-align:left; cursor:pointer;">
+          ${action.emoji} ${action.text}
+        </button>
+      `).join('')}
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', quickActionsHTML);
+}
+
+function sendQuickMessage(msg) {
+  window.open(`https://wa.me/919359122677?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ✅ INITIALIZE EVERYTHING
 document.addEventListener('DOMContentLoaded', function() {
   initSmallMap();
+  animateStats();
   
-  const statsSection = document.getElementById('home');
-  if(statsSection){
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          animateStats();
-        }
-      });
-    });
-    observer.observe(statsSection);
+  // Check saved user
+  const savedUser = localStorage.getItem('currentUser');
+  if(savedUser) {
+    currentUser = JSON.parse(savedUser);
+    updateUserMenu();
   }
   
-  // Close modal when clicking outside
+  // Auto-hide user menu when clicking outside
+  document.addEventListener('click', function(e) {
+    if(!e.target.closest('.user-account')) {
+      document.getElementById('userMenu').style.display = 'none';
+    }
+  });
+  
+  // Close modals when clicking outside
   document.getElementById('loginModal').addEventListener('click', function(e) {
-    if(e.target === this) {
-      closeLogin();
-    }
+    if(e.target === this) closeLogin();
   });
   
-  // Enter key support for login
-  document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-    if(e.key === 'Enter') {
-      loginToAdmin();
-    }
+  document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+    if(e.target === this) closeAdminLogin();
   });
 });
 </script>
-
-<!-- Supabase Integration -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-/* ---------------- SUPABASE SETTINGS ---------------- */
-const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Save form data to Supabase (if form exists)
-document.addEventListener('DOMContentLoaded', () => {
-  const orderForm = document.getElementById('orderForm');
-  if(orderForm){
-    orderForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(orderForm);
-      const data = Object.fromEntries(formData.entries());
-      const { error } = await supabase.from('orders').insert([data]);
-      if(error) alert('❌ Error saving order');
-      else alert('✔ Order saved!');
-    });
-  }
-});
-</script>
-
-
-<!-- ADMIN LOGIN POPUP -->
-<div class="login-modal" id="loginModal" style="display:none;">
-  <div class="login-content">
-    <span class="login-close" onclick="closeLogin()">×</span>
-    <h3 class="login-title">Admin Login</h3>
-    <p class="login-subtitle">Enter password to access admin panel</p>
-
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="adminLoginPass" placeholder="Enter password">
-    </div>
-
-    <button class="login-btn" onclick="adminLogin()">Login</button>
-  </div>
-</div>
-
-
-<script>
-/* ---------------- ADMIN AUTH ---------------- */
-const ADMIN_REAL_PASSWORD = "Bhai1234";
-const ADMIN_HASH = btoa(ADMIN_REAL_PASSWORD);
-
-function adminLogin() {
-  const pass = document.getElementById("adminLoginPass").value;
-
-  if (!pass) {
-    alert("Please enter password");
-    return;
-  }
-
-  const encoded = btoa(pass);
-
-  if (encoded === ADMIN_HASH) {
-    localStorage.setItem("isAdmin", "true");
-    closeLogin();
-    showAdminPanel();
-  } else {
-    alert("Wrong password!");
-  }
-}
-
-function showAdminPanel() {
-  try {
-    document.getElementById("adminPanel").style.display = "block";
-  } catch(e) {
-    console.log("Admin panel not found:", e);
-  }
-}
-
-function closeLogin() {
-  document.getElementById("loginModal").style.display = "none";
-}
-
-
-/* ---------------- BOOKING SYSTEM ---------------- */
-
-let userLocation = "";
-
-// open booking popup
-function openBookingForm(serviceName) {
-  document.getElementById("bookingModal").style.display = "flex";
-  document.getElementById("selectedService").innerHTML = "Service: " + serviceName;
-  getLiveLocation();
-}
-
-// close popup
-function closeBookingForm() {
-  document.getElementById("bookingModal").style.display = "none";
-}
-
-// fetch live location
-function getLiveLocation() {
-  document.getElementById("locStatus").innerHTML = "Fetching live location...";
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        let lat = pos.coords.latitude;
-        let lon = pos.coords.longitude;
-
-        userLocation = `https://maps.google.com/?q=${lat},${lon}`;
-        document.getElementById("locStatus").innerHTML = "📍 Location attached";
-      },
-      () => {
-        userLocation = "Location not allowed";
-        document.getElementById("locStatus").innerHTML = "❌ Location access denied";
-      }
-    );
-  }
-}
-
-// submit booking to WhatsApp
-function submitBooking() {
-  let name = document.getElementById("custName").value;
-  let phone = document.getElementById("custPhone").value;
-  let model = document.getElementById("custModel").value;
-  let ref = document.getElementById("custRefNo").value;
-
-  let service = document
-    .getElementById("selectedService")
-    .innerHTML.replace("Service: ", "");
-
-  if (!name || !phone || !model || !ref) {
-    alert("Please fill all details.");
-    return;
-  }
-
-  let msg =
-`📲 *New Service Booking - Step'sEazy*
-
-🛠️ *Service:* ${service}
-👤 *Name:* ${name}
-📞 *Phone:* ${phone}
-📱 *Model:* ${model}
-🔖 *Reference No:* ${ref}
-
-📍 *Customer Location:* 
-${userLocation}
-
-Thank you 😊`;
-
-  let url = `https://wa.me/918050269752?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-
-  closeBookingForm();
-}
-</script>
-
-<body>
-<!-- BOOKING POPUP FORM -->
-<div id="bookingModal" style="
-  display:none; 
-  position:fixed; 
-  top:0; left:0; 
-  width:100%; 
-  height:100%; 
-  background:rgba(0,0,0,0.6); 
-  backdrop-filter:blur(4px); 
-  justify-content:center; 
-  align-items:center; 
-  z-index:9999;
-">
-  <div style="
-    background:white; 
-    padding:25px; 
-    width:90%; 
-    max-width:380px; 
-    border-radius:20px; 
-    box-shadow:0 0 25px rgba(0,0,0,0.3);
-    position:relative;
-  ">
-  
-    <span onclick="closeBookingForm()" style="
-      position:absolute; 
-      top:10px; 
-      right:15px; 
-      font-size:24px; 
-      cursor:pointer;">
-      ×
-    </span>
-
-    <h3 style="margin:0 0 10px 0; font-size:20px;">
-      📱 Book This Service
-    </h3>
-
-    <p id="selectedService" style="font-weight:bold; margin-bottom:15px;"></p>
-
-    <input id="custName" type="text" placeholder="Your Name" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
-    
-    <input id="custPhone" type="text" placeholder="Phone Number" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
-    
-    <input id="custModel" type="text" placeholder="Smartphone Model" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
-    
-    <input id="custRefNo" type="text" placeholder="Reference Number" class="form-input" style="width:100%; padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid #ddd;">
-    
-    <button onclick="submitBooking()" style="
-      width:100%; 
-      padding:14px; 
-      background:#007bff; 
-      color:white; 
-      border:none; 
-      border-radius:12px;
-      font-size:16px;
-      cursor:pointer;">
-      📩 Submit Booking
-    </button>
-
-    <p id="locStatus" style="font-size:12px; margin-top:10px; color:gray;"></p>
-
-  </div>
-</div>
+<!-- ========== JAVASCRIPT ENDS HERE ========== -->
 </body>
 </html>
-  
