@@ -2971,6 +2971,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<!-- Supabase JS Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Tumhara connection code -->
+<script>
+  const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  console.log("Supabase Connected:", db);
+</script>  
 <!-- ========== JAVASCRIPT ENDS HERE ========== -->
 </body>
 </html>
