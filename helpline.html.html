@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हेल्पलाइन नंबर - Maa Raksha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #000080;
+            --dark: #0F172A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .helpline-header {
+            background: linear-gradient(90deg, var(--dark), #1E293B);
+            color: white;
+            padding: 1.5rem 5%;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .helpline-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #FF9933, #FFFFFF, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .helpline-container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 5%;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 100px;
+            z-index: 999;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--saffron);
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .quick-call {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .quick-call-btn {
+            background: white;
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-call-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .emergency {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            color: white;
+        }
+
+        .police {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: white;
+        }
+
+        .women {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            color: white;
+        }
+
+        .medical {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+        }
+
+        .quick-call-btn i {
+            font-size: 30px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .category-title i {
+            color: var(--saffron);
+            font-size: 24px;
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .number-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .number-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .number-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .number-header h4 {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .call-btn {
+            background: linear-gradient(135deg, var(--saffron), #FF8000);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .call-btn:hover {
+            background: linear-gradient(135deg, #FF8000, #FF9933);
+        }
+
+        .number-details p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .state-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .state-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .state-btn:hover {
+            background: var(--saffron);
+            color: white;
+            border-color: var(--saffron);
+        }
+
+        .floating-btns {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--saffron), #FF8000);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .emergency-btn {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 130px;
+            left: 5%;
+            background: white;
+            color: var(--dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 998;
+        }
+
+        @media (max-width: 768px) {
+            .helpline-container {
+                margin-top: 140px;
+                padding: 0 3%;
+            }
+            
+            .quick-call {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .numbers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .state-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .back-btn {
+                top: 110px;
+                left: 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="helpline-header">
+        <h1><i class="fas fa-phone-alt"></i> आपातकालीन हेल्पलाइन नंबर</h1>
+        <p>भारत के सभी महत्वपूर्ण आपातकालीन नंबर एक जगह</p>
+    </header>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> होम
+    </a>
+
+    <!-- Container -->
+    <div class="helpline-container">
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" id="searchHelpline" placeholder="🔍 हेल्पलाइन खोजें (पुलिस, एम्बुलेंस, महिला, साइबर...)">
+        </div>
+
+        <!-- Quick Call Buttons -->
+        <div class="quick-call">
+            <button class="quick-call-btn emergency" onclick="callNumber('112')">
+                <i class="fas fa-phone-alt"></i>
+                <h3>आपातकालीन</h3>
+                <h2>112</h2>
+                <p>सभी आपातकालीन सेवाएँ</p>
+            </button>
+            
+            <button class="quick-call-btn police" onclick="callNumber('100')">
+                <i class="fas fa-shield-alt"></i>
+                <h3>पुलिस</h3>
+                <h2>100</h2>
+                <p>तुरंत पुलिस सहायता</p>
+            </button>
+            
+            <button class="quick-call-btn women" onclick="callNumber('1091')">
+                <i class="fas fa-female"></i>
+                <h3>महिला हेल्पलाइन</h3>
+                <h2>1091</h2>
+                <p>महिलाओं की सुरक्षा</p>
+            </button>
+            
+            <button class="quick-call-btn medical" onclick="callNumber('102')">
+                <i class="fas fa-ambulance"></i>
+                <h3>एम्बुलेंस</h3>
+                <h2>102</h2>
+                <p>मेडिकल इमरजेंसी</p>
+            </button>
+        </div>
+
+        <!-- Category-wise Numbers -->
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-shield-alt"></i>
+                <h2>पुलिस एवं सुरक्षा</h2>
+            </div>
+            
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>राष्ट्रीय आपातकालीन नंबर</h4>
+                        <button class="call-btn" onclick="callNumber('112')">
+                            <i class="fas fa-phone"></i> 112
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> सभी आपातकालीन सेवाएँ: पुलिस, फायर, एम्बुलेंस</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>पुलिस आपातकालीन</h4>
+                        <button class="call-btn" onclick="callNumber('100')">
+                            <i class="fas fa-phone"></i> 100
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> तत्काल पुलिस सहायता</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>महिला हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1091')">
+                            <i class="fas fa-phone"></i> 1091
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> महिलाओं के लिए विशेष सहायता</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>चाइल्ड हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1098')">
+                            <i class="fas fa-phone"></i> 1098
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> बच्चों के लिए विशेष सहायता</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>साइबर क्राइम</h4>
+                        <button class="call-btn" onclick="callNumber('1930')">
+                            <i class="fas fa-phone"></i> 1930
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> ऑनलाइन धोखाधड़ी, हैकिंग की शिकायत</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>विजिलेंस हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1800110180')">
+                            <i class="fas fa-phone"></i> 1800-110-180
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> भ्रष्टाचार की शिकायत</p>
+                        <p><i class="fas fa-clock"></i> 24x7 उपलब्ध</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Emergency -->
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-heartbeat"></i>
+                <h2>चिकित्सा आपातकाल</h2>
+            </div>
+            
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>एम्बुलेंस</h4>
+                        <button class="call-btn" onclick="callNumber('102')">
+                            <i class="fas fa-phone"></i> 102
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> नि:शुल्क एम्बुलेंस सेवा</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>कोविड हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1075')">
+                            <i class="fas fa-phone"></i> 1075
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> कोरोना वायरस संबंधित सहायता</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>मानसिक स्वास्थ्य</h4>
+                        <button class="call-btn" onclick="callNumber('08046110007')">
+                            <i class="fas fa-phone"></i> 080-46110007
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> मानसिक स्वास्थ्य परामर्श</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Government Services -->
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-building"></i>
+                <h2>सरकारी सेवाएँ</h2>
+            </div>
+            
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>RTI हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1800110222')">
+                            <i class="fas fa-phone"></i> 1800-110-222
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> सूचना का अधिकार संबंधित सहायता</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>उपभोक्ता हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('1800114000')">
+                            <i class="fas fa-phone"></i> 1800-114-000
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> उपभोक्ता शिकायत</p>
+                    </div>
+                </div>
+                
+                <div class="number-card">
+                    <div class="number-header">
+                        <h4>आयकर हेल्पलाइन</h4>
+                        <button class="call-btn" onclick="callNumber('18001800196')">
+                            <i class="fas fa-phone"></i> 1800-180-0196
+                        </button>
+                    </div>
+                    <div class="number-details">
+                        <p><i class="fas fa-info-circle"></i> आयकर संबंधित सहायता</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- State-wise Emergency -->
+        <div class="state-section">
+            <div class="category-title">
+                <i class="fas fa-map-marker-alt"></i>
+                <h2>राज्यवार आपातकालीन नंबर</h2>
+            </div>
+            
+            <div class="state-grid">
+                <button class="state-btn" onclick="showStateNumbers('delhi')">दिल्ली</button>
+                <button class="state-btn" onclick="showStateNumbers('mumbai')">मुंबई</button>
+                <button class="state-btn" onclick="showStateNumbers('up')">उत्तर प्रदेश</button>
+                <button class="state-btn" onclick="showStateNumbers('bihar')">बिहार</button>
+                <button class="state-btn" onclick="showStateNumbers('rajasthan')">राजस्थान</button>
+                <button class="state-btn" onclick="showStateNumbers('mp')">मध्य प्रदेश</button>
+                <button class="state-btn" onclick="showStateNumbers('westbengal')">पश्चिम बंगाल</button>
+                <button class="state-btn" onclick="showStateNumbers('tamilnadu')">तमिलनाडु</button>
+                <button class="state-btn" onclick="showStateNumbers('karnataka')">कर्नाटक</button>
+                <button class="state-btn" onclick="showStateNumbers('gujarat')">गुजरात</button>
+                <button class="state-btn" onclick="showStateNumbers('punjab')">पंजाब</button>
+                <button class="state-btn" onclick="showStateNumbers('haryana')">हरियाणा</button>
+            </div>
+            
+            <div id="stateNumbers" style="display: none; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 10px;">
+                <!-- State numbers will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Important Note -->
+        <div style="background: linear-gradient(135deg, #FFF3CD, #FFEAA7); padding: 20px; border-radius: 15px; border-left: 5px solid #FFC107; margin-top: 30px;">
+            <h3><i class="fas fa-exclamation-triangle"></i> महत्वपूर्ण नोट:</h3>
+            <p>1. आपातकालीन नंबरों का दुरुपयोग न करें। गलत कॉल करने पर कानूनी कार्रवाई हो सकती है।</p>
+            <p>2. 112 नंबर सभी आपातकालीन सेवाओं के लिए एकीकृत नंबर है।</p>
+            <p>3. कॉल करते समय अपना नाम, स्थान और समस्या स्पष्ट रूप से बताएं।</p>
+            <p>4. Maa Raksha इमरजेंसी: <strong>1800-XXX-XXXX</strong> (भ्रष्टाचार/अन्याय की शिकायत के लिए)</p>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-btns">
+        <a href="tel:112" class="floating-btn emergency-btn">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="index.html" class="floating-btn" style="background: linear-gradient(135deg, var(--green), #0D6E00);">
+            <i class="fas fa-home"></i>
+        </a>
+        <button class="floating-btn" onclick="shareHelpline()" style="background: linear-gradient(135deg, var(--navy), #0000CC);">
+            <i class="fas fa-share-alt"></i>
+        </button>
+    </div>
+
+    <script>
+        // Call Number Function
+        function callNumber(number) {
+            if (confirm(`क्या आप ${number} पर कॉल करना चाहते हैं?`)) {
+                window.location.href = `tel:${number}`;
+            }
+        }
+
+        // Search Functionality
+        document.getElementById('searchHelpline').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const numberCards = document.querySelectorAll('.number-card');
+            const categories = document.querySelectorAll('.category-section');
+            
+            let foundAny = false;
+            
+            numberCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'highlight 1s';
+                    foundAny = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show/hide categories based on results
+            categories.forEach(category => {
+                const cardsInCategory = category.querySelectorAll('.number-card');
+                const visibleCards = Array.from(cardsInCategory).filter(card => card.style.display !== 'none');
+                
+                if (visibleCards.length > 0 || searchTerm === '') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        });
+
+        // Show State Numbers
+        const stateNumbers = {
+            'delhi': [
+                {name: 'दिल्ली पुलिस कंट्रोल रूम', number: '100'},
+                {name: 'दिल्ली महिला हेल्पलाइन', number: '1091'},
+                {name: 'दिल्ली एम्बुलेंस', number: '102'},
+                {name: 'दिल्ली फायर ब्रिगेड', number: '101'}
+            ],
+            'mumbai': [
+                {name: 'मुंबई पुलिस', number: '100'},
+                {name: 'मुंबई महिला हेल्पलाइन', number: '103'},
+                {name: 'महाराष्ट्र पुलिस', number: '100'}
+            ],
+            'up': [
+                {name: 'यूपी पुलिस', number: '100'},
+                {name: 'यूपी महिला हेल्पलाइन', number: '1090'},
+                {name: 'यूपी एम्बुलेंस', number: '108'}
+            ]
+        };
+
+        function showStateNumbers(state) {
+            const container = document.getElementById('stateNumbers');
+            const numbers = stateNumbers[state] || [
+                {name: 'पुलिस', number: '100'},
+                {name: 'महिला हेल्पलाइन', number: '1091'},
+                {name: 'एम्बुलेंस', number: '102'}
+            ];
+            
+            let html = `<h4>${getStateName(state)} के आपातकालीन नंबर:</h4>`;
+            html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">';
+            
+            numbers.forEach(item => {
+                html += `
+                    <div style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                        <p style="font-weight: bold; margin-bottom: 5px;">${item.name}</p>
+                        <button onclick="callNumber('${item.number}')" style="background: linear-gradient(135deg, var(--saffron), #FF8000); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
+                            <i class="fas fa-phone"></i> ${item.number}
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        function getStateName(state) {
+            const names = {
+                'delhi': 'दिल्ली',
+                'mumbai': 'मुंबई',
+                'up': 'उत्तर प्रदेश',
+                'bihar': 'बिहार',
+                'rajasthan': 'राजस्थान',
+                'mp': 'मध्य प्रदेश',
+                'westbengal': 'पश्चिम बंगाल',
+                'tamilnadu': 'तमिलनाडु',
+                'karnataka': 'कर्नाटक',
+                'gujarat': 'गुजरात',
+                'punjab': 'पंजाब',
+                'haryana': 'हरियाणा'
+            };
+            return names[state] || state;
+        }
+
+        // Share Helpline
+        function shareHelpline() {
+            const shareText = `Maa Raksha - आपातकालीन हेल्पलाइन नंबर:\n\n` +
+                             `• आपातकालीन: 112\n` +
+                             `• पुलिस: 100\n` +
+                             `• महिला हेल्पलाइन: 1091\n` +
+                             `• एम्बुलेंस: 102\n` +
+                             `• चाइल्ड हेल्पलाइन: 1098\n` +
+                             `• साइबर क्राइम: 1930\n\n` +
+                             `वेबसाइट: maaraksha.org`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Maa Raksha हेल्पलाइन नंबर',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('हेल्पलाइन नंबर कॉपी किए गए! WhatsApp, Facebook पर शेयर करें।');
+                });
+            }
+        }
+
+        // Highlight animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes highlight {
+                0% { background-color: #FFFF99; }
+                100% { background-color: white; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Quick call buttons click
+        document.querySelectorAll('.quick-call-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

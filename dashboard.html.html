@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लाइव डैशबोर्ड - Maa Raksha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #000080;
+            --dark: #0F172A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--saffron);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: var(--saffron);
+        }
+
+        .dashboard-container {
+            margin-top: 100px;
+            padding: 20px 5%;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--saffron);
+            box-shadow: 0 10px 30px rgba(255, 153, 51, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF9933, #FFFFFF, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--saffron);
+            color: var(--dark);
+            border-color: var(--saffron);
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complaints-list {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .complaint-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+            transition: all 0.3s;
+        }
+
+        .complaint-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
+        }
+
+        .complaint-item.pending {
+            border-left-color: #FF9933;
+        }
+
+        .complaint-item.inprogress {
+            border-left-color: #1a73e8;
+        }
+
+        .complaint-item.resolved {
+            border-left-color: #138808;
+        }
+
+        .complaint-item.expired {
+            border-left-color: #FF0000;
+        }
+
+        .complaint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .complaint-id {
+            font-family: monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .complaint-timer {
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .complaint-timer.expiring {
+            color: #FF0000;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .complaint-city {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-pending {
+            background: rgba(255, 153, 51, 0.2);
+            color: #FF9933;
+        }
+
+        .status-inprogress {
+            background: rgba(26, 115, 232, 0.2);
+            color: #1a73e8;
+        }
+
+        .status-resolved {
+            background: rgba(19, 136, 8, 0.2);
+            color: #138808;
+        }
+
+        .status-expired {
+            background: rgba(255, 0, 0, 0.2);
+            color: #FF0000;
+        }
+
+        .stats-sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .chart-container {
+            margin: 30px 0;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .chart-label {
+            width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .chart-progress {
+            flex-grow: 1;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+
+        .chart-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .chart-fill.pending {
+            background: linear-gradient(90deg, #FF9933, #FF8000);
+        }
+
+        .chart-fill.inprogress {
+            background: linear-gradient(90deg, #1a73e8, #0d47a1);
+        }
+
+        .chart-fill.resolved {
+            background: linear-gradient(90deg, #138808, #0D6E00);
+        }
+
+        .chart-fill.expired {
+            background: linear-gradient(90deg, #FF0000, #CC0000);
+        }
+
+        .chart-percentage {
+            width: 50px;
+            text-align: right;
+        }
+
+        .map-container {
+            height: 300px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .floating-btns {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--saffron), #FF8000);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .emergency-btn {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 130px;
+            left: 5%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 998;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                margin-top: 120px;
+                padding: 0 3%;
+            }
+            
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .back-btn {
+                top: 110px;
+                left: 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>लाइव डैशबोर्ड</span>
+        </div>
+        
+        <div>
+            <span style="color: #FF9933; font-weight: bold;">लाइव अपडेट</span>
+            <span id="lastUpdate" style="margin-left: 15px; font-size: 0.9rem; color: #ccc;">अभी अपडेट हुआ</span>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> होम
+    </a>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="stat-number" id="totalComplaints">1,247</div>
+                <p>कुल शिकायतें</p>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number" id="activeComplaints">348</div>
+                <p>सक्रिय शिकायतें</p>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number" id="resolvedToday">42</div>
+                <p>आज हल हुईं</p>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-number" id="avgTime">48</div>
+                <p>औसत समय (घंटे)</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterComplaints('all')">
+                सभी शिकायतें
+            </button>
+            <button class="filter-btn" onclick="filterComplaints('pending')">
+                लंबित
+            </button>
+            <button class="filter-btn" onclick="filterComplaints('inprogress')">
+                प्रगति में
+            </button>
+            <button class="filter-btn" onclick="filterComplaints('resolved')">
+                हल हुई
+            </button>
+            <button class="filter-btn" onclick="filterComplaints('expired')">
+                समय समाप्त
+            </button>
+            <select id="cityFilter" onchange="filterByCity(this.value)" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px 15px; border-radius: 25px;">
+                <option value="all">सभी शहर</option>
+                <option value="delhi">दिल्ली</option>
+                <option value="mumbai">मुंबई</option>
+                <option value="lucknow">लखनऊ</option>
+                <option value="bangalore">बेंगलुरु</option>
+            </select>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Complaints List -->
+            <div class="complaints-list" id="complaintsList">
+                <!-- Complaints will be loaded here -->
+            </div>
+
+            <!-- Stats Sidebar -->
+            <div class="stats-sidebar">
+                <h3><i class="fas fa-chart-pie"></i> स्थिति विश्लेषण</h3>
+                
+                <div class="chart-container">
+                    <div class="chart-bar">
+                        <span class="chart-label">लंबित</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill pending" style="width: 40%;"></div>
+                        </div>
+                        <span class="chart-percentage">40%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">प्रगति में</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill inprogress" style="width: 25%;"></div>
+                        </div>
+                        <span class="chart-percentage">25%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">हल हुई</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill resolved" style="width: 30%;"></div>
+                        </div>
+                        <span class="chart-percentage">30%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">समय समाप्त</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill expired" style="width: 5%;"></div>
+                        </div>
+                        <span class="chart-percentage">5%</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;"><i class="fas fa-city"></i> शहरवार शिकायतें</h3>
+                
+                <div class="chart-container">
+                    <div class="chart-bar">
+                        <span class="chart-label">दिल्ली</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill pending" style="width: 35%;"></div>
+                        </div>
+                        <span class="chart-percentage">35%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">मुंबई</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill inprogress" style="width: 25%;"></div>
+                        </div>
+                        <span class="chart-percentage">25%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">लखनऊ</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill resolved" style="width: 20%;"></div>
+                        </div>
+                        <span class="chart-percentage">20%</span>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <span class="chart-label">अन्य</span>
+                        <div class="chart-progress">
+                            <div class="chart-fill expired" style="width: 20%;"></div>
+                        </div>
+                        <span class="chart-percentage">20%</span>
+                    </div>
+                </div>
+
+                <!-- Map Placeholder -->
+                <div class="map-container">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span style="margin-left: 10px;">शिकायतों का लाइव मैप</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-btns">
+        <a href="tel:112" class="floating-btn emergency-btn">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="feed.html" class="floating-btn" style="background: linear-gradient(135deg, var(--green), #0D6E00);">
+            <i class="fas fa-newspaper"></i>
+        </a>
+        <button class="floating-btn" onclick="refreshDashboard()" style="background: linear-gradient(135deg, var(--navy), #0000CC);">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </div>
+
+    <script>
+        // Sample Complaints Data
+        const complaints = [
+            {
+                id: 'MR-20240415-001',
+                title: 'पुलिस अधिकारी रिश्वत मांग रहा है',
+                city: 'दिल्ली',
+                department: 'पुलिस',
+                status: 'pending',
+                timer: '45:12:30',
+                time: '2 घंटे पहले',
+                isExpiring: true
+            },
+            {
+                id: 'MR-20240415-002',
+                title: 'RTO ऑफिस में अधिकारी नकद ले रहा है',
+                city: 'मुंबई',
+                department: 'RTO',
+                status: 'inprogress',
+                timer: '42:30:15',
+                time: '5 घंटे पहले',
+                isExpiring: false
+            },
+            {
+                id: 'MR-20240414-001',
+                title: 'नगर निगम अधिकारी पानी कनेक्शन के पैसे मांग रहा',
+                city: 'लखनऊ',
+                department: 'नगर निगम',
+                status: 'resolved',
+                timer: '00:00:00',
+                time: '1 दिन पहले',
+                isExpiring: false
+            },
+            {
+                id: 'MR-20240414-002',
+                title: 'सरकारी अस्पताल में डॉक्टर फ्री ऑपरेशन के पैसे मांग रहा',
+                city: 'बेंगलुरु',
+                department: 'स्वास्थ्य',
+                status: 'pending',
+                timer: '20:15:45',
+                time: '2 दिन पहले',
+                isExpiring: true
+            },
+            {
+                id: 'MR-20240413-001',
+                title: 'स्कूल प्रिंसिपल डोनेशन मांग रहा',
+                city: 'दिल्ली',
+                department: 'शिक्षा',
+                status: 'expired',
+                timer: '00:00:00',
+                time: '3 दिन पहले',
+                isExpiring: false
+            },
+            {
+                id: 'MR-20240413-002',
+                title: 'बिजली विभाग अधिकारी नए कनेक्शन के लिए रिश्वत',
+                city: 'चंडीगढ़',
+                department: 'बिजली',
+                status: 'resolved',
+                timer: '00:00:00',
+                time: '3 दिन पहले',
+                isExpiring: false
+            },
+            {
+                id: 'MR-20240412-001',
+                title: 'राशन दुकानदार अतिरिक्त पैसे मांग रहा',
+                city: 'पटना',
+                department: 'खाद्य',
+                status: 'inprogress',
+                timer: '12:45:30',
+                time: '4 दिन पहले',
+                isExpiring: false
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentCity = 'all';
+
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            renderComplaints();
+            updateStats();
+            startLiveUpdates();
+        });
+
+        // Render Complaints
+        function renderComplaints() {
+            const container = document.getElementById('complaintsList');
+            let filtered = complaints;
+            
+            // Apply status filter
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(c => c.status === currentFilter);
+            }
+            
+            // Apply city filter
+            if (currentCity !== 'all') {
+                filtered = filtered.filter(c => c.city.toLowerCase().includes(currentCity));
+            }
+            
+            container.innerHTML = '';
+            
+            filtered.forEach(complaint => {
+                const statusText = {
+                    'pending': 'लंबित',
+                    'inprogress': 'प्रगति में',
+                    'resolved': 'हल हुई',
+                    'expired': 'समय समाप्त'
+                };
+                
+                const statusClass = {
+                    'pending': 'status-pending',
+                    'inprogress': 'status-inprogress',
+                    'resolved': 'status-resolved',
+                    'expired': 'status-expired'
+                };
+                
+                const timerClass = complaint.isExpiring ? 'complaint-timer expiring' : 'complaint-timer';
+                
+                const complaintHTML = `
+                    <div class="complaint-item ${complaint.status}">
+                        <div class="complaint-header">
+                            <div>
+                                <h4>${complaint.title}</h4>
+                                <small style="color: #ccc;">${complaint.time}</small>
+                            </div>
+                            <div class="complaint-id">${complaint.id}</div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div class="complaint-city">
+                                <i class="fas fa-map-marker-alt"></i> ${complaint.city}
+                            </div>
+                            <span class="status-badge ${statusClass[complaint.status]}">
+                                ${statusText[complaint.status]}
+                            </span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <small style="color: #ccc;">
+                                    <i class="fas fa-building"></i> ${complaint.department} विभाग
+                                </small>
+                            </div>
+                            <div class="${timerClass}">
+                                <i class="fas fa-clock"></i> ${complaint.timer}
+                            </div>
+                        </div>
+                        
+                        ${complaint.status === 'pending' ? `
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <button onclick="takeAction('${complaint.id}')" style="background: rgba(255, 153, 51, 0.2); color: #FF9933; border: 1px solid #FF9933; padding: 8px 15px; border-radius: 10px; cursor: pointer;">
+                                    कार्रवाई लें
+                                </button>
+                                <button onclick="escalate('${complaint.id}')" style="background: rgba(255, 0, 0, 0.2); color: #FF0000; border: 1px solid #FF0000; padding: 8px 15px; border-radius: 10px; cursor: pointer;">
+                                    एस्केलेट करें
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                container.innerHTML += complaintHTML;
+            });
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #ccc;">
+                        <i class="fas fa-inbox" style="font-size: 50px; margin-bottom: 20px;"></i>
+                        <h3>कोई शिकायत नहीं मिली</h3>
+                        <p>फिल्टर बदलकर देखें या नई शिकायत दर्ज करें</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Filter Complaints
+        function filterComplaints(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderComplaints();
+        }
+
+        // Filter by City
+        function filterByCity(city) {
+            currentCity = city;
+            renderComplaints();
+        }
+
+        // Update Stats
+        function updateStats() {
+            // Animate numbers
+            animateNumber('totalComplaints', 1247);
+            animateNumber('activeComplaints', 348);
+            animateNumber('resolvedToday', 42);
+            animateNumber('avgTime', 48);
+            
+            // Update last update time
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = 
+                `अंतिम अपडेट: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+        }
+
+        // Animate Number
+        function animateNumber(elementId, finalValue) {
+            const element = document.getElementById(elementId);
+            let current = 0;
+            const increment = finalValue / 100;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= finalValue) {
+                    current = finalValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        // Live Updates
+        function startLiveUpdates() {
+            // Simulate live updates every 30 seconds
+            setInterval(() => {
+                // Randomly update some complaints
+                complaints.forEach(complaint => {
+                    if (complaint.status === 'pending' && Math.random() > 0.7) {
+                        // Simulate timer update
+                        const timerParts = complaint.timer.split(':');
+                        let hours = parseInt(timerParts[0]);
+                        let minutes = parseInt(timerParts[1]);
+                        let seconds = parseInt(timerParts[2]);
+                        
+                        if (seconds > 0) seconds--;
+                        else if (minutes > 0) {
+                            minutes--;
+                            seconds = 59;
+                        } else if (hours > 0) {
+                            hours--;
+                            minutes = 59;
+                            seconds = 59;
+                        }
+                        
+                        complaint.timer = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        
+                        // If timer expires, change status
+                        if (hours === 0 && minutes === 0 && seconds === 0) {
+                            complaint.status = 'expired';
+                            complaint.isExpiring = false;
+                        }
+                        
+                        // Mark as expiring if less than 2 hours
+                        complaint.isExpiring = (hours < 2 && complaint.status === 'pending');
+                    }
+                });
+                
+                renderComplaints();
+                updateStats();
+            }, 30000); // Every 30 seconds
+        }
+
+        // Take Action
+        function takeAction(complaintId) {
+            const complaint = complaints.find(c => c.id === complaintId);
+            if (complaint) {
+                complaint.status = 'inprogress';
+                alert(`कार्रवाई शुरू: ${complaintId}\nअब इस शिकायत की स्थिति "प्रगति में" बदल गई है।`);
+                renderComplaints();
+            }
+        }
+
+        // Escalate Complaint
+        function escalate(complaintId) {
+            const complaint = complaints.find(c => c.id === complaintId);
+            if (complaint) {
+                alert(`एस्केलेशन: ${complaintId}\nइस शिकायत को उच्च अधिकारियों के पास भेजा गया है। Maa Raksha टीम सीधी कार्रवाई करेगी।`);
+                // In real app, this would send notification to admin team
+            }
+        }
+
+        // Refresh Dashboard
+        function refreshDashboard() {
+            document.querySelector('.floating-btn:nth-child(3)').style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                document.querySelector('.floating-btn:nth-child(3)').style.transform = '';
+                renderComplaints();
+                updateStats();
+                alert('डैशबोर्ड ताज़ा किया गया!');
+            }, 500);
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Randomly add new complaint
+            if (Math.random() > 0.8) {
+                const cities = ['दिल्ली', 'मुंबई', 'लखनऊ', 'बेंगलुरु', 'चेन्नई', 'कोलकाता'];
+                const departments = ['पुलिस', 'RTO', 'नगर निगम', 'स्वास्थ्य', 'शिक्षा', 'बिजली'];
+                
+                const newComplaint = {
+                    id: `MR-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.floor(Math.random()*1000)}`,
+                    title: `${departments[Math.floor(Math.random()*departments.length)]} अधिकारी रिश्वत मांग रहा`,
+                    city: cities[Math.floor(Math.random()*cities.length)],
+                    department: departments[Math.floor(Math.random()*departments.length)],
+                    status: 'pending',
+                    timer: '48:00:00',
+                    time: 'अभी अभी',
+                    isExpiring: false
+                };
+                
+                complaints.unshift(newComplaint);
+                if (complaints.length > 20) complaints.pop();
+                renderComplaints();
+                updateStats();
+            }
+        }, 60000); // Check every minute
+    </script>
+</body>
+</html>

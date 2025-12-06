@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maa Raksha - भ्रष्टाचार के खिलाफ आवाज</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #000080;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gradient: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Premium Header */
+        .premium-header {
+            background: var(--dark);
+            background-image: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%230F172A"/><path d="M0 50L50 0L100 50L50 100Z" fill="%23138808" opacity="0.1"/></svg>');
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-bottom: 3px solid var(--saffron);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--navy);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: var(--saffron);
+            color: var(--dark);
+        }
+
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
+                        url('https://images.unsplash.com/photo-1614854262340-84be5e05e8ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--saffron), #FF8000);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 153, 51, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--green), #0D6E00);
+            color: white;
+            box-shadow: 0 10px 20px rgba(19, 136, 8, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(19, 136, 8, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        .features {
+            padding: 100px 5%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .stats {
+            background: linear-gradient(135deg, var(--dark), #1E293B);
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .emergency-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 15px 40px rgba(255, 0, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4); }
+        }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo .logo-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--saffron);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .premium-header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Emergency Button -->
+    <a href="tel:112" class="emergency-btn">
+        <i class="fas fa-phone-alt"></i>
+    </a>
+
+    <!-- Premium Header -->
+    <header class="premium-header">
+        <div class="logo">
+            <div class="logo-icon">MR</div>
+            <div class="logo-text">
+                <h1>Maa Raksha</h1>
+                <p>सत्य की शक्ति | Power of Truth</p>
+            </div>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="feed.html"><i class="fas fa-newspaper"></i> Public Feed</a>
+            <a href="constitution.html"><i class="fas fa-book"></i> Constitution</a>
+            <a href="report.html"><i class="fas fa-video"></i> Report</a>
+            <a href="helpline.html"><i class="fas fa-phone"></i> Helpline</a>
+            <a href="team.html"><i class="fas fa-users"></i> Our Team</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>बिना डरे, बिना छुपे<br>अपनी आवाज बुलंद करें</h2>
+            <p>Maa Raksha आपको सशक्त बनाता है। भ्रष्टाचार, अन्याय या गलत काम का सामना कर रहे हैं? हमारे साथ सीधे सरकार तक पहुँचाएँ। 48 घंटे में समाधान का वादा।</p>
+            
+            <div class="action-buttons">
+                <a href="feed.html" class="btn btn-primary">
+                    <i class="fas fa-newspaper"></i> Public Feed देखें
+                </a>
+                <a href="report.html?mode=anonymous" class="btn btn-secondary">
+                    <i class="fas fa-user-secret"></i> गुप्त शिकायत करें
+                </a>
+                <a href="constitution.html" class="btn btn-outline">
+                    <i class="fas fa-gavel"></i> अपने अधिकार जानें
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>हमारी विशेषताएं</h2>
+            <p>हर नागरिक के लिए, हर समस्या का समाधान</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <h3>Public Social Feed</h3>
+                <p>Instagram जैसा public feed। सभी शिकायतें सबको दिखेंगी। Like, Comment, Share कर सकते हैं।</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>गोपनीयता सुरक्षा</h3>
+                <p>Auto-face blur तकनीक से आपकी पहचान 100% गुप्त। कोई लॉग, कोई ट्रैक नहीं।</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>48 घंटे का वादा</h3>
+                <p>शिकायत दर्ज होने के 48 घंटे में सरकारी कार्रवाई या हमारी टीम हल करेगी।</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h3>City-Wise Filter</h3>
+                <p>अपने शहर की सभी शिकायतें देखें। All India view भी उपलब्ध।</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>पूरा कानूनी डेटाबेस</h3>
+                <p>भारतीय संविधान, सभी कानून, RTI गाइड - सब कुछ हिंगलिश में।</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>24x7 इमरजेंसी सपोर्ट</h3>
+                <p>1000+ हेल्पलाइन नंबर, तुरंत कॉल, लाइव चैट और व्हाट्सएप सपोर्ट।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="section-title">
+            <h2 style="color: white;">हमारा प्रभाव</h2>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3 id="cases-solved">2,847</h3>
+                <p>हल की गई शिकायतें</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3 id="hours-saved">48</h3>
+                <p>औसत समाधान समय (घंटे)</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3 id="public-posts">15,238</h3>
+                <p>Public Feed पोस्ट</p>
+            </div>
+            
+            <div class="stat-item">
+                <h3 id="volunteers">12,458</h3>
+                <p>सक्रिय स्वयंसेवक</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <div class="logo-icon" style="animation: none;">MR</div>
+                    <h3 style="margin-top: 15px;">Maa Raksha</h3>
+                </div>
+                <p>भ्रष्टाचार मुक्त भारत के लिए हमारा संकल्प। हर नागरिक, हर आवाज मायने रखती है।</p>
+                
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>त्वरित लिंक</h4>
+                <ul style="list-style: none; margin-top: 20px;">
+                    <li><a href="feed.html" style="color: white; text-decoration: none; display: block; padding: 8px 0; opacity: 0.8; transition: 0.3s;">Public Feed देखें</a></li>
+                    <li><a href="constitution.html" style="color: white; text-decoration: none; display: block; padding: 8px 0; opacity: 0.8; transition: 0.3s;">संविधान जानें</a></li>
+                    <li><a href="report.html" style="color: white; text-decoration: none; display: block; padding: 8px 0; opacity: 0.8; transition: 0.3s;">शिकायत दर्ज करें</a></li>
+                    <li><a href="helpline.html" style="color: white; text-decoration: none; display: block; padding: 8px 0; opacity: 0.8; transition: 0.3s;">हेल्पलाइन नंबर</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>संपर्क करें</h4>
+                <div style="margin-top: 20px;">
+                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> contact@maaraksha.org</p>
+                    <p><i class="fas fa-phone" style="margin-right: 10px;"></i> 1800-XXX-XXXX</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> नई दिल्ली, भारत</p>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>महत्वपूर्ण नंबर</h4>
+                <div style="margin-top: 20px;">
+                    <p>पुलिस: 100</p>
+                    <p>महिला हेल्पलाइन: 1091</p>
+                    <p>एम्बुलेंस: 102</p>
+                    <p>साइबर क्राइम: 1930</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 Maa Raksha. सभी अधिकार सुरक्षित। यह एक नागरिक पहल है।</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">"सत्यमेव जयते" - सत्य की ही विजय होती है</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animated Counter
+        function animateCounter(elementId, finalValue, duration = 2000) {
+            let element = document.getElementById(elementId);
+            let startValue = 0;
+            let increment = finalValue / (duration / 16);
+            let current = startValue;
+            
+            let timer = setInterval(() => {
+                current += increment;
+                if (current >= finalValue) {
+                    current = finalValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 16);
+        }
+
+        // Start animation when page loads
+        window.addEventListener('load', function() {
+            animateCounter('cases-solved', 2847);
+            animateCounter('hours-saved', 48);
+            animateCounter('public-posts', 15238);
+            animateCounter('volunteers', 12458);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.premium-header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(15, 23, 42, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'var(--dark)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
