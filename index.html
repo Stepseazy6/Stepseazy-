@@ -1211,6 +1211,225 @@ footer p {
   background: #e2e8f0;
 }
 
+/* ========== ORDER FORM POPUP STYLES ========== */
+.order-popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.order-form-container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  animation: slideIn 0.5s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.order-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.order-close-btn:hover {
+  background: #f5f5f5;
+  transform: rotate(90deg);
+}
+
+.order-form-title {
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 25px;
+  font-size: 22px;
+  border-bottom: 2px solid var(--primary-2);
+  padding-bottom: 12px;
+  font-weight: 700;
+}
+
+.order-form-group {
+  margin-bottom: 20px;
+}
+
+.order-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.order-form-group input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+  background: #f8faff;
+}
+
+.order-form-group input:focus {
+  border-color: var(--primary-2);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.order-location-btn {
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 10px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.order-location-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.order-location-display {
+  background: #f8faff;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  display: none;
+  border: 2px solid #e2e8f0;
+}
+
+.order-submit-btn {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 15px;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.order-submit-btn:hover {
+  background: #1da851;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+}
+
+.order-submit-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.order-error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+  display: none;
+  border-left: 4px solid #ff6b6b;
+}
+
+.order-success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
+  display: none;
+  font-weight: 600;
+  border-left: 4px solid #25D366;
+}
+
+.selected-product-display {
+  background: linear-gradient(135deg, #f8faff, #ffffff);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  border: 2px solid var(--primary-2);
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.selected-product-display strong {
+  color: var(--primary-2);
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.selected-product-display span {
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.order-form-note {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #666;
+  padding: 10px;
+  background: #f8faff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.order-location-icon::before {
+  content: "📍";
+  font-size: 18px;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .admin-sidebar {
@@ -1226,6 +1445,13 @@ footer p {
   .quick-actions-panel {
     left: 15px;
     bottom: 120px;
+  }
+  .order-form-container {
+    padding: 25px 20px;
+    width: 95%;
+  }
+  .order-form-title {
+    font-size: 20px;
   }
 }
 /* ========== CSS ENDS HERE ========== */
@@ -1308,6 +1534,57 @@ footer p {
   <button class="quick-action-btn" onclick="sendQuickMessage('Please call me back for service enquiry.')">
     📞 Call Back
   </button>
+</div>
+
+<!-- ✅ ORDER FORM POPUP -->
+<div class="order-popup-container" id="orderPopupForm">
+    <div class="order-form-container">
+        <button class="order-close-btn" onclick="closeOrderForm()">×</button>
+        <h2 class="order-form-title">📱 Complete Your Order</h2>
+        
+        <!-- Selected Product Display -->
+        <div class="selected-product-display" id="selectedProductDisplay">
+            <strong>Product:</strong> <span id="productName">Loading...</span>
+        </div>
+        
+        <form id="orderForm">
+            <div class="order-form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="order-form-group">
+                <label for="customerPhone">WhatsApp Number *</label>
+                <input type="tel" id="customerPhone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" maxlength="10">
+            </div>
+            
+            <div class="order-form-group">
+                <label>Live Location *</label>
+                <button type="button" class="order-location-btn" onclick="getLocation()">
+                    <span class="order-location-icon"></span> Share Your Live Location
+                </button>
+                <div class="order-location-display" id="locationDisplay">
+                    <strong>📍 Your Location:</strong> <br>
+                    <span id="locationText">Location not shared yet</span>
+                </div>
+                <div class="order-error-message" id="locationError">
+                    Location access denied. Please allow location to continue.
+                </div>
+            </div>
+            
+            <button type="submit" class="order-submit-btn" id="submitBtn" disabled>
+                <span>💬</span> Send Order via WhatsApp
+            </button>
+            
+            <div class="order-success-message" id="successMessage">
+                ✅ Order sent to WhatsApp! Check your messages.
+            </div>
+        </form>
+        
+        <div class="order-form-note">
+            <p>📍 We'll pickup from your location within 15-20 minutes</p>
+        </div>
+    </div>
 </div>
 
 <!-- ---------- MAIN CONTENT ---------- -->
@@ -1438,9 +1715,9 @@ footer p {
         <h4>Display Replacement</h4>
         <p class="price">Starting ₹1200</p>
         <p>Original & compatible displays available for all models.</p>
-        <!-- ✅ ADDED: Book Service Button -->
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Display Replacement', 1200)">
-          💬 Book via WhatsApp
+        <!-- ✅ UPDATED: Now opens order form directly -->
+        <button class="whatsapp-btn" onclick="openOrderForm('Display Replacement', 1200)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1448,8 +1725,8 @@ footer p {
         <h4>Battery Replacement</h4>
         <p class="price">Starting ₹700</p>
         <p>High quality batteries with 6 months warranty.</p>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Battery Replacement', 700)">
-          💬 Book via WhatsApp
+        <button class="whatsapp-btn" onclick="openOrderForm('Battery Replacement', 700)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1457,8 +1734,8 @@ footer p {
         <h4>Back Panel & Body</h4>
         <p class="price">Starting ₹800</p>
         <p>Full body replacements & panel painting.</p>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Back Panel Repair', 800)">
-          💬 Book via WhatsApp
+        <button class="whatsapp-btn" onclick="openOrderForm('Back Panel Repair', 800)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1480,7 +1757,7 @@ footer p {
   </section>
 </div>
 
-<!-- ✅ UPDATED: SERVICES PAGE WITH BOOK BUTTONS -->
+<!-- ✅ UPDATED: SERVICES PAGE WITH ORDER FORM BUTTONS -->
 <div id="services" class="page">
   <section>
     <h3>All Services & Pricing</h3>
@@ -1494,9 +1771,9 @@ footer p {
           <li>30-45 minutes repair</li>
           <li>6 months warranty</li>
         </ul>
-        <!-- ✅ ADDED: Book Service Button -->
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Display Replacement', 1200)">
-          💬 Book This Service
+        <!-- ✅ UPDATED: Now opens order form directly -->
+        <button class="whatsapp-btn" onclick="openOrderForm('Display Replacement', 1200)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1508,8 +1785,8 @@ footer p {
           <li>30 minutes replacement</li>
           <li>6 months warranty</li>
         </ul>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Battery Replacement', 700)">
-          💬 Book This Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Battery Replacement', 700)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1521,8 +1798,8 @@ footer p {
           <li>Color matching</li>
           <li>45 minutes service</li>
         </ul>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Back Panel Repair', 800)">
-          💬 Book This Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Back Panel Repair', 800)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1534,8 +1811,8 @@ footer p {
           <li>30 minutes service</li>
           <li>Warranty included</li>
         </ul>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Charging Port Repair', 600)">
-          💬 Book This Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Charging Port Repair', 600)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1547,8 +1824,8 @@ footer p {
           <li>Software update</li>
           <li>Data backup</li>
         </ul>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Software Repair', 500)">
-          💬 Book This Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Software Repair', 500)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -1560,16 +1837,16 @@ footer p {
           <li>Ultrasonic cleaning</li>
           <li>Component replacement</li>
         </ul>
-        <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Water Damage Repair', 1500)">
-          💬 Book This Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Water Damage Repair', 1500)">
+          💬 Order Now
         </button>
       </div>
     </div>
     
-    <!-- ✅ ADDED: QUICK BOOKING SECTION -->
+    <!-- ✅ ADDED: QUICK ORDER SECTION -->
     <div style="text-align:center; margin-top:40px;">
-      <h4>Quick Booking</h4>
-      <p style="color:var(--muted); margin-bottom:20px;">Select your device and problem for instant WhatsApp booking</p>
+      <h4>Quick Order</h4>
+      <p style="color:var(--muted); margin-bottom:20px;">Select your device and problem for instant ordering</p>
       
       <div style="max-width:500px; margin:0 auto; background:white; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
         <div class="form-group">
@@ -1598,8 +1875,8 @@ footer p {
           </select>
         </div>
         
-        <button class="whatsapp-btn" onclick="quickBookService()" style="width:100%; margin-top:15px;">
-          💬 Book Now via WhatsApp
+        <button class="whatsapp-btn" onclick="quickOrderService()" style="width:100%; margin-top:15px;">
+          💬 Order Now
         </button>
       </div>
     </div>
@@ -1638,10 +1915,10 @@ footer p {
       </div>
       <!-- ✅ FIXED: Now uses customerOrderWhatsApp instead of openSimpleLogin -->
       <button class="customer-order-btn" onclick="customerOrderWhatsApp()">
-        💬 Order via WhatsApp
+        💬 Complete Order
       </button>
       <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:10px;">
-        No login required! Direct WhatsApp booking.
+        No login required! Direct WhatsApp ordering.
       </p>
     </div>
   </section>
@@ -1662,7 +1939,9 @@ footer p {
           <div class="laptop-title">Dell Inspiron 15</div>
           <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD</div>
           <div class="laptop-price">₹299 / 2 hours</div>
-          <button class="rent-now-btn" onclick="rentLaptop('Dell Inspiron 15', 299)">💻 Rent Now</button>
+          <button class="rent-now-btn" onclick="openOrderForm('Dell Inspiron 15 Laptop Rental', 299)">
+            💻 Rent Now
+          </button>
         </div>
       </div>
 
@@ -1672,7 +1951,9 @@ footer p {
           <div class="laptop-title">HP Pavilion 14</div>
           <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD</div>
           <div class="laptop-price">₹399 / 2 hours</div>
-          <button class="rent-now-btn" onclick="rentLaptop('HP Pavilion 14', 399)">💻 Rent Now</button>
+          <button class="rent-now-btn" onclick="openOrderForm('HP Pavilion 14 Laptop Rental', 399)">
+            💻 Rent Now
+          </button>
         </div>
       </div>
     </div>
@@ -1698,8 +1979,8 @@ footer p {
         <h4 style="margin:0 0 10px;">Estimated Cost: <span id="estimatedPrice">₹0</span></h4>
       </div>
       
-      <button class="whatsapp-btn" onclick="bookServiceWhatsApp('Calculated Service', 0)" style="width:100%; margin-top:15px;">
-        💬 Book via WhatsApp
+      <button class="whatsapp-btn" onclick="openOrderForm('Calculated Service', 0)" style="width:100%; margin-top:15px;">
+        💬 Order Now
       </button>
     </div>
   </section>
@@ -1861,6 +2142,9 @@ let isAdminLoggedIn = false;
 let isSidebarOpen = false;
 let isQuickActionsOpen = false;
 
+// WhatsApp number for orders
+const ORDER_WHATSAPP_NUMBER = "8050269752";
+
 // Admin Data Structure
 let adminData = {
   orders: [],
@@ -1874,6 +2158,242 @@ let adminData = {
     businessPhone: "9359122677"
   }
 };
+
+// ========== ORDER FORM FUNCTIONS ==========
+let selectedProduct = {
+    name: "Unknown Product",
+    price: 0
+};
+
+let userLocation = null;
+let locationObtained = false;
+
+function openOrderForm(productName, productPrice) {
+    // Set selected product
+    selectedProduct.name = productName;
+    selectedProduct.price = productPrice;
+    
+    // Update display
+    document.getElementById('productName').textContent = `${productName} - ₹${productPrice}`;
+    
+    // Show form
+    document.getElementById('orderPopupForm').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Reset form
+    resetForm();
+}
+
+function closeOrderForm() {
+    document.getElementById('orderPopupForm').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetForm();
+}
+
+function resetForm() {
+    document.getElementById('orderForm').reset();
+    document.getElementById('locationDisplay').style.display = 'none';
+    document.getElementById('locationError').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('submitBtn').disabled = true;
+    userLocation = null;
+    locationObtained = false;
+}
+
+function getLocation() {
+    const locationDisplay = document.getElementById('locationDisplay');
+    const locationText = document.getElementById('locationText');
+    const locationError = document.getElementById('locationError');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    locationError.style.display = 'none';
+    
+    if (!navigator.geolocation) {
+        locationText.textContent = "Browser doesn't support location";
+        locationError.style.display = 'block';
+        locationDisplay.style.display = 'block';
+        return;
+    }
+    
+    // Show loading
+    locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
+    locationDisplay.style.display = 'block';
+    
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            userLocation = { lat, lon };
+            locationObtained = true;
+            
+            // Get address
+            getAddressFromCoords(lat, lon);
+            
+            // Enable submit button if name and phone are filled
+            checkFormValidity();
+        },
+        function(error) {
+            let errorMessage = "Location access denied. ";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage += "Please allow location access to continue.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage += "Location information unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage += "Location request timed out.";
+                    break;
+                default:
+                    errorMessage += "Unknown error occurred.";
+            }
+            
+            locationText.textContent = errorMessage;
+            locationError.style.display = 'block';
+            locationDisplay.style.display = 'block';
+            submitBtn.disabled = true;
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+}
+
+function getAddressFromCoords(lat, lon) {
+    const locationText = document.getElementById('locationText');
+    
+    // Try to get address from OpenStreetMap
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.display_name) {
+                const address = data.display_name.split(',').slice(0, 3).join(', ');
+                locationText.innerHTML = `
+                    <div>
+                        <strong>📍 Your Location:</strong><br>
+                        ${address}<br>
+                        <small style="color:#666; font-size:12px;">
+                            (Lat: ${lat.toFixed(6)}, Long: ${lon.toFixed(6)})
+                        </small>
+                    </div>
+                `;
+                userLocation.address = address;
+            } else {
+                locationText.innerHTML = `
+                    <div>
+                        <strong>📍 Your Location:</strong><br>
+                        Latitude: ${lat.toFixed(6)}<br>
+                        Longitude: ${lon.toFixed(6)}<br>
+                        <small style="color:#666; font-size:12px;">
+                            <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
+                                View on Google Maps
+                            </a>
+                        </small>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            locationText.innerHTML = `
+                <div>
+                    <strong>📍 Your Location:</strong><br>
+                    Latitude: ${lat.toFixed(6)}<br>
+                    Longitude: ${lon.toFixed(6)}<br>
+                    <small style="color:#666; font-size:12px;">
+                        <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
+                            View on Google Maps
+                        </a>
+                    </small>
+                </div>
+            `;
+        });
+}
+
+function checkFormValidity() {
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const submitBtn = document.getElementById('submitBtn');
+    
+    const isNameValid = name.length > 0;
+    const isPhoneValid = /^[0-9]{10}$/.test(phone);
+    
+    submitBtn.disabled = !(isNameValid && isPhoneValid && locationObtained);
+}
+
+// Attach validation
+document.getElementById('customerName').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('blur', function() {
+    if (!/^[0-9]{10}$/.test(this.value)) {
+        this.style.borderColor = '#ff6b6b';
+    } else {
+        this.style.borderColor = '#e2e8f0';
+    }
+});
+
+// Form submission
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    
+    // Create WhatsApp message
+    let message = `🛍️ *NEW ORDER - Step'sEazy*%0A%0A`;
+    message += `*Product:* ${selectedProduct.name}%0A`;
+    message += `*Price:* ₹${selectedProduct.price}%0A`;
+    message += `*Customer Name:* ${name}%0A`;
+    message += `*WhatsApp:* ${phone}%0A%0A`;
+    
+    // Add location
+    if (userLocation && userLocation.address) {
+        message += `*📍 Location:* ${userLocation.address}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
+    } else if (userLocation) {
+        message += `*📍 Location Coordinates:*%0A`;
+        message += `Latitude: ${userLocation.lat}%0A`;
+        message += `Longitude: ${userLocation.lon}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
+    }
+    
+    message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
+    message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
+    message += `Please process this order for pickup/delivery.`;
+    
+    // Create WhatsApp URL
+    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+    
+    // Show success message
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+    
+    // Open WhatsApp after delay
+    setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+        
+        // Close form after 3 seconds
+        setTimeout(() => {
+            closeOrderForm();
+            successMessage.style.display = 'none';
+        }, 3000);
+    }, 800);
+});
+
+// Close form on escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeOrderForm();
+    }
+});
+
+// Close form when clicking outside
+document.getElementById('orderPopupForm').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeOrderForm();
+    }
+});
 
 // ✅ FIXED: SIMPLE LOGIN FUNCTIONS
 function openSimpleLogin() {
@@ -1935,21 +2455,8 @@ function logoutAdmin() {
   showNotification('👋 Logged out from Admin Panel');
 }
 
-// ✅ ADDED: BOOK SERVICE VIA WHATSAPP FUNCTION
-function bookServiceWhatsApp(serviceName, price) {
-  let message = `🔧 *SERVICE BOOKING REQUEST - Step'sEazy*%0A%0A`;
-  message += `*Service Required:* ${serviceName}%0A`;
-  message += `*Starting Price:* ₹${price}%0A%0A`;
-  message += `I want to book this service. Please contact me for pickup in Boisar/Palghar.%0A%0A`;
-  message += `Thank you! 😊`;
-  
-  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  showNotification(`✅ ${serviceName} booking request sent!`);
-}
-
-// ✅ ADDED: QUICK BOOK SERVICE FUNCTION
-function quickBookService() {
+// ✅ ADDED: QUICK ORDER SERVICE FUNCTION
+function quickOrderService() {
   const device = document.getElementById('quickDevice').value;
   const problem = document.getElementById('quickProblem').value;
   
@@ -1976,16 +2483,16 @@ function quickBookService() {
     water: 'Water Damage'
   };
   
-  let message = `🔧 *QUICK SERVICE BOOKING - Step'sEazy*%0A%0A`;
+  let message = `🔧 *QUICK SERVICE ORDER - Step'sEazy*%0A%0A`;
   message += `*Device:* ${deviceNames[device]}%0A`;
   message += `*Problem:* ${problemNames[problem]}%0A%0A`;
   message += `Please contact me for immediate repair service. I need pickup in Boisar/Palghar.%0A%0A`;
   message += `Urgent: Yes%0A`;
   message += `Thank you!`;
   
-  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
   window.open(whatsappURL, '_blank');
-  showNotification('✅ Quick booking request sent via WhatsApp!');
+  showNotification('✅ Quick order request sent via WhatsApp!');
 }
 
 // ✅ FIXED: CUSTOMER ORDER VIA WHATSAPP (No login required)
@@ -2009,7 +2516,7 @@ function customerOrderWhatsApp() {
   message += `Expected delivery: 15-20 minutes.%0A%0A`;
   message += `Thank you! 😊`;
   
-  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
   window.open(whatsappURL, '_blank');
   
   // Clear cart after order
@@ -2174,19 +2681,6 @@ function updateOrderSummary() {
   orderTotal.textContent = `₹${total}`;
 }
 
-// ✅ LAPTOP RENTAL FUNCTION
-function rentLaptop(laptopName, price) {
-  let message = `💻 *LAPTOP RENTAL REQUEST - Step'sEazy*%0A%0A`;
-  message += `*Laptop:* ${laptopName}%0A`;
-  message += `*Rental Price:* ₹${price} for 2 hours%0A%0A`;
-  message += `I want to rent this laptop. Please deliver to my address in Boisar/Palghar.%0A%0A`;
-  message += `Thank you! 😊`;
-  
-  const whatsappURL = `https://wa.me/919359122677?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  showNotification(`💻 ${laptopName} rental request sent!`);
-}
-
 // ✅ NOTIFICATION FUNCTION
 function showNotification(message) {
   const notification = document.createElement('div');
@@ -2261,7 +2755,7 @@ function hideQuickActions() {
 }
 
 function sendQuickMessage(msg) {
-  window.open(`https://wa.me/919359122677?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
   hideQuickActions();
 }
 
@@ -2949,6 +3443,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if(!e.target.closest('#quickActionButton') && !e.target.closest('#quickActionsPanel')) {
       hideQuickActions();
     }
+    
+    // Close order form when clicking outside
+    if(e.target.classList.contains('order-popup-container')) {
+      closeOrderForm();
+    }
   });
   
   // Close modals when clicking outside
@@ -2967,6 +3466,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if(e.key === 'Escape' && isQuickActionsOpen) {
       hideQuickActions();
+    }
+    if(e.key === 'Escape' && document.getElementById('orderPopupForm').style.display === 'flex') {
+      closeOrderForm();
     }
   });
 });
