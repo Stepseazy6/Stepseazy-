@@ -2104,6 +2104,8 @@ footer p {
 
 <!-- ========== START JAVASCRIPT ========== -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Supabase Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ========== GLOBAL VARIABLES ==========
 let cart = [];
@@ -2129,7 +2131,7 @@ let adminData = {
   }
 };
 
-// ========== ORDER FORM FUNCTIONS ==========
+// Order Form Variables
 let selectedProduct = {
     name: "Unknown Product",
     price: 0
@@ -2138,19 +2140,174 @@ let selectedProduct = {
 let userLocation = null;
 let locationObtained = false;
 
+// ========== SUPABASE CONFIGURATION ==========
+// 🔥 YAHAN APNA SUPABASE CLIENT API KEY DALNA HAI
+const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5dWJzZXNydHd2b2x1d29tbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxOTM3MzcsImV4cCI6MjA1ODc2OTczN30.ywS4HLH44FJwGexP-_eAlGSOYbS9emhGq0kZ0kRfCMo";
+
+// Supabase Client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ========== SUPABASE ORDER FUNCTIONS ==========
+
+// ✅ 1. Order Save Function
+async function saveOrderToDatabase(orderData) {
+  try {
+    console.log("💾 Saving order to Supabase...", orderData);
+    
+    const { data, error } = await supabase
+      .from('orders')
+      .insert([{
+        customer_name: orderData.name,
+        customer_phone: orderData.phone,
+        product_name: orderData.product,
+        price: orderData.price,
+        location: orderData.location,
+        status: 'pending'
+      }])
+      .select();
+    
+    if (error) {
+      console.error("❌ Order save error:", error);
+      showNotification('⚠️ Database save failed. Order placed on WhatsApp only.');
+      return null;
+    }
+    
+    console.log("✅ Order saved to database:", data);
+    showNotification('✅ Order saved to database!');
+    return data[0];
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return null;
+  }
+}
+
+// ✅ 2. Fetch Orders for Admin
+async function loadOrdersFromDatabase() {
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error("❌ Load orders error:", error);
+      return [];
+    }
+    
+    console.log(`✅ ${data.length} orders loaded from database`);
+    return data;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return [];
+  }
+}
+
+// ✅ 3. Update Order Status
+async function updateOrderStatusDB(orderId, newStatus) {
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status: newStatus })
+      .eq('id', orderId);
+    
+    if (error) {
+      console.error("❌ Update error:", error);
+      return false;
+    }
+    
+    console.log(`✅ Order ${orderId} updated to ${newStatus}`);
+    return true;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return false;
+  }
+}
+
+// ✅ 4. Test Database Connection
+async function testDatabaseConnection() {
+  console.log("🔗 Testing database connection...");
+  
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('count');
+    
+    if (error) {
+      console.error("❌ Database connection failed:", error.message);
+      showNotification('⚠️ Database offline. Using local storage.');
+      return false;
+    }
+    
+    console.log("✅ Database connected successfully!");
+    showNotification('✅ Database connected!');
+    return true;
+  } catch (err) {
+    console.error("❌ Connection error:", err);
+    return false;
+  }
+}
+
+// ✅ 5. Add Sample Products (One-time)
+async function addSampleProducts() {
+  const products = [
+    {
+      name: "Fast USB Charger",
+      price: 499,
+      category: "charging",
+      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1",
+      delivery_time: "15 min"
+    },
+    {
+      name: "Premium Earphones", 
+      price: 699,
+      category: "audio",
+      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
+      delivery_time: "15 min"
+    },
+    {
+      name: "Designer Mobile Cover",
+      price: 299,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8",
+      delivery_time: "20 min"
+    },
+    {
+      name: "Tempered Glass",
+      price: 199,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91",
+      delivery_time: "15 min"
+    }
+  ];
+  
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .insert(products);
+    
+    if (error) {
+      console.error("❌ Add products error:", error);
+      return false;
+    }
+    
+    console.log("✅ Sample products added to database");
+    return true;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return false;
+  }
+}
+
+// ========== ORDER FORM FUNCTIONS ==========
 function openOrderForm(productName, productPrice) {
-    // Set selected product
     selectedProduct.name = productName;
     selectedProduct.price = productPrice;
     
-    // Update display
     document.getElementById('productName').textContent = `${productName} - ₹${productPrice}`;
-    
-    // Show form
     document.getElementById('orderPopupForm').style.display = 'flex';
     document.body.style.overflow = 'hidden';
     
-    // Reset form
     resetForm();
 }
 
@@ -2185,7 +2342,6 @@ function getLocation() {
         return;
     }
     
-    // Show loading
     locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
     locationDisplay.style.display = 'block';
     
@@ -2196,10 +2352,7 @@ function getLocation() {
             userLocation = { lat, lon };
             locationObtained = true;
             
-            // Get address
             getAddressFromCoords(lat, lon);
-            
-            // Enable submit button if name and phone are filled
             checkFormValidity();
         },
         function(error) {
@@ -2234,7 +2387,6 @@ function getLocation() {
 function getAddressFromCoords(lat, lon) {
     const locationText = document.getElementById('locationText');
     
-    // Try to get address from OpenStreetMap
     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
         .then(response => response.json())
         .then(data => {
@@ -2292,19 +2444,8 @@ function checkFormValidity() {
     submitBtn.disabled = !(isNameValid && isPhoneValid && locationObtained);
 }
 
-// Attach validation
-document.getElementById('customerName').addEventListener('input', checkFormValidity);
-document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
-document.getElementById('customerPhone').addEventListener('blur', function() {
-    if (!/^[0-9]{10}$/.test(this.value)) {
-        this.style.borderColor = '#ff6b6b';
-    } else {
-        this.style.borderColor = '#e2e8f0';
-    }
-});
-
-// Form submission
-document.getElementById('orderForm').addEventListener('submit', function(e) {
+// ✅ UPDATED: Order Form Submission with Database Save
+document.getElementById('orderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const name = document.getElementById('customerName').value.trim();
@@ -2317,7 +2458,6 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
     message += `*Customer Name:* ${name}%0A`;
     message += `*WhatsApp:* ${phone}%0A%0A`;
     
-    // Add location
     if (userLocation && userLocation.address) {
         message += `*📍 Location:* ${userLocation.address}%0A`;
         message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
@@ -2339,6 +2479,21 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
     const successMessage = document.getElementById('successMessage');
     successMessage.style.display = 'block';
     
+    // ✅ NEW: Save to Database
+    const orderData = {
+        name: name,
+        phone: phone,
+        product: selectedProduct.name,
+        price: selectedProduct.price,
+        location: userLocation ? JSON.stringify(userLocation) : 'Not shared'
+    };
+    
+    const savedOrder = await saveOrderToDatabase(orderData);
+    
+    if (savedOrder) {
+        showNotification('✅ Order saved to database! Order ID: ' + savedOrder.id);
+    }
+    
     // Open WhatsApp after delay
     setTimeout(() => {
         window.open(whatsappURL, '_blank');
@@ -2349,6 +2504,17 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
             successMessage.style.display = 'none';
         }, 3000);
     }, 800);
+});
+
+// Attach validation
+document.getElementById('customerName').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('blur', function() {
+    if (!/^[0-9]{10}$/.test(this.value)) {
+        this.style.borderColor = '#ff6b6b';
+    } else {
+        this.style.borderColor = '#e2e8f0';
+    }
 });
 
 // Close form on escape
@@ -2365,7 +2531,7 @@ document.getElementById('orderPopupForm').addEventListener('click', function(e) 
     }
 });
 
-// ✅ FIXED: SIMPLE LOGIN FUNCTIONS
+// ========== LOGIN FUNCTIONS ==========
 function openSimpleLogin() {
   document.getElementById('loginModal').style.display = 'flex';
 }
@@ -2383,7 +2549,6 @@ function closeAdminLogin() {
   document.getElementById('adminLoginModal').style.display = 'none';
 }
 
-// ✅ FIXED: EASY LOGIN OPTIONS
 function loginAsCustomer() {
   currentUser = { type: 'customer', name: 'Customer' };
   localStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -2403,7 +2568,6 @@ function loginToAdmin() {
   const email = document.getElementById('adminEmail').value;
   const password = document.getElementById('adminPassword').value;
   
-  // Simple admin check
   if(email === 'admin@gmail.com' && password === '1234') {
     isAdminLoggedIn = true;
     closeAdminLogin();
@@ -2425,7 +2589,7 @@ function logoutAdmin() {
   showNotification('👋 Logged out from Admin Panel');
 }
 
-// ✅ ADDED: QUICK ORDER SERVICE FUNCTION
+// ========== QUICK ORDER SERVICE ==========
 function quickOrderService() {
   const device = document.getElementById('quickDevice').value;
   const problem = document.getElementById('quickProblem').value;
@@ -2465,7 +2629,7 @@ function quickOrderService() {
   showNotification('✅ Quick order request sent via WhatsApp!');
 }
 
-// ✅ FIXED: CUSTOMER ORDER VIA WHATSAPP (No login required)
+// ========== CUSTOMER ORDER VIA WHATSAPP ==========
 function customerOrderWhatsApp() {
   if(cart.length === 0) {
     showNotification('❌ Your cart is empty!');
@@ -2489,13 +2653,12 @@ function customerOrderWhatsApp() {
   const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
   window.open(whatsappURL, '_blank');
   
-  // Clear cart after order
   cart = [];
   updateOrderSummary();
   showNotification('✅ Order placed successfully! Check WhatsApp.');
 }
 
-// ✅ PAGE NAVIGATION
+// ========== PAGE NAVIGATION ==========
 function showPage(id){ 
   if(id === 'admin' && !isAdminLoggedIn) {
     showAdminLogin();
@@ -2506,14 +2669,13 @@ function showPage(id){
   document.getElementById(id).classList.add('active'); 
   window.scrollTo(0,0); 
   
-  // ✅ HIDE FLOATING BUTTONS ON ADMIN PAGE
   const floatingButtons = document.getElementById('floatingButtons');
   const quickActionButton = document.getElementById('quickActionButton');
   
   if(id === 'admin') {
     floatingButtons.style.display = 'none';
     quickActionButton.style.display = 'none';
-    hideQuickActions(); // Close quick actions if open
+    hideQuickActions();
   } else {
     floatingButtons.style.display = 'flex';
     quickActionButton.style.display = 'block';
@@ -2525,7 +2687,7 @@ function showPage(id){
   }
 }
 
-// ✅ USER MENU FUNCTIONS
+// ========== USER MENU FUNCTIONS ==========
 function updateUserMenu() {
   if(currentUser) {
     document.getElementById('userName').textContent = currentUser.name;
@@ -2552,7 +2714,7 @@ function logoutUser() {
   showNotification('👋 Logged out successfully');
 }
 
-// ✅ ACCESSORIES SHOP
+// ========== ACCESSORIES SHOP ==========
 const accessories = [
   {id: 1, name: "Fast USB Charger", price: 499, img: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjaGFyZ2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
   {id: 2, name: "Premium Earphones", price: 699, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "audio"},
@@ -2651,7 +2813,7 @@ function updateOrderSummary() {
   orderTotal.textContent = `₹${total}`;
 }
 
-// ✅ NOTIFICATION FUNCTION
+// ========== NOTIFICATION FUNCTION ==========
 function showNotification(message) {
   const notification = document.createElement('div');
   notification.className = 'notification';
@@ -2665,57 +2827,23 @@ function showNotification(message) {
   }, 3000);
 }
 
-// ✅ MAP INITIALIZATION (RETURN KARA)
+// ========== MAP INITIALIZATION ==========
 function initSmallMap(){
   const map = L.map('smallMap').setView([19.800,72.760],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
   
-  let branches=[
-    {name:"Step'sEazy Boisar", lat:19.800, lon:72.760},
-    {name:"Step'sEazy Palghar", lat:19.695, lon:72.765}
-  ];
+  L.marker([19.805,72.756]).addTo(map).bindPopup('<b>Step\'sEazy Boisar</b><br>Shop no. 5, Station Road').openPopup();
+  L.marker([19.795,72.764]).addTo(map).bindPopup('<b>Step\'sEazy Palghar</b><br>Main Market Area');
   
-  branches.forEach(b=>{ 
-    L.marker([b.lat,b.lon]).addTo(map)
-      .bindPopup(`<strong>${b.name}</strong><br>📞 9359122677<br>🚚 Free Pickup & Delivery`);
-  });
+  L.circle([19.800,72.760],{radius:3000,color:'#667eea',fillColor:'#667eea',fillOpacity:0.1}).addTo(map).bindPopup('Service Area');
 }
-
-// ✅ STATS ANIMATION
-function animateStats() {
-  const stats = [
-    { element: 'happyCustomers', target: 500, current: 0 },
-    { element: 'phonesRepaired', target: 1200, current: 0 },
-    { element: 'warrantyClaims', target: 98, current: 0 },
-    { element: 'serviceCities', target: 2, current: 0 }
-  ];
-  
-  stats.forEach(stat => {
-    const increment = stat.target / 50;
-    const timer = setInterval(() => {
-      stat.current += increment;
-      if(stat.current >= stat.target){
-        stat.current = stat.target;
-        clearInterval(timer);
-      }
-      document.getElementById(stat.element).textContent = 
-        stat.element === 'warrantyClaims' ? 
-        Math.floor(stat.current) + '%' : 
-        Math.floor(stat.current) + '+';
-    }, 40);
-  });
-}
+document.addEventListener('DOMContentLoaded',initSmallMap);
 
 // ========== QUICK ACTIONS FUNCTIONS ==========
 function toggleQuickActions() {
   const panel = document.getElementById('quickActionsPanel');
+  panel.classList.toggle('active');
   isQuickActionsOpen = !isQuickActionsOpen;
-  
-  if (isQuickActionsOpen) {
-    panel.classList.add('active');
-  } else {
-    panel.classList.remove('active');
-  }
 }
 
 function hideQuickActions() {
@@ -2724,738 +2852,397 @@ function hideQuickActions() {
   isQuickActionsOpen = false;
 }
 
-function sendQuickMessage(msg) {
-  window.open(`https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+function sendQuickMessage(message) {
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
   hideQuickActions();
+  showNotification('Quick message sent via WhatsApp!');
 }
 
 // ========== ADMIN PANEL FUNCTIONS ==========
-
-// ✅ SIDEBAR FUNCTIONS
 function toggleSidebar() {
   const sidebar = document.getElementById('adminSidebar');
-  const content = document.getElementById('adminContent');
   const overlay = document.querySelector('.sidebar-overlay');
+  const adminContent = document.getElementById('adminContent');
   
   isSidebarOpen = !isSidebarOpen;
+  sidebar.classList.toggle('active');
+  overlay.classList.toggle('active');
+  adminContent.classList.toggle('sidebar-open');
+}
+
+async function initializeAdminPanel() {
+  console.log("Initializing admin panel...");
   
-  if (isSidebarOpen) {
-    sidebar.classList.add('active');
-    content.classList.add('sidebar-open');
-    overlay.classList.add('active');
-  } else {
-    sidebar.classList.remove('active');
-    content.classList.remove('sidebar-open');
-    overlay.classList.remove('active');
-  }
-}
-
-function closeSidebarOnMobile() {
-  if (window.innerWidth <= 768) {
-    toggleSidebar();
-  }
-}
-
-function updateSidebarMenu(activeTab) {
-  const menuItems = document.querySelectorAll('.sidebar-menu a');
-  menuItems.forEach(item => {
-    item.classList.remove('active');
-  });
+  // Test database connection
+  const connected = await testDatabaseConnection();
   
-  const activeItem = document.querySelector(`.sidebar-menu a[onclick*="${activeTab}"]`);
-  if (activeItem) {
-    activeItem.classList.add('active');
+  if (connected) {
+    // Load orders from database
+    const orders = await loadOrdersFromDatabase();
+    if (orders.length > 0) {
+      adminData.orders = orders;
+      loadOrdersTable();
+      updateDashboardStats();
+      showNotification(`✅ Loaded ${orders.length} orders from database`);
+    }
   }
+  
+  // Show overview tab by default
+  showAdminTab('overview');
 }
 
-// ✅ LOAD ADMIN DATA
-function loadAdminData() {
-  const saved = localStorage.getItem('adminData');
-  if(saved) adminData = JSON.parse(saved);
-  initializeDemoData();
-}
-
-function saveAdminData() {
-  localStorage.setItem('adminData', JSON.stringify(adminData));
-}
-
-// ✅ ADMIN TAB NAVIGATION
 function showAdminTab(tabName) {
-  updateSidebarMenu(tabName);
-  closeSidebarOnMobile();
-  loadTabContent(tabName);
-}
-
-// ✅ LOAD TAB CONTENT
-async function loadTabContent(tabName) {
+  // Update active tab in sidebar
+  document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+  document.querySelector(`a[onclick*="${tabName}"]`).classList.add('active');
+  
   const contentArea = document.getElementById('adminContentArea');
   
-  contentArea.innerHTML = `
-    <div style="text-align:center; padding:50px;">
-      <div style="width:50px; height:50px; border:3px solid #f3f3f3; border-top:3px solid var(--primary-2); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto;"></div>
-      <p style="margin-top:15px; color:var(--muted);">Loading ${tabName}...</p>
-    </div>
-  `;
+  switch(tabName) {
+    case 'overview':
+      contentArea.innerHTML = generateAdminOverview();
+      break;
+    case 'orders':
+      contentArea.innerHTML = generateAdminOrders();
+      loadOrdersTable();
+      break;
+    case 'products':
+      contentArea.innerHTML = generateAdminProducts();
+      break;
+    case 'customers':
+      contentArea.innerHTML = generateAdminCustomers();
+      break;
+    case 'inventory':
+      contentArea.innerHTML = generateAdminInventory();
+      break;
+    case 'services':
+      contentArea.innerHTML = generateAdminServices();
+      break;
+    case 'employees':
+      contentArea.innerHTML = generateAdminEmployees();
+      break;
+    case 'analytics':
+      contentArea.innerHTML = generateAdminAnalytics();
+      break;
+    case 'reports':
+      contentArea.innerHTML = generateAdminReports();
+      break;
+    case 'settings':
+      contentArea.innerHTML = generateAdminSettings();
+      break;
+  }
+}
+
+function generateAdminOverview() {
+  const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
+  const today = new Date().toLocaleDateString();
   
-  setTimeout(() => {
-    switch(tabName) {
-      case 'overview':
-        contentArea.innerHTML = getOverviewContent();
-        updateDashboardStats();
-        break;
-      case 'orders':
-        contentArea.innerHTML = getOrdersContent();
-        loadOrdersTable();
-        break;
-      case 'products':
-        contentArea.innerHTML = getProductsContent();
-        break;
-      case 'customers':
-        contentArea.innerHTML = getCustomersContent();
-        break;
-      case 'inventory':
-        contentArea.innerHTML = getInventoryContent();
-        break;
-      case 'services':
-        contentArea.innerHTML = getServicesContent();
-        break;
-      case 'analytics':
-        contentArea.innerHTML = getAnalyticsContent();
-        break;
-      case 'settings':
-        contentArea.innerHTML = getSettingsContent();
-        break;
-      default:
-        contentArea.innerHTML = getOverviewContent();
-    }
-  }, 300);
-}
-
-// ✅ CONTENT TEMPLATES
-function getOverviewContent() {
   return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="margin-bottom:30px;">
-        <h3 style="margin-bottom:10px;">Welcome back, Admin! 👋</h3>
-        <p style="color:var(--muted);">Here's what's happening with your business today.</p>
-      </div>
-      
-      <!-- Stats Cards -->
-      <div class="stats-grid">
-        <div class="stat-item" style="background:linear-gradient(135deg, #667eea20, #764ba220);">
-          <div class="stat-value" id="overviewTodayOrders">0</div>
-          <div class="stat-label">Today's Orders</div>
-          <div style="font-size:11px; color:#25D366;" id="overviewOrderChange">+0%</div>
-        </div>
-        <div class="stat-item" style="background:linear-gradient(135deg, #f6d36520, #fda08520);">
-          <div class="stat-value" id="overviewTotalRevenue">₹0</div>
-          <div class="stat-label">Total Revenue</div>
-          <div style="font-size:11px; color:#25D366;" id="overviewRevenueChange">+0%</div>
-        </div>
-        <div class="stat-item" style="background:linear-gradient(135deg, #25D36620, #128C7E20);">
-          <div class="stat-value" id="overviewPendingRepairs">0</div>
-          <div class="stat-label">Pending Repairs</div>
-          <div style="font-size:11px; color:#ff6b6b;">Urgent</div>
-        </div>
-        <div class="stat-item" style="background:linear-gradient(135deg, #ff6b6b20, #ff475720);">
-          <div class="stat-value" id="overviewActiveRentals">0</div>
-          <div class="stat-label">Active Rentals</div>
-          <div style="font-size:11px; color:#667eea;">Running</div>
-        </div>
-      </div>
-      
-      <!-- Quick Actions -->
-      <div style="margin:40px 0;">
-        <h4>Quick Actions</h4>
-        <div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:15px;">
-          <button class="admin-btn" onclick="showAdminTab('orders')">
-            <span>➕</span> Add New Order
-          </button>
-          <button class="admin-btn" onclick="showAdminTab('products')">
-            <span>🛍️</span> Add Product
-          </button>
-          <button class="admin-btn" onclick="showAdminTab('customers')">
-            <span>👤</span> Add Customer
-          </button>
-          <button class="admin-btn" onclick="generateReport()">
-            <span>📄</span> Generate Report
-          </button>
-        </div>
-      </div>
-      
-      <!-- Recent Orders Table -->
-      <div style="background:white; border-radius:15px; padding:25px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-          <h5 style="margin:0;">Recent Orders</h5>
-          <button class="admin-btn secondary" onclick="showAdminTab('orders')">View All</button>
-        </div>
-        <div id="recentOrdersTable">
-          Loading recent orders...
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function getOrdersContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-        <h3 style="margin:0;">📦 Orders Management</h3>
-        <div>
-          <select id="orderFilter" onchange="filterOrders()" style="padding:8px; border-radius:8px; border:1px solid #e2e8f0; margin-right:10px;">
-            <option value="all">All Orders</option>
-            <option value="pending">Pending</option>
-            <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <button class="admin-btn" onclick="addNewOrder()">➕ Add Order</button>
-        </div>
-      </div>
-      
-      <div class="orders-table-container">
-        <table id="ordersTable">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Service/Product</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody">
-            <!-- Orders will be loaded here -->
-          </tbody>
-        </table>
-      </div>
-      
-      <div class="admin-section">
-        <h4>🔄 Update Order Status</h4>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
-          <div class="form-group">
-            <label>Select Order</label>
-            <select id="updateOrderSelect" style="width:100%;">
-              <option value="">Select Order</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>New Status</label>
-            <select id="newOrderStatus" style="width:100%;">
-              <option value="pending">⏳ Pending</option>
-              <option value="confirmed">✅ Confirmed</option>
-              <option value="in_progress">🔧 In Progress</option>
-              <option value="ready">📦 Ready for Delivery</option>
-              <option value="completed">🎉 Completed</option>
-              <option value="cancelled">❌ Cancelled</option>
-            </select>
-          </div>
-          <div style="align-self:end;">
-            <button class="admin-btn" onclick="updateOrderStatus()">Update Status</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function getProductsContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <h3>🛍️ Products Management</h3>
-      <div style="margin:30px 0;">
-        <button class="admin-btn" onclick="addNewProduct()">➕ Add New Product</button>
-      </div>
-      
-      <div class="product-grid" id="productsGrid">
-        Loading products...
-      </div>
-    </div>
-  `;
-}
-
-function getCustomersContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-        <h3 style="margin:0;">👥 Customer Database</h3>
-        <div>
-          <input type="text" id="searchCustomer" placeholder="Search customer..." style="padding:8px; border-radius:8px; border:1px solid #e2e8f0; margin-right:10px;">
-          <button class="admin-btn" onclick="addNewCustomer()">➕ Add Customer</button>
-        </div>
-      </div>
-      
-      <div class="customers-list" id="customersList">
-        Loading customers...
-      </div>
-    </div>
-  `;
-}
-
-function getInventoryContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-        <h3 style="margin:0;">📦 Inventory Management</h3>
-        <button class="admin-btn" onclick="addInventoryItem()">➕ Add Item</button>
-      </div>
-      
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;" id="inventoryGrid">
-        Loading inventory...
-      </div>
-      
-      <div class="admin-section" style="background:#fff3cd; border-left:4px solid #ffc107; margin-top:30px;">
-        <h4>⚠️ Low Stock Alert</h4>
-        <div id="lowStockItems">No low stock items</div>
-      </div>
-    </div>
-  `;
-}
-
-function getServicesContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <h3>🔧 Services Management</h3>
-      <div id="servicesManagementGrid">
-        Loading services...
-      </div>
-      
-      <div class="admin-section">
-        <h4>💰 Add New Service</h4>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
-          <div class="form-group">
-            <label>Service Name</label>
-            <input type="text" id="serviceName" placeholder="Service name">
-          </div>
-          <div class="form-group">
-            <label>Price (₹)</label>
-            <input type="number" id="servicePrice" placeholder="Price">
-          </div>
-          <div class="form-group">
-            <label>Warranty (Months)</label>
-            <input type="number" id="serviceWarranty" placeholder="6" value="6">
-          </div>
-          <div style="align-self:end;">
-            <button class="admin-btn" onclick="addService()">Add Service</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function getAnalyticsContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <h3>📊 Business Analytics</h3>
-      <p style="color:var(--muted); margin-bottom:30px;">View detailed insights about your business performance</p>
-      
-      <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-        <h4 style="margin-top:0;">Sales Overview</h4>
-        <div style="height:300px; display:flex; align-items:center; justify-content:center; color:var(--muted); border:1px dashed #e2e8f0; border-radius:10px;">
-          Sales chart will appear here
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function getSettingsContent() {
-  return `
-    <div style="max-width:1200px; margin:0 auto;">
-      <h3>⚙️ Settings</h3>
-      
-      <div class="admin-section">
-        <h4>Business Information</h4>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-          <div>
-            <div class="form-group">
-              <label>Business Name</label>
-              <input type="text" id="businessName" value="Step'sEazy">
-            </div>
-            <div class="form-group">
-              <label>Contact Number</label>
-              <input type="text" id="businessPhone" value="9359122677">
-            </div>
-            <button class="admin-btn" onclick="saveBusinessInfo()">Save</button>
-          </div>
-          
-          <div>
-            <div class="form-group">
-              <label>WhatsApp Number</label>
-              <input type="text" id="whatsappNumber" value="919359122677">
-            </div>
-            <div class="form-group">
-              <label>Default Message</label>
-              <textarea id="whatsappMessage" rows="3" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">Hi Step'sEazy, I want to book a service.</textarea>
-            </div>
-            <button class="admin-btn" onclick="saveWhatsAppSettings()">Save</button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="admin-section">
-        <h4>💾 Data Management</h4>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="admin-btn" onclick="backupData()">💾 Backup Data</button>
-          <button class="admin-btn" onclick="restoreData()">🔄 Restore Data</button>
-          <button class="admin-btn danger" onclick="clearAllData()">🗑️ Clear All Data</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// ✅ DASHBOARD FUNCTIONS
-function updateDashboardStats() {
-  const today = new Date().toDateString();
-  const todayOrders = adminData.orders.filter(order => 
-    new Date(order.date).toDateString() === today
-  ).length;
-  
-  const totalRevenue = adminData.orders.reduce((sum, order) => sum + (order.amount || 0), 0);
-  const pendingRepairs = adminData.orders.filter(order => 
-    order.status === 'pending' || order.status === 'in_progress'
-  ).length;
-  
-  document.getElementById('overviewTodayOrders').textContent = todayOrders;
-  document.getElementById('overviewTotalRevenue').textContent = '₹' + totalRevenue;
-  document.getElementById('overviewPendingRepairs').textContent = pendingRepairs;
-  document.getElementById('overviewActiveRentals').textContent = adminData.orders.filter(order => 
-    order.type === 'rental' && order.status === 'in_progress'
-  ).length;
-}
-
-// ✅ ORDERS MANAGEMENT
-function loadOrdersTable() {
-  const tbody = document.getElementById('ordersTableBody');
-  tbody.innerHTML = '';
-  
-  const orderSelect = document.getElementById('updateOrderSelect');
-  orderSelect.innerHTML = '<option value="">Select Order</option>';
-  
-  adminData.orders.forEach(order => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${order.id}</td>
-      <td>
-        <strong>${order.customerName || 'Walk-in'}</strong><br>
-        <small>${order.customerPhone || 'N/A'}</small>
-      </td>
-      <td>${order.service}</td>
-      <td>₹${order.amount || 0}</td>
-      <td>
-        <span class="status-badge status-${order.status || 'pending'}">
-          ${getStatusText(order.status)}
-        </span>
-      </td>
-      <td>${formatDate(order.date)}</td>
-      <td>
-        <button class="admin-btn" style="padding:5px 10px; font-size:11px;" onclick="viewOrder('${order.id}')">👁️</button>
-        <button class="admin-btn" style="padding:5px 10px; font-size:11px;" onclick="editOrder('${order.id}')">✏️</button>
-      </td>
-    `;
-    tbody.appendChild(row);
+    <h3 style="margin-top:0;">📊 Admin Dashboard</h3>
     
-    const option = document.createElement('option');
-    option.value = order.id;
-    option.textContent = `${order.id} - ${order.customerName || 'Walk-in'}`;
-    orderSelect.appendChild(option);
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">${adminData.orders.length}</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">${pendingOrders}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Today's Revenue</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Active Customers</div>
+      </div>
+    </div>
+    
+    <div class="admin-section">
+      <h4>📈 Quick Stats</h4>
+      <p>Today: ${today}</p>
+      <p>Database Status: <span style="color:#25D366;">✅ Connected</span></p>
+      <p>Total Orders in DB: ${adminData.orders.length}</p>
+    </div>
+    
+    <div class="admin-section">
+      <h4>⚡ Quick Actions</h4>
+      <button class="admin-btn" onclick="showAdminTab('orders')">View All Orders</button>
+      <button class="admin-btn success" onclick="addNewOrder()">Add New Order</button>
+      <button class="admin-btn" onclick="testDatabaseConnection()">Test Database</button>
+    </div>
+  `;
+}
+
+function generateAdminOrders() {
+  return `
+    <h3 style="margin-top:0;">📦 Order Management</h3>
+    
+    <div style="margin-bottom:20px;">
+      <button class="admin-btn" onclick="refreshOrders()">🔄 Refresh Orders</button>
+      <button class="admin-btn success" onclick="addNewOrder()">➕ Add New Order</button>
+    </div>
+    
+    <div class="orders-table-container">
+      <div id="ordersTableContent">
+        Loading orders from database...
+      </div>
+    </div>
+  `;
+}
+
+async function loadOrdersTable() {
+  const contentDiv = document.getElementById('ordersTableContent');
+  
+  if (!contentDiv) return;
+  
+  // Load fresh data from database
+  const orders = await loadOrdersFromDatabase();
+  adminData.orders = orders;
+  
+  if (orders.length === 0) {
+    contentDiv.innerHTML = '<p>No orders found in database.</p>';
+    return;
+  }
+  
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  
+  orders.forEach(order => {
+    const date = new Date(order.created_at).toLocaleDateString('en-IN');
+    const statusBadge = getStatusBadge(order.status);
+    
+    html += `
+      <tr>
+        <td>${order.id}</td>
+        <td>${order.customer_name}<br><small>${order.customer_phone}</small></td>
+        <td>${order.product_name}</td>
+        <td>₹${order.price}</td>
+        <td>${statusBadge}</td>
+        <td>${date}</td>
+        <td>
+          <button class="admin-btn" onclick="viewOrder(${order.id})">👁️ View</button>
+          <button class="admin-btn success" onclick="updateOrderStatus(${order.id})">✏️ Update</button>
+        </td>
+      </tr>
+    `;
   });
+  
+  html += `</tbody></table>`;
+  contentDiv.innerHTML = html;
+  
+  // Update sidebar badge
+  const pendingCount = orders.filter(o => o.status === 'pending').length;
+  document.getElementById('sidebarOrderBadge').textContent = pendingCount;
+}
+
+function getStatusBadge(status) {
+  const statusMap = {
+    'pending': 'status-pending',
+    'confirmed': 'status-confirmed',
+    'in_progress': 'status-in_progress',
+    'ready': 'status-ready',
+    'completed': 'status-completed',
+    'cancelled': 'status-cancelled'
+  };
+  
+  const statusText = {
+    'pending': 'Pending',
+    'confirmed': 'Confirmed',
+    'in_progress': 'In Progress',
+    'ready': 'Ready',
+    'completed': 'Completed',
+    'cancelled': 'Cancelled'
+  };
+  
+  return `<span class="status-badge ${statusMap[status] || 'status-pending'}">${statusText[status] || 'Pending'}</span>`;
+}
+
+async function refreshOrders() {
+  showNotification('🔄 Refreshing orders...');
+  await loadOrdersTable();
+  showNotification('✅ Orders refreshed!');
+}
+
+async function updateOrderStatus(orderId) {
+  const order = adminData.orders.find(o => o.id === orderId);
+  if (!order) return;
+  
+  const newStatus = prompt(`Update status for order ${orderId}:\nCurrent: ${order.status}\n\nEnter new status (pending/confirmed/in_progress/ready/completed/cancelled):`, order.status);
+  
+  if (newStatus && ['pending','confirmed','in_progress','ready','completed','cancelled'].includes(newStatus)) {
+    const success = await updateOrderStatusDB(orderId, newStatus);
+    if (success) {
+      showNotification(`✅ Order ${orderId} updated to ${newStatus}`);
+      await refreshOrders();
+    } else {
+      showNotification('❌ Failed to update order');
+    }
+  }
 }
 
 function addNewOrder() {
-  const orderId = 'ORD' + Date.now().toString().slice(-6);
-  const customerName = prompt("Customer Name:");
-  const customerPhone = prompt("Customer Phone:");
-  const service = prompt("Service/Product:");
-  const amount = parseFloat(prompt("Amount:"));
-  
-  if(!customerName || !service || !amount) {
-    showNotification('❌ Please fill all fields');
-    return;
-  }
-  
-  const newOrder = {
-    id: orderId,
-    customerName: customerName,
-    customerPhone: customerPhone,
-    service: service,
-    amount: amount,
-    status: 'pending',
-    date: new Date().toISOString(),
-    type: 'repair'
-  };
-  
-  adminData.orders.unshift(newOrder);
-  saveAdminData();
-  loadOrdersTable();
-  updateDashboardStats();
-  showNotification('✅ Order added successfully!');
+  showNotification('Opening order form...');
+  showPage('home');
+  setTimeout(() => {
+    openOrderForm('Custom Service', 1000);
+  }, 500);
 }
 
-function updateOrderStatus() {
-  const orderId = document.getElementById('updateOrderSelect').value;
-  const newStatus = document.getElementById('newOrderStatus').value;
-  
-  if(!orderId) {
-    showNotification('❌ Please select an order');
-    return;
-  }
-  
+function viewOrder(orderId) {
   const order = adminData.orders.find(o => o.id === orderId);
-  if(order) {
-    order.status = newStatus;
-    saveAdminData();
-    loadOrdersTable();
-    updateDashboardStats();
-    showNotification(`✅ Order ${orderId} updated to ${getStatusText(newStatus)}`);
-  }
-}
-
-// ✅ INITIALIZE DEMO DATA
-function initializeDemoData() {
-  if(adminData.orders.length === 0) {
-    adminData.orders = [
-      {
-        id: 'ORD001',
-        customerName: 'Rahul Sharma',
-        customerPhone: '9876543210',
-        service: 'Display Replacement',
-        amount: 2500,
-        status: 'completed',
-        date: new Date().toISOString(),
-        type: 'repair'
-      },
-      {
-        id: 'ORD002',
-        customerName: 'Priya Patel',
-        customerPhone: '9876543211',
-        service: 'Battery Replacement',
-        amount: 1200,
-        status: 'in_progress',
-        date: new Date().toISOString(),
-        type: 'repair'
-      }
-    ];
-    
-    adminData.customers = [
-      {
-        id: 'CUST001',
-        name: 'Rahul Sharma',
-        phone: '9876543210',
-        email: 'rahul@gmail.com',
-        joinDate: new Date().toISOString(),
-        totalOrders: 3,
-        totalSpent: 7500
-      }
-    ];
-    
-    adminData.inventory = [
-      {
-        id: 'INV001',
-        name: 'iPhone Display',
-        category: 'display',
-        quantity: 5,
-        minStock: 2,
-        price: 2500,
-        cost: 1800
-      }
-    ];
-    
-    adminData.services = [
-      {
-        id: 'SERV001',
-        name: 'Display Replacement',
-        price: 1200,
-        warranty: 6,
-        time: '30-45 min'
-      }
-    ];
-    
-    adminData.employees = [
-      {
-        id: 'EMP001',
-        name: 'Amit Patel',
-        role: 'Repair Technician',
-        phone: '9876543211',
-        salary: 25000
-      }
-    ];
-    
-    saveAdminData();
-  }
-}
-
-// ✅ UTILITY FUNCTIONS
-function getStatusText(status) {
-  const statusMap = {
-    'pending': '⏳ Pending',
-    'confirmed': '✅ Confirmed',
-    'in_progress': '🔧 In Progress',
-    'ready': '📦 Ready',
-    'completed': '🎉 Completed',
-    'cancelled': '❌ Cancelled'
-  };
-  return statusMap[status] || 'Pending';
-}
-
-function formatDate(dateString) {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN') + ' ' + 
-           date.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
-  } catch {
-    return 'Invalid date';
-  }
-}
-
-function backupData() {
-  const dataStr = JSON.stringify(adminData, null, 2);
-  localStorage.setItem('adminBackup_' + new Date().toISOString(), dataStr);
-  showNotification('✅ Data backup created successfully!');
-}
-
-function clearAllData() {
-  if(confirm('⚠️ Are you sure? This will delete ALL admin data!')) {
-    localStorage.removeItem('adminData');
-    adminData = {orders:[], customers:[], inventory:[], services:[], employees:[], settings:{}};
-    saveAdminData();
-    showAdminTab('overview');
-    showNotification('🗑️ All data cleared!');
-  }
-}
-
-function saveBusinessInfo() {
-  adminData.settings.businessName = document.getElementById('businessName').value;
-  adminData.settings.businessPhone = document.getElementById('businessPhone').value;
-  saveAdminData();
-  showNotification('✅ Business info saved!');
-}
-
-function saveWhatsAppSettings() {
-  adminData.settings.whatsappNumber = document.getElementById('whatsappNumber').value;
-  saveAdminData();
-  showNotification('✅ WhatsApp settings saved!');
-}
-
-// ✅ INITIALIZE ADMIN PANEL
-function initializeAdminPanel() {
-  loadAdminData();
-  loadTabContent('overview');
-  updateSidebarBadges();
+  if (!order) return;
   
-  // Auto-refresh every 30 seconds
-  setInterval(() => {
-    if (document.getElementById('admin').classList.contains('active')) {
-      updateDashboardStats();
-    }
-  }, 30000);
-}
-
-function updateSidebarBadges() {
-  const pendingOrders = adminData.orders.filter(order => 
-    order.status === 'pending' || order.status === 'in_progress'
-  ).length;
-  
-  const lowStockItems = adminData.inventory.filter(item => 
-    item.quantity < item.minStock
-  ).length;
-  
-  document.getElementById('sidebarOrderBadge').textContent = pendingOrders;
-  document.getElementById('sidebarInventoryBadge').textContent = lowStockItems;
-}
-
-// ✅ SEARCH & FILTER
-function filterProducts(searchTerm) {
-  const products = document.querySelectorAll('.product-card-ecom');
-  products.forEach(product => {
-    const title = product.querySelector('.product-title').textContent.toLowerCase();
-    product.style.display = title.includes(searchTerm.toLowerCase()) ? 'block' : 'none';
-  });
-}
-
-// ✅ INITIALIZE EVERYTHING
-document.addEventListener('DOMContentLoaded', function() {
-  // ✅ Map Return Kara
-  initSmallMap();
-  animateStats();
-  
-  // Add bounce animation
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+  const modalHtml = `
+    <div class="admin-modal">
+      <div class="admin-modal-content">
+        <h3>Order Details #${order.id}</h3>
+        <p><strong>Customer:</strong> ${order.customer_name}</p>
+        <p><strong>Phone:</strong> ${order.customer_phone}</p>
+        <p><strong>Product:</strong> ${order.product_name}</p>
+        <p><strong>Price:</strong> ₹${order.price}</p>
+        <p><strong>Status:</strong> ${getStatusBadge(order.status)}</p>
+        <p><strong>Location:</strong> ${order.location || 'Not shared'}</p>
+        <p><strong>Created:</strong> ${new Date(order.created_at).toLocaleString('en-IN')}</p>
+        <div style="margin-top:20px;">
+          <button class="admin-btn" onclick="closeModal()">Close</button>
+          <button class="admin-btn success" onclick="updateOrderStatus(${order.id})">Update Status</button>
+        </div>
+      </div>
+    </div>
   `;
-  document.head.appendChild(style);
   
-  // Check saved user
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function closeModal() {
+  const modal = document.querySelector('.admin-modal');
+  if (modal) modal.remove();
+}
+
+function updateDashboardStats() {
+  const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
+  document.getElementById('sidebarOrderBadge').textContent = pendingOrders;
+}
+
+// Other admin panel sections (simplified for now)
+function generateAdminProducts() {
+  return `<h3>🛍️ Product Management (Coming Soon)</h3><p>Product management features will be added soon.</p>`;
+}
+
+function generateAdminCustomers() {
+  return `<h3>👥 Customer Management (Coming Soon)</h3><p>Customer management features will be added soon.</p>`;
+}
+
+function generateAdminInventory() {
+  return `<h3>📦 Inventory Management (Coming Soon)</h3><p>Inventory management features will be added soon.</p>`;
+}
+
+function generateAdminServices() {
+  return `<h3>🔧 Service Management (Coming Soon)</h3><p>Service management features will be added soon.</p>`;
+}
+
+function generateAdminEmployees() {
+  return `<h3>👨‍🔧 Employee Management (Coming Soon)</h3><p>Employee management features will be added soon.</p>`;
+}
+
+function generateAdminAnalytics() {
+  return `<h3>📈 Analytics Dashboard (Coming Soon)</h3><p>Analytics features will be added soon.</p>`;
+}
+
+function generateAdminReports() {
+  return `<h3>📄 Reports (Coming Soon)</h3><p>Reporting features will be added soon.</p>`;
+}
+
+function generateAdminSettings() {
+  return `
+    <h3>⚙️ Settings</h3>
+    <div class="admin-section">
+      <h4>Business Settings</h4>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" value="${adminData.settings.businessName}" readonly>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number</label>
+        <input type="text" value="${adminData.settings.whatsappNumber}" readonly>
+      </div>
+      <div class="form-group">
+        <label>Business Phone</label>
+        <input type="text" value="${adminData.settings.businessPhone}" readonly>
+      </div>
+    </div>
+  `;
+}
+
+// ========== OTHER FUNCTIONS ==========
+function trackOrder() {
+  const trackingId = document.getElementById('trackingId').value;
+  if (!trackingId) {
+    showNotification('❌ Please enter order ID or phone number');
+    return;
+  }
+  
+  // For now, show demo message
+  showNotification('🔍 Searching for order...');
+  setTimeout(() => {
+    showNotification('✅ Order found! Status: In Progress. Estimated completion: 30 minutes');
+  }, 1000);
+}
+
+function showMyOrders() {
+  if (!currentUser) {
+    openSimpleLogin();
+    return;
+  }
+  
+  // For now, show demo
+  showNotification('📋 Your orders will appear here after login');
+}
+
+// ========== INITIALIZATION ==========
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if user is already logged in
   const savedUser = localStorage.getItem('currentUser');
-  if(savedUser) {
+  if (savedUser) {
     currentUser = JSON.parse(savedUser);
     updateUserMenu();
   }
   
-  // Load admin data
-  loadAdminData();
+  // Load accessories shop
+  loadAccessoriesShop();
   
-  // Auto-hide user menu when clicking outside
-  document.addEventListener('click', function(e) {
-    if(!e.target.closest('.user-account')) {
-      document.getElementById('userMenu').style.display = 'none';
-    }
-    
-    // Close quick actions when clicking outside
-    if(!e.target.closest('#quickActionButton') && !e.target.closest('#quickActionsPanel')) {
-      hideQuickActions();
-    }
-    
-    // Close order form when clicking outside
-    if(e.target.classList.contains('order-popup-container')) {
-      closeOrderForm();
-    }
-  });
-  
-  // Close modals when clicking outside
-  document.getElementById('loginModal').addEventListener('click', function(e) {
-    if(e.target === this) closeLogin();
-  });
-  
-  document.getElementById('adminLoginModal').addEventListener('click', function(e) {
-    if(e.target === this) closeAdminLogin();
-  });
-  
-  // Close sidebar on ESC key
-  document.addEventListener('keydown', function(e) {
-    if(e.key === 'Escape' && isSidebarOpen) {
-      toggleSidebar();
-    }
-    if(e.key === 'Escape' && isQuickActionsOpen) {
-      hideQuickActions();
-    }
-    if(e.key === 'Escape' && document.getElementById('orderPopupForm').style.display === 'flex') {
-      closeOrderForm();
-    }
-  });
+  // Auto-test database connection
+  setTimeout(() => {
+    testDatabaseConnection();
+  }, 2000);
 });
+
+// CSS Animation
+document.head.insertAdjacentHTML('beforeend', `
+  <style>
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-10px);}
+      60% {transform: translateY(-5px);}
+    }
+  </style>
+`);
 </script>
-<!-- Supabase JS Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Tumhara connection code -->
-<script>
-  const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_Um4jqIPZ43NV3zf53xl9WQ_U1SbwVBJ";
-
-  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  console.log("Supabase Connected:", db);
-</script>  
-<!-- ========== JAVASCRIPT ENDS HERE ========== -->
 </body>
 </html>
