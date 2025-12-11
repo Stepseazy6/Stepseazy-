@@ -372,8 +372,41 @@ nav a:hover {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.rented-laptop-btn {
-  background: var(--gold-gradient);
+/* ✅ UPDATED: SAARE BUTTONS COLORFUL */
+.hero-btn-primary {
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(99,102,241,0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+  letter-spacing: 0.3px;
+}
+.hero-btn-secondary {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+  letter-spacing: 0.3px;
+}
+.hero-btn-rental {
+  background: linear-gradient(135deg, #f6d365, #fda085);
   color: white;
   border: none;
   padding: 14px 28px;
@@ -388,9 +421,11 @@ nav a:hover {
   margin: 0 10px;
   letter-spacing: 0.3px;
 }
-.rented-laptop-btn:hover {
+.hero-btn-primary:hover,
+.hero-btn-secondary:hover,
+.hero-btn-rental:hover {
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 15px 35px rgba(255,107,107,0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 /* ✅ UPDATED: FLOATING BUTTONS (ONLY ON CUSTOMER PAGES) */
 .floating-buttons {
@@ -817,7 +852,6 @@ footer p {
   .floating-buttons { bottom: 15px; right: 15px; }
   .floating-btn { width: 50px; height: 50px; font-size: 18px; }
   .hero-buttons { flex-direction: column; gap: 10px; }
-  .rented-laptop-btn { margin: 5px 0; }
   .services, .product-grid, .team-container, .laptops-grid { 
     grid-template-columns: 1fr; 
     gap: 20px; 
@@ -1609,7 +1643,7 @@ footer p {
     <a href="#" onclick="showPage('accessoriesShop')">Accessories Shop</a>
     <a href="#" onclick="showPage('about')">About Us</a>
     <a href="#" onclick="showPage('laptopRental')">💻 Laptop Rental</a>
-    <a href="#" onclick="showPage('serviceCalculator')">💰 Calculator</a>
+    <!-- ❌ REMOVED: Service Calculator Option -->
     <a href="#" onclick="showPage('orderTracking')">📦 Track</a>
     <a href="#" onclick="openSimpleLogin()" style="background:rgba(255,255,255,0.2);">👤 Account</a>
   </nav>
@@ -1664,21 +1698,7 @@ footer p {
       </div>
     </div>
 
-    <!-- ✅ ADDED: CLICKABLE ARROW FOR SERVICES -->
-    <div style="text-align:center; margin:30px 0;">
-      <div style="display:inline-block; animation:bounce 2s infinite; cursor:pointer;" onclick="showPage('services')">
-        <div style="font-size:24px; color:white;">👇</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.9); margin-top:5px;">Click here to view our services</div>
-      </div>
-    </div>
-
-    <div class="hero-buttons" style="margin: 20px 0 30px 0; text-align: center;">
-      <button class="btn" onclick="showPage('services')" style="margin: 0 10px;">📱 Our Services</button>
-      <button class="btn secondary" onclick="showPage('accessoriesShop')" style="margin: 0 10px;">🛍️ Accessories Shop</button>
-      <button class="rented-laptop-btn" onclick="showPage('laptopRental')">
-        💻 Laptop Rental
-      </button>
-    </div>
+    <!-- ❌ REMOVED: Clickable Arrow Section (Shift kiya niche) -->
   </div>
 
   <div class="trust-badges">
@@ -1707,49 +1727,30 @@ footer p {
     </div>
   </div>
 
-  <section>
-    <h3>Our Services</h3>
-    <div class="services container">
-      <div class="phone-box">
-        <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjByZXBhaXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Display Replacement">
-        <h4>Display Replacement</h4>
-        <p class="price">Starting ₹1200</p>
-        <p>Original & compatible displays available for all models.</p>
-        <!-- ✅ UPDATED: Now opens order form directly -->
-        <button class="whatsapp-btn" onclick="openOrderForm('Display Replacement', 1200)">
-          💬 Order Now
-        </button>
-      </div>
-      <div class="phone-box">
-        <img src="https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBiYXR0ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Battery Replacement">
-        <h4>Battery Replacement</h4>
-        <p class="price">Starting ₹700</p>
-        <p>High quality batteries with 6 months warranty.</p>
-        <button class="whatsapp-btn" onclick="openOrderForm('Battery Replacement', 700)">
-          💬 Order Now
-        </button>
-      </div>
-      <div class="phone-box">
-        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Back Panel Repair">
-        <h4>Back Panel & Body</h4>
-        <p class="price">Starting ₹800</p>
-        <p>Full body replacements & panel painting.</p>
-        <button class="whatsapp-btn" onclick="openOrderForm('Back Panel Repair', 800)">
-          💬 Order Now
-        </button>
-      </div>
-      <div class="phone-box">
-        <img src="https://images.unsplash.com/photo-1605789538467-fbea1b8f71cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBhY2Nlc3Nvcmllc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Accessories">
-        <h4>Smartphone Accessories</h4>
-        <p class="price">Starting ₹199</p>
-        <p>Chargers, earphones, cases & more.</p>
-        <button class="whatsapp-btn" onclick="showPage('accessoriesShop')">
-          🛍️ Shop Now
-        </button>
-      </div>
+  <!-- ✅ UPDATED: Animation 3 Buttons ke upar -->
+  <div style="text-align:center; margin:30px 0;">
+    <div style="display:inline-block; animation:bounce 2s infinite; cursor:pointer;">
+      <div style="font-size:24px; color:var(--primary-2);">👇</div>
+      <div style="font-size:13px; color:var(--muted); margin-top:5px;">Click on buttons below to explore</div>
     </div>
-  </section>
+  </div>
 
+  <!-- ✅ UPDATED: 3 Colorful Buttons -->
+  <div style="text-align:center; margin: 30px 0;">
+    <button class="hero-btn-primary" onclick="showPage('services')">
+      📱 Our Services
+    </button>
+    <button class="hero-btn-secondary" onclick="showPage('accessoriesShop')">
+      🛍️ Accessories Shop
+    </button>
+    <button class="hero-btn-rental" onclick="showPage('laptopRental')">
+      💻 Laptop Rental
+    </button>
+  </div>
+
+  <!-- ❌ REMOVED: "Our Services" Heading & Services Section -->
+  
+  <!-- ✅ ADDED: Our Service Areas Map (Return Kara) -->
   <section class="small-map-container">
     <h3>Our Service Areas</h3>
     <p style="text-align:center; color:var(--muted); margin-bottom:20px; font-size:14px;">Serving Boisar & Palghar with free pickup and delivery</p>
@@ -1893,14 +1894,7 @@ footer p {
 
     <div class="search-filter">
       <input type="text" class="search-box" placeholder="🔍 Search accessories..." onkeyup="filterProducts(this.value)">
-      <div class="filter-buttons">
-        <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
-        <button class="filter-btn" onclick="filterByCategory('charging')">Charging</button>
-        <button class="filter-btn" onclick="filterByCategory('audio')">Audio</button>
-        <button class="filter-btn" onclick="filterByCategory('protection')">Protection</button>
-        <button class="filter-btn" onclick="filterByCategory('accessories')">Accessories</button>
-        <button class="filter-btn" onclick="sortByPrice()">Price: Low to High</button>
-      </div>
+      <!-- ❌ REMOVED: Filter Buttons (All, Charging, Audio, Protection, Accessories, Price) -->
     </div>
 
     <div class="product-grid container" id="accessoriesGrid"></div>
@@ -1960,31 +1954,7 @@ footer p {
   </section>
 </div>
 
-<!-- Other pages (calculator, tracking, about, admin) remain same structure -->
-<div id="serviceCalculator" class="page">
-  <section>
-    <h3>💰 Service Cost Calculator</h3>
-    <div class="calculator">
-      <div class="form-group">
-        <label>Select Device Brand</label>
-        <select id="deviceBrand" onchange="calculatePrice()">
-          <option value="">Select Brand</option>
-          <option value="apple">Apple</option>
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-        </select>
-      </div>
-      
-      <div id="calcResult" class="calc-result">
-        <h4 style="margin:0 0 10px;">Estimated Cost: <span id="estimatedPrice">₹0</span></h4>
-      </div>
-      
-      <button class="whatsapp-btn" onclick="openOrderForm('Calculated Service', 0)" style="width:100%; margin-top:15px;">
-        💬 Order Now
-      </button>
-    </div>
-  </section>
-</div>
+<!-- ❌ REMOVED: Service Calculator Page (Pura section hata diya) -->
 
 <div id="orderTracking" class="page">
   <section>
@@ -2695,7 +2665,7 @@ function showNotification(message) {
   }, 3000);
 }
 
-// ✅ MAP INITIALIZATION
+// ✅ MAP INITIALIZATION (RETURN KARA)
 function initSmallMap(){
   const map = L.map('smallMap').setView([19.800,72.760],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
@@ -3410,6 +3380,7 @@ function filterProducts(searchTerm) {
 
 // ✅ INITIALIZE EVERYTHING
 document.addEventListener('DOMContentLoaded', function() {
+  // ✅ Map Return Kara
   initSmallMap();
   animateStats();
   
