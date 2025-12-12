@@ -2286,7 +2286,7 @@ footer p {
   <p>© 2025 Step'sEazy - All Rights Reserved</p>
   <div class="social-icons">
     <a href="tel:+91-9359122677" target="_blank">📞</a>
-    <a href="https://wa.me/919359122677" target="_blank">💬</a>
+    <a href="https://wa.me/+91-9359122677" target="_blank">💬</a>
   </div>
   <p>Made with ❤ in Boisar | No stress - Take rest</p>
 </footer>
@@ -2296,8 +2296,8 @@ footer p {
 <!-- ✅ ADDED: FLOATING ACTION BUTTONS (ONLY SHOW ON CUSTOMER PAGES) -->
 <div class="floating-buttons" id="floatingButtons">
   <a href="tel:+91-9359122677" class="floating-btn call" title="Call Now">📞</a>
-  <a href="https://wa.me/919359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
-  <a href="https://wa.me/919359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
+  <a href="https://wa.me/+91-9359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
+  <a href="https://wa.me/+91-9359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
 </div>
 
 <!-- ✅ ADDED: QUICK ACTIONS BUTTON (ONLY SHOW ON CUSTOMER PAGES) -->
@@ -2320,7 +2320,7 @@ let isSidebarOpen = false;
 let isQuickActionsOpen = false;
 
 // WhatsApp number for orders
-const ORDER_WHATSAPP_NUMBER = "+91 8050269752";
+const ORDER_WHATSAPP_NUMBER = "+91-8050269752";
 
 // Admin Data Structure
 let adminData = {
@@ -2331,8 +2331,8 @@ let adminData = {
   employees: [],
   settings: {
     businessName: "Step'sEazy",
-    whatsappNumber: "919359122677",
-    businessPhone: "8050269752"
+    whatsappNumber: "+91-9359122677",
+    businessPhone: "+91-8050269752"
   }
 };
 
@@ -2696,6 +2696,8 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     
     const name = document.getElementById('customerName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
+    const phonemodel = document.getElementById('customerPhonemodel').value.trim();
+    const Add = document.getElementById('customerlocation').value.trim();
     
     // Create WhatsApp message
     let message = `🛍️ *NEW ORDER - Step'sEazy*%0A%0A`;
