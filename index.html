@@ -60,6 +60,11 @@ header h1 {
   margin-left: 50px;
 }
 
+/* Hide old horizontal nav */
+nav.desktop-nav { 
+  display: none; 
+}
+
 /* 3 Line Hamburger Menu (LEFT SIDE) - Like Admin */
 .hamburger-menu-btn {
   background: rgba(255,255,255,0.2);
@@ -127,7 +132,7 @@ header h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.3); /* Light overlay */
   z-index: 1000;
   display: none;
 }
@@ -428,17 +433,12 @@ header h1 {
   color: #374151;
   font-size: 13px;
 }
-.form-group input, .form-group textarea, .form-group select {
+.form-group input {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   font-size: 14px;
-  font-family: 'Inter', sans-serif;
-}
-.form-group textarea {
-  resize: vertical;
-  min-height: 80px;
 }
 .buy-now-btn {
   width: 100%;
@@ -1452,276 +1452,250 @@ footer p {
   background: #e2e8f0;
 }
 
-/* ========== ✅ NEW: ORDER FORM MODAL STYLES ========== */
-.order-modal {
+/* ========== ORDER FORM POPUP STYLES ========== */
+.order-popup-container {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 99999;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(5px);
+  font-family: 'Inter', sans-serif;
 }
 
-.order-modal-content {
+.order-form-container {
   background: white;
-  width: 90%;
-  max-width: 500px;
   border-radius: 20px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  overflow: hidden;
-  animation: modalSlideUp 0.4s ease;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  animation: slideIn 0.5s ease;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-@keyframes modalSlideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-header {
-  background: var(--premium-gradient);
-  padding: 20px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.close-modal {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+.order-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
   cursor: pointer;
-  font-size: 20px;
+  color: #666;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.close-modal:hover {
-  background: rgba(255,255,255,0.3);
+.order-close-btn:hover {
+  background: #f5f5f5;
   transform: rotate(90deg);
 }
 
-.modal-body {
-  padding: 25px;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-/* ✅ SERVICE FORM SPECIFIC STYLES */
-.form-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.form-row .form-group {
-  flex: 1;
-  margin-bottom: 0;
-}
-
-/* ✅ ACCESSORIES FORM SPECIFIC STYLES */
-.cart-item {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  background: #f8faff;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-
-.cart-item-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  object-fit: cover;
-  margin-right: 15px;
-}
-
-.cart-item-details {
-  flex: 1;
-}
-
-.cart-item-title {
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.cart-item-price {
-  color: var(--primary-2);
+.order-form-title {
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 25px;
+  font-size: 22px;
+  border-bottom: 2px solid var(--primary-2);
+  padding-bottom: 12px;
   font-weight: 700;
 }
 
-.cart-item-actions {
+.order-form-group {
+  margin-bottom: 20px;
+}
+
+.order-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.order-form-group input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+  background: #f8faff;
+}
+
+.order-form-group input:focus {
+  border-color: var(--primary-2);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.order-location-btn {
+  background: var(--premium-gradient);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 10px;
+  transition: all 0.3s;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* ✅ LAPTOP RENTAL FORM SPECIFIC STYLES */
-.radio-group {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.radio-option {
-  flex: 1;
-  position: relative;
-}
-
-.radio-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-}
-
-.radio-label {
-  display: block;
-  padding: 15px;
-  background: #f8faff;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s;
-  font-weight: 600;
-}
-
-.radio-option input[type="radio"]:checked + .radio-label {
-  background: var(--premium-gradient);
-  color: white;
-  border-color: var(--primary-2);
+.order-location-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
-.time-options {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.time-option {
-  padding: 12px;
+.order-location-display {
   background: #f8faff;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s;
-  font-weight: 600;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  display: none;
+  border: 2px solid #e2e8f0;
 }
 
-.time-option:hover {
-  border-color: var(--primary-2);
-}
-
-.time-option.selected {
-  background: var(--premium-gradient);
-  color: white;
-  border-color: var(--primary-2);
-}
-
-/* ✅ SUBMIT BUTTON */
-.modal-submit-btn {
-  width: 100%;
-  padding: 16px;
+.order-submit-btn {
   background: #25D366;
   color: white;
   border: none;
+  padding: 16px;
   border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
   cursor: pointer;
-  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 15px;
   transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
 
-.modal-submit-btn:hover {
+.order-submit-btn:hover {
   background: #1da851;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(37,211,102,0.3);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
 }
 
-.modal-submit-btn:disabled {
+.order-submit-btn:disabled {
   background: #cccccc;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-/* ✅ LOCATION STYLES */
-.location-btn {
-  background: var(--gold-gradient);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 10px;
-  width: 100%;
-  cursor: pointer;
-  font-weight: 600;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.location-display {
-  background: #f8faff;
+.order-error-message {
+  background: #f8d7da;
+  color: #721c24;
   padding: 12px;
   border-radius: 10px;
   margin-top: 10px;
+  font-size: 13px;
   display: none;
-  font-size: 14px;
-  border-left: 4px solid var(--primary-2);
+  border-left: 4px solid #ff6b6b;
 }
 
-/* ✅ RESPONSIVE */
-@media (max-width: 768px) {
-  .order-modal-content {
-    width: 95%;
-    margin: 10px;
-  }
-  
-  .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .time-options {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ✅ ADMIN PANEL VISIBLE */
-#adminPanel {
+.order-success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
   display: none;
+  font-weight: 600;
+  border-left: 4px solid #25D366;
 }
 
-#adminPanel.active {
+.selected-product-display {
+  background: linear-gradient(135deg, #f8faff, #ffffff);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  border: 2px solid var(--primary-2);
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.selected-product-display strong {
+  color: var(--primary-2);
+  font-size: 15px;
   display: block;
+  margin-bottom: 8px;
 }
+
+.selected-product-display span {
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.order-form-note {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #666;
+  padding: 10px;
+  background: #f8faff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.order-location-icon::before {
+  content: "📍";
+  font-size: 18px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 280px;
+  }
+  .admin-content.sidebar-open {
+    margin-left: 0;
+  }
+  .menu-toggle-btn {
+    top: 15px;
+    left: 15px;
+  }
+  .quick-actions-panel {
+    left: 15px;
+    bottom: 120px;
+  }
+  .order-form-container {
+    padding: 25px 20px;
+    width: 95%;
+  }
+  .order-form-title {
+    font-size: 20px;
+  }
+}
+/* ========== CSS ENDS HERE ========== */
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
@@ -1732,12 +1706,12 @@ footer p {
 <div class="vertical-sidebar" id="verticalSidebar">
   <button class="close-sidebar" onclick="closeSidebar()">&times;</button>
   <a href="#" onclick="showPage('home'); closeSidebar();">🏠 Home</a>
-  <a href="#" onclick="showPage('services'); closeSidebar();">🔧 Our Services</a>
+  <a href="#" onclick="showPage('services'); closeSidebar();">🔧 Services</a>
   <a href="#" onclick="showPage('accessoriesShop'); closeSidebar();">🛍️ Accessories Shop</a>
   <a href="#" onclick="showPage('about'); closeSidebar();">👥 About Us</a>
   <a href="#" onclick="showPage('laptopRental'); closeSidebar();">💻 Laptop Rental</a>
   <a href="#" onclick="showPage('orderTracking'); closeSidebar();">📦 Track</a>
-  <a href="#" onclick="openSimpleLogin(); closeSidebar();" style="background:var(--premium-gradient); color:white;">👤 Account / Admin</a>
+  <a href="#" onclick="openSimpleLogin(); closeSidebar();" style="background:var(--premium-gradient); color:white;">👤 Account</a>
 </div>
 
 <!-- ✅ UPDATED: SIMPLE LOGIN MODAL -->
@@ -1758,7 +1732,7 @@ footer p {
       <div style="font-size:12px; color:var(--muted); margin-top:5px;">Fast & secure login</div>
     </div>
     
-    <div class="login-option" onclick="loginAsAdmin()">
+    <div class="login-option" onclick="showAdminLogin()">
       <div class="login-option-icon">🔧</div>
       <div class="login-option-text">Admin Login</div>
       <div style="font-size:12px; color:var(--muted); margin-top:5px;">For business management</div>
@@ -1770,252 +1744,101 @@ footer p {
   </div>
 </div>
 
-<!-- ✅ ORDER FORM MODALS -->
-<div id="serviceOrderModal" class="order-modal">
-  <div class="order-modal-content">
-    <div class="modal-header">
-      <h3>📱 Service Order Form</h3>
-      <button class="close-modal" onclick="closeServiceOrder()">×</button>
-    </div>
-    <div class="modal-body">
-      <div style="background: #f8faff; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--primary-2);">
-        <strong>Service:</strong> <span id="serviceName">Loading...</span><br>
-        <strong>Price:</strong> <span id="servicePrice">₹0</span>
-      </div>
-      
-      <form id="serviceOrderForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" id="serviceCustomerName" placeholder="Enter full name" required>
-          </div>
-          <div class="form-group">
-            <label>WhatsApp Number *</label>
-            <input type="tel" id="serviceCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Phone Model *</label>
-          <input type="text" id="phoneModel" placeholder="e.g., iPhone 14, Samsung S23" required>
-        </div>
-        
-        <div class="form-group">
-          <label>Location Details *</label>
-          <input type="text" id="serviceLocation" placeholder="Street, Area, Landmark" required>
-        </div>
-        
-        <div class="form-group">
-          <label>Live Location (Optional)</label>
-          <button type="button" class="location-btn" onclick="getServiceLocation()">
-            📍 Share Live Location
-          </button>
-          <div class="location-display" id="serviceLocationDisplay">
-            <strong>📍 Your Location:</strong><br>
-            <span id="serviceLocationText">Location not shared yet</span>
-          </div>
-        </div>
-        
-        <!-- ✅ SUBMIT BUTTON ADDED -->
-        <button type="submit" class="modal-submit-btn" id="serviceSubmitBtn">
-          📱 Submit Service Order
-        </button>
-        
-        <div style="text-align:center; margin-top:15px; font-size:12px; color:#666;">
-          After submitting, we'll send order to WhatsApp with live location
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div id="accessoriesOrderModal" class="order-modal">
-  <div class="order-modal-content">
-    <div class="modal-header">
-      <h3>🛍️ Accessories Order Form</h3>
-      <button class="close-modal" onclick="closeAccessoriesOrder()">×</button>
-    </div>
-    <div class="modal-body">
-      <div id="accessoriesCartItems">
-        <!-- Cart items will be loaded here -->
-      </div>
-      
-      <div id="accessoriesCartEmpty" style="text-align:center; padding:30px; color:var(--muted);">
-        🛒 Your cart is empty<br>
-        <small>Add accessories from the shop first</small>
-      </div>
-      
-      <form id="accessoriesOrderForm" style="display:none;">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" id="accessoriesCustomerName" placeholder="Enter full name" required>
-          </div>
-          <div class="form-group">
-            <label>WhatsApp Number *</label>
-            <input type="tel" id="accessoriesCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Delivery Address *</label>
-          <textarea id="accessoriesAddress" rows="3" placeholder="Complete address with landmark" required></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Live Location (Optional)</label>
-          <button type="button" class="location-btn" onclick="getAccessoriesLocation()">
-            📍 Share Live Location
-          </button>
-          <div class="location-display" id="accessoriesLocationDisplay">
-            <strong>📍 Your Location:</strong><br>
-            <span id="accessoriesLocationText">Location not shared yet</span>
-          </div>
-        </div>
-        
-        <!-- ✅ SUBMIT BUTTON ADDED -->
-        <button type="submit" class="modal-submit-btn" id="accessoriesSubmitBtn">
-          🛍️ Submit Accessories Order
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div id="laptopRentalModal" class="order-modal">
-  <div class="order-modal-content">
-    <div class="modal-header">
-      <h3>💻 Laptop Rental Order</h3>
-      <button class="close-modal" onclick="closeLaptopRental()">×</button>
-    </div>
-    <div class="modal-body">
-      <div style="background: #f8faff; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--primary-2);">
-        <strong>Laptop:</strong> <span id="laptopName">Loading...</span><br>
-        <strong>Price:</strong> <span id="laptopPrice">₹0</span> per 2 hours
-      </div>
-      
-      <form id="laptopRentalForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" id="laptopCustomerName" placeholder="Enter full name" required>
-          </div>
-          <div class="form-group">
-            <label>WhatsApp Number *</label>
-            <input type="tel" id="laptopCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Rental Period *</label>
-          <div class="time-options">
-            <div class="time-option" onclick="selectRentalTime(2, 299)">2 Hours - ₹299</div>
-            <div class="time-option" onclick="selectRentalTime(4, 549)">4 Hours - ₹549</div>
-            <div class="time-option" onclick="selectRentalTime(8, 999)">8 Hours - ₹999</div>
-            <div class="time-option" onclick="selectRentalTime(24, 1999)">1 Day - ₹1999</div>
-            <div class="time-option" onclick="selectRentalTime(168, 6999)">1 Week - ₹6999</div>
-            <div class="time-option" onclick="selectRentalTime(720, 24999)">1 Month - ₹24999</div>
-          </div>
-          <input type="hidden" id="rentalHours" value="2">
-          <input type="hidden" id="rentalPrice" value="299">
-        </div>
-        
-        <div class="form-group">
-          <label>Delivery Option *</label>
-          <div class="radio-group">
-            <div class="radio-option">
-              <input type="radio" id="deliveryHome" name="deliveryOption" value="home" checked onchange="toggleLaptopLocation()">
-              <label class="radio-label" for="deliveryHome">🏠 Home Delivery</label>
-            </div>
-            <div class="radio-option">
-              <input type="radio" id="pickupShop" name="deliveryOption" value="shop" onchange="toggleLaptopLocation()">
-              <label class="radio-label" for="pickupShop">🏪 Shop Pickup</label>
-            </div>
-          </div>
-        </div>
-        
-        <div class="form-group" id="laptopLocationGroup">
-          <label>Delivery Address *</label>
-          <textarea id="laptopAddress" rows="3" placeholder="Complete address for delivery" required></textarea>
-        </div>
-        
-        <div class="form-group" id="laptopLiveLocationGroup">
-          <label>Live Location (Optional)</label>
-          <button type="button" class="location-btn" onclick="getLaptopLocation()">
-            📍 Share Live Location
-          </button>
-          <div class="location-display" id="laptopLocationDisplay">
-            <strong>📍 Your Location:</strong><br>
-            <span id="laptopLocationText">Location not shared yet</span>
-          </div>
-        </div>
-        
-        <!-- ✅ SUBMIT BUTTON ADDED -->
-        <button type="submit" class="modal-submit-btn" id="laptopSubmitBtn">
-          💻 Submit Rental Order
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- ✅ ADMIN PANEL SECTION -->
-<div id="adminPanel" class="page">
-  <section>
-    <div style="text-align:center; margin-bottom:30px;">
-      <h3>🔧 Admin Panel</h3>
-      <p style="color:var(--muted);">Manage your business operations</p>
+<!-- ✅ UPDATED: ADMIN LOGIN MODAL (DEMO ID REMOVED) -->
+<div id="adminLoginModal" class="login-modal" style="display:none;">
+  <div class="login-content">
+    <span class="login-close" onclick="closeAdminLogin()">&times;</span>
+    <div class="login-title">🔧 Admin Login</div>
+    
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="adminEmail" placeholder="Enter admin email" required>
     </div>
     
-    <div class="admin-panel">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h4 style="margin:0;">Step'sEazy Admin Dashboard</h4>
-        <button class="admin-btn danger" onclick="logoutAdmin()">🚪 Logout</button>
-      </div>
-      
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-value" id="adminTotalOrders">0</div>
-          <div class="stat-label">Total Orders</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="adminPendingOrders">0</div>
-          <div class="stat-label">Pending Orders</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="adminTodayOrders">0</div>
-          <div class="stat-label">Today's Orders</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value" id="adminRevenue">₹0</div>
-          <div class="stat-label">Total Revenue</div>
-        </div>
-      </div>
-      
-      <div class="admin-section">
-        <h4>📋 Recent Orders</h4>
-        <div id="adminOrdersList" style="background:#f8faff; padding:15px; border-radius:12px; min-height:100px;">
-          <p style="text-align:center; color:var(--muted);">Loading orders...</p>
-        </div>
-      </div>
-      
-      <div class="admin-section">
-        <h4>⚡ Quick Actions</h4>
-        <button class="admin-btn" onclick="addNewProduct()">➕ Add Product</button>
-        <button class="admin-btn" onclick="viewAllOrders()">📦 View All Orders</button>
-        <button class="admin-btn success" onclick="updateInventory()">📊 Update Inventory</button>
-        <button class="admin-btn" onclick="generateReport()">📄 Generate Report</button>
-      </div>
-      
-      <div class="admin-section">
-        <h4>📊 Business Overview</h4>
-        <p>📍 Serving Area: Boisar & Palghar</p>
-        <p>📱 WhatsApp: +91-9359122677</p>
-        <p>⏰ Service Hours: 8 AM - 10 PM</p>
-        <p>🚚 Delivery Time: 15-20 minutes</p>
-      </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="adminPassword" placeholder="Enter password" required>
     </div>
-  </section>
+    
+    <button class="whatsapp-btn" onclick="loginToAdmin()" style="background:var(--premium-gradient); width:100%;">
+      🔑 Login to Admin Panel
+    </button>
+    
+    <div style="margin-top:15px; font-size:12px; color:var(--muted); text-align:center;">
+      <a href="#" onclick="forgotPassword()" style="color:var(--primary-2);">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ QUICK ACTIONS PANEL -->
+<div id="quickActionsPanel" class="quick-actions-panel">
+  <div class="quick-actions-header">
+    <strong>Quick Actions</strong>
+    <button class="close-quick-actions" onclick="hideQuickActions()">&times;</button>
+  </div>
+  <button class="quick-action-btn" onclick="sendQuickMessage('Hello, my phone display is broken. Need urgent repair.')">
+    📱 Broken Display
+  </button>
+  <button class="quick-action-btn" onclick="sendQuickMessage('My phone battery drains very fast. Need battery replacement.')">
+    🔋 Battery Issue
+  </button>
+  <button class="quick-action-btn" onclick="sendQuickMessage('Phone not charging properly. Charging port issue.')">
+    ⚡ Not Charging
+  </button>
+  <button class="quick-action-btn" onclick="sendQuickMessage('Please call me back for service enquiry.')">
+    📞 Call Back
+  </button>
+</div>
+
+<!-- ✅ ORDER FORM POPUP -->
+<div class="order-popup-container" id="orderPopupForm">
+    <div class="order-form-container">
+        <button class="order-close-btn" onclick="closeOrderForm()">×</button>
+        <h2 class="order-form-title">📱 Complete Your Order</h2>
+        
+        <!-- Selected Product Display -->
+        <div class="selected-product-display" id="selectedProductDisplay">
+            <strong>Product:</strong> <span id="productName">Loading...</span>
+        </div>
+        
+        <form id="orderForm">
+            <div class="order-form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="order-form-group">
+                <label for="customerPhone">WhatsApp Number *</label>
+                <input type="tel" id="customerPhone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" maxlength="10">
+            </div>
+            
+            <div class="order-form-group">
+                <label>Live Location *</label>
+                <button type="button" class="order-location-btn" onclick="getLocation()">
+                    <span class="order-location-icon"></span> Share Your Live Location
+                </button>
+                <div class="order-location-display" id="locationDisplay">
+                    <strong>📍 Your Location:</strong> <br>
+                    <span id="locationText">Location not shared yet</span>
+                </div>
+                <div class="order-error-message" id="locationError">
+                    Location access denied. Please allow location to continue.
+                </div>
+            </div>
+            
+            <button type="submit" class="order-submit-btn" id="submitBtn" disabled>
+                <span>💬</span> Send Order via WhatsApp
+            </button>
+            
+            <div class="order-success-message" id="successMessage">
+                ✅ Order sent to WhatsApp! Check your messages.
+            </div>
+        </form>
+        
+        <div class="order-form-note">
+            <p>📍 We'll pickup from your location within 15-20 minutes</p>
+        </div>
+    </div>
 </div>
 
 <!-- ---------- MAIN CONTENT ---------- -->
@@ -2157,9 +1980,9 @@ footer p {
           <li>30-45 minutes repair</li>
           <li>6 months warranty</li>
         </ul>
-        <!-- ✅ UPDATED: Opens Service Order Form -->
-        <button class="whatsapp-btn" onclick="openServiceOrder('Display Replacement', 1200)">
-          📱 Order Service
+        <!-- ✅ UPDATED: Now opens order form directly -->
+        <button class="whatsapp-btn" onclick="openOrderForm('Display Replacement', 1200)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -2171,8 +1994,8 @@ footer p {
           <li>30 minutes replacement</li>
           <li>6 months warranty</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openServiceOrder('Battery Replacement', 700)">
-          📱 Order Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Battery Replacement', 700)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -2184,8 +2007,8 @@ footer p {
           <li>Color matching</li>
           <li>45 minutes service</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openServiceOrder('Back Panel Repair', 800)">
-          📱 Order Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Back Panel Repair', 800)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -2197,8 +2020,8 @@ footer p {
           <li>30 minutes service</li>
           <li>Warranty included</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openServiceOrder('Charging Port Repair', 600)">
-          📱 Order Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Charging Port Repair', 600)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -2210,8 +2033,8 @@ footer p {
           <li>Software update</li>
           <li>Data backup</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openServiceOrder('Software Repair', 500)">
-          📱 Order Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Software Repair', 500)">
+          💬 Order Now
         </button>
       </div>
       <div class="phone-box">
@@ -2223,15 +2046,15 @@ footer p {
           <li>Ultrasonic cleaning</li>
           <li>Component replacement</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openServiceOrder('Water Damage Repair', 1500)">
-          📱 Order Service
+        <button class="whatsapp-btn" onclick="openOrderForm('Water Damage Repair', 1500)">
+          💬 Order Now
         </button>
       </div>
     </div>
     
     <!-- ✅ ADDED: QUICK ORDER SECTION -->
     <div style="text-align:center; margin-top:40px;">
-      <h4>Quick Service Order</h4>
+      <h4>Quick Order</h4>
       <p style="color:var(--muted); margin-bottom:20px;">Select your device and problem for instant ordering</p>
       
       <div style="max-width:500px; margin:0 auto; background:white; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
@@ -2262,7 +2085,7 @@ footer p {
         </div>
         
         <button class="whatsapp-btn" onclick="quickOrderService()" style="width:100%; margin-top:15px;">
-          📱 Order Service Now
+          💬 Order Now
         </button>
       </div>
     </div>
@@ -2281,30 +2104,28 @@ footer p {
       <input type="text" class="search-box" placeholder="🔍 Search accessories..." onkeyup="filterProducts(this.value)">
     </div>
 
-    <div class="product-grid container" id="accessoriesGrid">
-      <!-- Accessories products will be loaded here -->
-    </div>
+    <div class="product-grid container" id="accessoriesGrid"></div>
 
-    <!-- ✅ UPDATED: Order Summary with Accessories Order Button -->
+    <!-- ✅ UPDATED: Order Summary with Customer Order Button -->
     <div class="order-summary" id="orderSummary" style="display:none;">
-      <h4>📦 Your Accessories Cart</h4>
+      <h4>📦 Your Order Summary</h4>
       <div id="orderItems"></div>
       <div class="order-total">
         <span>Total:</span>
         <span id="orderTotal">₹0</span>
       </div>
-      <!-- ✅ UPDATED: Opens Accessories Order Form -->
-      <button class="customer-order-btn" onclick="openAccessoriesOrder()">
-        🛍️ Proceed to Order Form
+      <!-- ✅ FIXED: Now uses customerOrderWhatsApp instead of openSimpleLogin -->
+      <button class="customer-order-btn" onclick="customerOrderWhatsApp()">
+        💬 Complete Order
       </button>
       <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:10px;">
-        Complete order form with name, number, and address
+        No login required! Direct WhatsApp ordering.
       </p>
     </div>
   </section>
 </div>
 
-<!-- ---------- LAPTOP RENTAL ---------- -->
+<!-- Other pages remain same (laptop rental, calculator, etc.) -->
 <div id="laptopRental" class="page">
   <section>
     <div class="ecommerce-header">
@@ -2319,8 +2140,7 @@ footer p {
           <div class="laptop-title">Dell Inspiron 15</div>
           <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD</div>
           <div class="laptop-price">₹299 / 2 hours</div>
-          <!-- ✅ UPDATED: Opens Laptop Rental Form -->
-          <button class="rent-now-btn" onclick="openLaptopRental('Dell Inspiron 15 Laptop', 299)">
+          <button class="rent-now-btn" onclick="openOrderForm('Dell Inspiron 15 Laptop Rental', 299)">
             💻 Rent Now
           </button>
         </div>
@@ -2332,7 +2152,7 @@ footer p {
           <div class="laptop-title">HP Pavilion 14</div>
           <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD</div>
           <div class="laptop-price">₹399 / 2 hours</div>
-          <button class="rent-now-btn" onclick="openLaptopRental('HP Pavilion 14 Laptop', 399)">
+          <button class="rent-now-btn" onclick="openOrderForm('HP Pavilion 14 Laptop Rental', 399)">
             💻 Rent Now
           </button>
         </div>
@@ -2341,7 +2161,6 @@ footer p {
   </section>
 </div>
 
-<!-- Other pages remain -->
 <div id="orderTracking" class="page">
   <section>
     <h3>📦 Track Your Order</h3>
@@ -2364,6 +2183,105 @@ footer p {
   </section>
 </div>
 
+<!-- ✅ UPDATED: ADMIN PANEL WITH VERTICAL SIDEBAR -->
+<div id="admin" class="page">
+  <!-- MENU TOGGLE BUTTON -->
+  <button class="menu-toggle-btn" onclick="toggleAdminSidebar()">☰</button>
+  
+  <!-- SIDEBAR OVERLAY (MOBILE) -->
+  <div class="admin-sidebar-overlay" onclick="toggleAdminSidebar()"></div>
+  
+  <!-- VERTICAL SIDEBAR -->
+  <div class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header">
+      <h4>Step'sEazy Admin</h4>
+      <p style="font-size:12px; color:var(--muted); margin:5px 0 0;">Business Control Panel</p>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li>
+        <a href="#" onclick="showAdminTab('overview'); toggleAdminSidebar();" class="active">
+          <span class="icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('orders'); toggleAdminSidebar();">
+          <span class="icon">📦</span>
+          <span>Orders</span>
+          <span class="badge" id="sidebarOrderBadge" style="margin-left:auto; background:#ff6b6b; color:white; font-size:11px; padding:2px 8px; border-radius:10px;">0</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('products'); toggleAdminSidebar();">
+          <span class="icon">🛍️</span>
+          <span>Products</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('customers'); toggleAdminSidebar();">
+          <span class="icon">👥</span>
+          <span>Customers</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('inventory'); toggleAdminSidebar();">
+          <span class="icon">📦</span>
+          <span>Inventory</span>
+          <span class="badge" id="sidebarInventoryBadge" style="margin-left:auto; background:#f6d365; color:#000; font-size:11px; padding:2px 8px; border-radius:10px;">0</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('services'); toggleAdminSidebar();">
+          <span class="icon">🔧</span>
+          <span>Services</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('employees'); toggleAdminSidebar();">
+          <span class="icon">👨‍🔧</span>
+          <span>Employees</span>
+        </a>
+      </li>
+      
+      <div class="sidebar-divider"></div>
+      
+      <li>
+        <a href="#" onclick="showAdminTab('analytics'); toggleAdminSidebar();">
+          <span class="icon">📈</span>
+          <span>Analytics</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('reports'); toggleAdminSidebar();">
+          <span class="icon">📄</span>
+          <span>Reports</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="showAdminTab('settings'); toggleAdminSidebar();">
+          <span class="icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <button class="admin-btn danger" onclick="logoutAdmin()" style="width:100%;">
+        <span>🚪</span> Logout
+      </button>
+    </div>
+  </div>
+  
+  <!-- MAIN CONTENT AREA -->
+  <div class="admin-content" id="adminContent">
+    <!-- Dashboard will be loaded here -->
+    <div id="adminContentArea">
+      <!-- Content will be dynamically loaded -->
+    </div>
+  </div>
+</div>
+
 <footer>
   <p>© 2025 Step'sEazy - All Rights Reserved</p>
   <div class="social-icons">
@@ -2375,38 +2293,59 @@ footer p {
 
 </div>
 
-<!-- ✅ ADDED: FLOATING ACTION BUTTONS -->
+<!-- ✅ ADDED: FLOATING ACTION BUTTONS (ONLY SHOW ON CUSTOMER PAGES) -->
 <div class="floating-buttons" id="floatingButtons">
   <a href="tel:+91-9359122677" class="floating-btn call" title="Call Now">📞</a>
   <a href="https://wa.me/+91-9359122677" class="floating-btn whatsapp" title="WhatsApp Now">💬</a>
+  <a href="https://wa.me/+91-9359122677?text=Hi%20Step'sEazy,%20I%20have%20a%20complaint" class="floating-btn complaint" title="Raise Complaint">⚠️</a>
+</div>
+
+<!-- ✅ ADDED: QUICK ACTIONS BUTTON (ONLY SHOW ON CUSTOMER PAGES) -->
+<div style="position:fixed; bottom:25px; left:25px; z-index:1000;" id="quickActionButton">
+  <button class="floating-btn" style="background:#8b6cf6;" onclick="toggleQuickActions()" title="Quick Actions">⚡</button>
 </div>
 
 <!-- ========== HTML ENDS HERE ========== -->
 
 <!-- ========== START JAVASCRIPT ========== -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Supabase Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ========== GLOBAL VARIABLES ==========
 let cart = [];
 let currentUser = null;
 let isAdminLoggedIn = false;
 let isSidebarOpen = false;
+let isQuickActionsOpen = false;
 
 // WhatsApp number for orders
-const WHATSAPP_NUMBER = "919359122677";
+const ORDER_WHATSAPP_NUMBER = "+91-8050269752";
 
-// Order Form Data
-let selectedService = { name: "", price: 0 };
-let selectedLaptop = { name: "", price: 0 };
-let selectedRentalHours = 2;
-let selectedRentalPrice = 299;
+// Admin Data Structure
+let adminData = {
+  orders: [],
+  customers: [],
+  inventory: [],
+  services: [],
+  employees: [],
+  settings: {
+    businessName: "Step'sEazy",
+    whatsappNumber: "+91-9359122677",
+    businessPhone: "+91-8050269752"
+  }
+};
 
-// Location Data
-let serviceLocation = null;
-let accessoriesLocation = null;
-let laptopLocation = null;
+// Order Form Variables
+let selectedProduct = {
+    name: "Unknown Product",
+    price: 0
+};
 
-// ========== ✅ SIDEBAR FUNCTIONS ==========
+let userLocation = null;
+let locationObtained = false;
+
+// ========== ✅ UPDATED: HAMBURGER MENU FUNCTIONS ==========
 function toggleSidebar() {
   const sidebar = document.getElementById('verticalSidebar');
   const overlay = document.getElementById('sidebarOverlay');
@@ -2416,6 +2355,8 @@ function toggleSidebar() {
   sidebar.classList.toggle('active');
   overlay.classList.toggle('active');
   hamburgerBtn.classList.toggle('open');
+  
+  // NO DARK EFFECT - Only light overlay
   document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
 }
 
@@ -2431,13 +2372,438 @@ function closeSidebar() {
   isSidebarOpen = false;
 }
 
-// ========== ✅ LOGIN FUNCTIONS ==========
+// Close sidebar when clicking on overlay
+document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+
+// ========== SUPABASE CONFIGURATION ==========
+// ✅ SUPABASE URL & KEY (YAHI RAHEGA)
+const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5dWJzZXNydHd2b2x1d29tbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxOTM3MzcsImV4cCI6MjA1ODc2OTczN30.ywS4HLH44FJwGexP-_eAlGSOYbS9emhGq0kZ0kRfCMo";
+
+// Supabase Client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ========== SUPABASE ORDER FUNCTIONS ==========
+
+// ✅ 1. FIXED Order Save Function (Simple version)
+async function saveOrderToDatabase(orderData) {
+  try {
+    console.log("💾 Saving order to Supabase...", orderData);
+    
+    // Simple insert without .select() issue
+    const { error } = await supabase
+      .from('orders')
+      .insert({
+        customer_name: orderData.name || "Unknown Customer",
+        customer_phone: orderData.phone || "0000000000",
+        product_name: orderData.product || "Unknown Product",
+        price: orderData.price || 0,
+        location: orderData.location || "Location not shared",
+        status: 'pending'
+      });
+    
+    if (error) {
+      console.error("❌ Order save error:", error);
+      showNotification('⚠️ Database save failed: ' + error.message);
+      return null;
+    }
+    
+    console.log("✅ Order saved to database successfully!");
+    showNotification('✅ Order saved to database!');
+    
+    // Return success object
+    return {
+      success: true,
+      message: 'Order saved',
+      timestamp: new Date().toISOString()
+    };
+    
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    showNotification('⚠️ Unexpected error saving order');
+    return null;
+  }
+}
+
+// ✅ 2. Fetch Orders for Admin (FIXED)
+async function loadOrdersFromDatabase() {
+  try {
+    console.log("📦 Loading orders from database...");
+    
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error("❌ Load orders error:", error);
+      showNotification('⚠️ Failed to load orders');
+      return [];
+    }
+    
+    console.log(`✅ ${data.length} orders loaded from database`);
+    return data;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return [];
+  }
+}
+
+// ✅ 3. Update Order Status
+async function updateOrderStatusDB(orderId, newStatus) {
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status: newStatus })
+      .eq('id', orderId);
+    
+    if (error) {
+      console.error("❌ Update error:", error);
+      return false;
+    }
+    
+    console.log(`✅ Order ${orderId} updated to ${newStatus}`);
+    return true;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return false;
+  }
+}
+
+// ✅ 4. Test Database Connection
+async function testDatabaseConnection() {
+  console.log("🔗 Testing database connection...");
+  
+  try {
+    // Simple test query
+    const { data, error } = await supabase
+      .from('orders')
+      .select('id')
+      .limit(1);
+    
+    if (error) {
+      console.error("❌ Database connection failed:", error.message);
+      showNotification('⚠️ Database offline. Check connection.');
+      return false;
+    }
+    
+    console.log("✅ Database connected successfully!");
+    showNotification('✅ Database connected!');
+    return true;
+  } catch (err) {
+    console.error("❌ Connection error:", err);
+    return false;
+  }
+}
+
+// ✅ 5. Load Products from Database (FIXED)
+async function loadProductsFromDatabase() {
+  try {
+    console.log("🛍️ Loading products from database...");
+    
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('is_active', true)
+      .order('id', { ascending: true });
+    
+    if (error) {
+      console.error("❌ Products fetch error:", error);
+      showNotification('⚠️ Using fallback products');
+      return getFallbackProducts();
+    }
+    
+    console.log(`✅ ${data.length} products loaded from DB`);
+    return data;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return getFallbackProducts();
+  }
+}
+
+// ✅ 6. Fallback Products (if DB fails)
+function getFallbackProducts() {
+  return [
+    {
+      id: 1,
+      name: "Fast USB Charger",
+      price: 499,
+      category: "charging",
+      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    },
+    {
+      id: 2,
+      name: "Premium Earphones",
+      price: 699,
+      category: "audio",
+      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    },
+    {
+      id: 3,
+      name: "Designer Mobile Cover",
+      price: 299,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "20 min"
+    },
+    {
+      id: 4,
+      name: "Tempered Glass",
+      price: 199,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    }
+  ];
+}
+
+// ========== ORDER FORM FUNCTIONS ==========
+function openOrderForm(productName, productPrice) {
+    selectedProduct.name = productName;
+    selectedProduct.price = productPrice;
+    
+    document.getElementById('productName').textContent = `${productName} - ₹${productPrice}`;
+    document.getElementById('orderPopupForm').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    resetForm();
+}
+
+function closeOrderForm() {
+    document.getElementById('orderPopupForm').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetForm();
+}
+
+function resetForm() {
+    document.getElementById('orderForm').reset();
+    document.getElementById('locationDisplay').style.display = 'none';
+    document.getElementById('locationError').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('submitBtn').disabled = true;
+    userLocation = null;
+    locationObtained = false;
+}
+
+function getLocation() {
+    const locationDisplay = document.getElementById('locationDisplay');
+    const locationText = document.getElementById('locationText');
+    const locationError = document.getElementById('locationError');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    locationError.style.display = 'none';
+    
+    if (!navigator.geolocation) {
+        locationText.textContent = "Browser doesn't support location";
+        locationError.style.display = 'block';
+        locationDisplay.style.display = 'block';
+        return;
+    }
+    
+    locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
+    locationDisplay.style.display = 'block';
+    
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            userLocation = { lat, lon };
+            locationObtained = true;
+            
+            getAddressFromCoords(lat, lon);
+            checkFormValidity();
+        },
+        function(error) {
+            let errorMessage = "Location access denied. ";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage += "Please allow location access to continue.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage += "Location information unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage += "Location request timed out.";
+                    break;
+                default:
+                    errorMessage += "Unknown error occurred.";
+            }
+            
+            locationText.textContent = errorMessage;
+            locationError.style.display = 'block';
+            locationDisplay.style.display = 'block';
+            submitBtn.disabled = true;
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+}
+
+function getAddressFromCoords(lat, lon) {
+    const locationText = document.getElementById('locationText');
+    
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.display_name) {
+                const address = data.display_name.split(',').slice(0, 3).join(', ');
+                locationText.innerHTML = `
+                    <div>
+                        <strong>📍 Your Location:</strong><br>
+                        ${address}<br>
+                        <small style="color:#666; font-size:12px;">
+                            (Lat: ${lat.toFixed(6)}, Long: ${lon.toFixed(6)})
+                        </small>
+                    </div>
+                `;
+                userLocation.address = address;
+            } else {
+                locationText.innerHTML = `
+                    <div>
+                        <strong>📍 Your Location:</strong><br>
+                        Latitude: ${lat.toFixed(6)}<br>
+                        Longitude: ${lon.toFixed(6)}<br>
+                        <small style="color:#666; font-size:12px;">
+                            <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
+                                View on Google Maps
+                            </a>
+                        </small>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            locationText.innerHTML = `
+                <div>
+                    <strong>📍 Your Location:</strong><br>
+                    Latitude: ${lat.toFixed(6)}<br>
+                    Longitude: ${lon.toFixed(6)}<br>
+                    <small style="color:#666; font-size:12px;">
+                        <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
+                            View on Google Maps
+                        </a>
+                    </small>
+                </div>
+            `;
+        });
+}
+
+function checkFormValidity() {
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const submitBtn = document.getElementById('submitBtn');
+    
+    const isNameValid = name.length > 0;
+    const isPhoneValid = /^[0-9]{10}$/.test(phone);
+    
+    submitBtn.disabled = !(isNameValid && isPhoneValid && locationObtained);
+}
+
+// ✅ UPDATED: Order Form Submission with FIXED Database Save
+document.getElementById('orderForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    
+    // Create WhatsApp message
+    let message = `🛍️ *NEW ORDER - Step'sEazy*%0A%0A`;
+    message += `*Product:* ${selectedProduct.name}%0A`;
+    message += `*Price:* ₹${selectedProduct.price}%0A`;
+    message += `*Customer Name:* ${name}%0A`;
+    message += `*WhatsApp:* ${phone}%0A%0A`;
+    
+    if (userLocation && userLocation.address) {
+        message += `*📍 Location:* ${userLocation.address}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
+    } else if (userLocation) {
+        message += `*📍 Location Coordinates:*%0A`;
+        message += `Latitude: ${userLocation.lat}%0A`;
+        message += `Longitude: ${userLocation.lon}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
+    }
+    
+    message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
+    message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
+    message += `Please process this order for pickup/delivery.`;
+    
+    // Create WhatsApp URL
+    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+    
+    // Show success message
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+    
+    // ✅ Save to Database (FIXED VERSION)
+    const orderData = {
+        name: name,
+        phone: phone,
+        product: selectedProduct.name,
+        price: selectedProduct.price,
+        location: userLocation ? JSON.stringify(userLocation) : 'Not shared'
+    };
+    
+    // Save to database
+    const savedOrder = await saveOrderToDatabase(orderData);
+    
+    // Open WhatsApp after delay
+    setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+        
+        // Close form after 3 seconds
+        setTimeout(() => {
+            closeOrderForm();
+            successMessage.style.display = 'none';
+        }, 3000);
+    }, 800);
+});
+
+// Attach validation
+document.getElementById('customerName').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
+document.getElementById('customerPhone').addEventListener('blur', function() {
+    if (!/^[0-9]{10}$/.test(this.value)) {
+        this.style.borderColor = '#ff6b6b';
+    } else {
+        this.style.borderColor = '#e2e8f0';
+    }
+});
+
+// Close form on escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeOrderForm();
+    }
+});
+
+// Close form when clicking outside
+document.getElementById('orderPopupForm').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeOrderForm();
+    }
+});
+
+// ========== LOGIN FUNCTIONS ==========
 function openSimpleLogin() {
   document.getElementById('loginModal').style.display = 'flex';
 }
 
 function closeLogin() {
   document.getElementById('loginModal').style.display = 'none';
+}
+
+function showAdminLogin() {
+  closeLogin();
+  document.getElementById('adminLoginModal').style.display = 'flex';
+}
+
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').style.display = 'none';
 }
 
 function loginAsCustomer() {
@@ -2450,534 +2816,83 @@ function loginAsCustomer() {
 
 function loginWithWhatsApp() {
   const message = "Hi Step'sEazy, I want to login to my account.";
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+  window.open(`https://wa.me/919359122677?text=${encodeURIComponent(message)}`, '_blank');
   closeLogin();
   showNotification('Opening WhatsApp for login...');
 }
 
-function loginAsAdmin() {
-  isAdminLoggedIn = true;
-  currentUser = { type: 'admin', name: 'Admin' };
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  localStorage.setItem('isAdminLoggedIn', 'true');
-  closeLogin();
-  showPage('adminPanel');
-  showNotification('✅ Welcome to Admin Panel!');
-  updateUserMenu();
-  loadAdminData();
+function loginToAdmin() {
+  const email = document.getElementById('adminEmail').value;
+  const password = document.getElementById('adminPassword').value;
+  
+  if(email === 'admin@gmail.com' && password === '1234') {
+    isAdminLoggedIn = true;
+    closeAdminLogin();
+    showPage('admin');
+    showNotification('✅ Welcome to Admin Panel!');
+    initializeAdminPanel();
+  } else {
+    showNotification('❌ Invalid email or password!');
+  }
+}
+
+function forgotPassword() {
+  showNotification('📧 Please contact support to reset your password.');
 }
 
 function logoutAdmin() {
   isAdminLoggedIn = false;
-  currentUser = null;
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('isAdminLoggedIn');
   showPage('home');
   showNotification('👋 Logged out from Admin Panel');
-  updateUserMenu();
 }
 
-// ========== ✅ ORDER FORM FUNCTIONS ==========
+// ========== ACCESSORIES SHOP FUNCTIONS ==========
 
-// 📱 SERVICE ORDER FUNCTIONS
-function openServiceOrder(serviceName, servicePrice) {
-  selectedService = { name: serviceName, price: servicePrice };
+// ✅ Load Accessories Shop from Database
+async function loadAccessoriesShop() {
+  const grid = document.getElementById('accessoriesGrid');
+  if (!grid) return;
   
-  document.getElementById('serviceName').textContent = serviceName;
-  document.getElementById('servicePrice').textContent = `₹${servicePrice}`;
-  document.getElementById('serviceOrderModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ Loading products...</div>';
   
-  // Reset form
-  document.getElementById('serviceOrderForm').reset();
-  document.getElementById('serviceLocationDisplay').style.display = 'none';
-  serviceLocation = null;
-}
-
-function closeServiceOrder() {
-  document.getElementById('serviceOrderModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-
-// Get location for service order
-function getServiceLocation() {
-  const display = document.getElementById('serviceLocationDisplay');
-  const text = document.getElementById('serviceLocationText');
-  
-  if (!navigator.geolocation) {
-    text.textContent = "Browser doesn't support location";
-    display.style.display = 'block';
-    return;
-  }
-  
-  text.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
-  display.style.display = 'block';
-  
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      serviceLocation = { lat, lon };
-      
-      // Get address from coordinates
-      getAddressFromCoords(lat, lon, 'serviceLocationText');
-    },
-    function(error) {
-      text.textContent = "Location access denied. Please allow location access.";
-      serviceLocation = null;
-    }
-  );
-}
-
-// 🛍️ ACCESSORIES ORDER FUNCTIONS
-function openAccessoriesOrder() {
-  if (cart.length === 0) {
-    showNotification('❌ Your cart is empty!');
-    return;
-  }
-  
-  document.getElementById('accessoriesOrderModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  
-  // Load cart items
-  loadAccessoriesCart();
-  
-  // Reset form
-  document.getElementById('accessoriesOrderForm').reset();
-  document.getElementById('accessoriesLocationDisplay').style.display = 'none';
-  accessoriesLocation = null;
-}
-
-function closeAccessoriesOrder() {
-  document.getElementById('accessoriesOrderModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-
-function loadAccessoriesCart() {
-  const cartItemsDiv = document.getElementById('accessoriesCartItems');
-  const emptyCartDiv = document.getElementById('accessoriesCartEmpty');
-  const orderForm = document.getElementById('accessoriesOrderForm');
-  
-  if (cart.length === 0) {
-    cartItemsDiv.innerHTML = '';
-    emptyCartDiv.style.display = 'block';
-    orderForm.style.display = 'none';
-    return;
-  }
-  
-  emptyCartDiv.style.display = 'none';
-  orderForm.style.display = 'block';
-  
-  let html = '<h4 style="margin-bottom:15px;">Your Cart Items:</h4>';
-  let total = 0;
-  
-  cart.forEach((item, index) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    
-    html += `
-      <div class="cart-item">
-        <img src="${item.img}" class="cart-item-img">
-        <div class="cart-item-details">
-          <div class="cart-item-title">${item.name}</div>
-          <div class="cart-item-price">₹${item.price} x ${item.quantity} = ₹${itemTotal}</div>
-        </div>
-        <div class="cart-item-actions">
-          <button onclick="updateCartItem(${index}, -1)" style="background:#ff6b6b; color:white; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;">-</button>
-          <span>${item.quantity}</span>
-          <button onclick="updateCartItem(${index}, 1)" style="background:#25D366; color:white; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;">+</button>
-        </div>
-      </div>
-    `;
-  });
-  
-  html += `<div style="text-align:right; margin-top:15px; font-weight:700; font-size:18px;">Total: ₹${total}</div>`;
-  cartItemsDiv.innerHTML = html;
-}
-
-function getAccessoriesLocation() {
-  const display = document.getElementById('accessoriesLocationDisplay');
-  const text = document.getElementById('accessoriesLocationText');
-  
-  if (!navigator.geolocation) {
-    text.textContent = "Browser doesn't support location";
-    display.style.display = 'block';
-    return;
-  }
-  
-  text.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
-  display.style.display = 'block';
-  
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      accessoriesLocation = { lat, lon };
-      
-      getAddressFromCoords(lat, lon, 'accessoriesLocationText');
-    },
-    function(error) {
-      text.textContent = "Location access denied. Please allow location access.";
-      accessoriesLocation = null;
-    }
-  );
-}
-
-// 💻 LAPTOP RENTAL FUNCTIONS
-function openLaptopRental(laptopName, laptopPrice) {
-  selectedLaptop = { name: laptopName, price: laptopPrice };
-  selectedRentalHours = 2;
-  selectedRentalPrice = laptopPrice;
-  
-  document.getElementById('laptopName').textContent = laptopName;
-  document.getElementById('laptopPrice').textContent = `₹${laptopPrice}`;
-  document.getElementById('laptopRentalModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  
-  // Reset form
-  document.getElementById('laptopRentalForm').reset();
-  document.getElementById('deliveryHome').checked = true;
-  document.getElementById('laptopLocationDisplay').style.display = 'none';
-  laptopLocation = null;
-  
-  // Show location fields for home delivery
-  toggleLaptopLocation();
-  
-  // Reset time options
-  document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
-  document.querySelectorAll('.time-option')[0].classList.add('selected');
-}
-
-function closeLaptopRental() {
-  document.getElementById('laptopRentalModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-
-function selectRentalTime(hours, price) {
-  selectedRentalHours = hours;
-  selectedRentalPrice = price;
-  
-  // Update UI
-  document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
-  event.target.classList.add('selected');
-}
-
-function toggleLaptopLocation() {
-  const deliveryHome = document.getElementById('deliveryHome').checked;
-  const locationGroup = document.getElementById('laptopLocationGroup');
-  const liveLocationGroup = document.getElementById('laptopLiveLocationGroup');
-  
-  if (deliveryHome) {
-    locationGroup.style.display = 'block';
-    liveLocationGroup.style.display = 'block';
-    document.getElementById('laptopAddress').required = true;
-  } else {
-    locationGroup.style.display = 'none';
-    liveLocationGroup.style.display = 'none';
-    document.getElementById('laptopAddress').required = false;
+  try {
+    const products = await loadProductsFromDatabase();
+    displayProducts(products);
+  } catch (err) {
+    console.error("Error loading products:", err);
+    displayProducts(getFallbackProducts());
   }
 }
 
-function getLaptopLocation() {
-  const display = document.getElementById('laptopLocationDisplay');
-  const text = document.getElementById('laptopLocationText');
-  
-  if (!navigator.geolocation) {
-    text.textContent = "Browser doesn't support location";
-    display.style.display = 'block';
-    return;
-  }
-  
-  text.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
-  display.style.display = 'block';
-  
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      laptopLocation = { lat, lon };
-      
-      getAddressFromCoords(lat, lon, 'laptopLocationText');
-    },
-    function(error) {
-      text.textContent = "Location access denied. Please allow location access.";
-      laptopLocation = null;
-    }
-  );
-}
-
-// ========== ✅ FORM SUBMISSION FUNCTIONS ==========
-
-// Service Form Submission
-document.getElementById('serviceOrderForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('serviceCustomerName').value.trim();
-  const phone = document.getElementById('serviceCustomerPhone').value.trim();
-  const model = document.getElementById('phoneModel').value.trim();
-  const location = document.getElementById('serviceLocation').value.trim();
-  
-  if (!name || !phone || !model || !location) {
-    showNotification('❌ Please fill all required fields');
-    return;
-  }
-  
-  if (!/^[0-9]{10}$/.test(phone)) {
-    showNotification('❌ Please enter a valid 10-digit phone number');
-    return;
-  }
-  
-  // Show success message
-  showNotification('✅ Service order submitted successfully!');
-  
-  // Create WhatsApp message
-  let message = `📱 *NEW SERVICE ORDER - Step'sEazy*%0A%0A`;
-  message += `*Service Type:* ${selectedService.name}%0A`;
-  message += `*Estimated Price:* ₹${selectedService.price}%0A`;
-  message += `*Customer Name:* ${name}%0A`;
-  message += `*WhatsApp Number:* ${phone}%0A`;
-  message += `*Phone Model:* ${model}%0A`;
-  message += `*Location Details:* ${location}%0A%0A`;
-  
-  if (serviceLocation) {
-    message += `*📍 Live Location Shared:*%0A`;
-    message += `Latitude: ${serviceLocation.lat}%0A`;
-    message += `Longitude: ${serviceLocation.lon}%0A`;
-    message += `Google Maps: https://maps.google.com/?q=${serviceLocation.lat},${serviceLocation.lon}%0A%0A`;
-  }
-  
-  message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
-  message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
-  message += `Please process this order for pickup. I have placed the order through website. Please provide service on time.`;
-  
-  // Open WhatsApp
-  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-  
-  // Close form first
-  closeServiceOrder();
-  
-  // Open WhatsApp after delay
-  setTimeout(() => {
-    window.open(whatsappURL, '_blank');
-  }, 1500);
-});
-
-// Accessories Form Submission
-document.getElementById('accessoriesOrderForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('accessoriesCustomerName').value.trim();
-  const phone = document.getElementById('accessoriesCustomerPhone').value.trim();
-  const address = document.getElementById('accessoriesAddress').value.trim();
-  
-  if (!name || !phone || !address) {
-    showNotification('❌ Please fill all required fields');
-    return;
-  }
-  
-  if (!/^[0-9]{10}$/.test(phone)) {
-    showNotification('❌ Please enter a valid 10-digit phone number');
-    return;
-  }
-  
-  if (cart.length === 0) {
-    showNotification('❌ Your cart is empty!');
-    return;
-  }
-  
-  // Show success message
-  showNotification('✅ Accessories order submitted successfully!');
-  
-  // Create WhatsApp message
-  let message = `🛍️ *NEW ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
-  message += `*Customer Name:* ${name}%0A`;
-  message += `*WhatsApp Number:* ${phone}%0A`;
-  message += `*Delivery Address:* ${address}%0A%0A`;
-  
-  message += `*Order Items:*%0A`;
-  let total = 0;
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
-  });
-  
-  message += `%0A*Total Amount: ₹${total}*%0A%0A`;
-  
-  if (accessoriesLocation) {
-    message += `*📍 Live Location Shared:*%0A`;
-    message += `Latitude: ${accessoriesLocation.lat}%0A`;
-    message += `Longitude: ${accessoriesLocation.lon}%0A`;
-    message += `Google Maps: https://maps.google.com/?q=${accessoriesLocation.lat},${accessoriesLocation.lon}%0A%0A`;
-  }
-  
-  message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
-  message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
-  message += `Please deliver within 15-20 minutes. I have placed the order through website.`;
-  
-  // Open WhatsApp
-  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-  
-  // Clear cart and close form
-  cart = [];
-  updateOrderSummary();
-  
-  // Close form first
-  closeAccessoriesOrder();
-  
-  // Open WhatsApp after delay
-  setTimeout(() => {
-    window.open(whatsappURL, '_blank');
-  }, 1500);
-});
-
-// Laptop Rental Form Submission
-document.getElementById('laptopRentalForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('laptopCustomerName').value.trim();
-  const phone = document.getElementById('laptopCustomerPhone').value.trim();
-  const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
-  const address = document.getElementById('laptopAddress').value.trim();
-  
-  if (!name || !phone) {
-    showNotification('❌ Please fill all required fields');
-    return;
-  }
-  
-  if (!/^[0-9]{10}$/.test(phone)) {
-    showNotification('❌ Please enter a valid 10-digit phone number');
-    return;
-  }
-  
-  if (deliveryOption === 'home' && !address) {
-    showNotification('❌ Please enter delivery address for home delivery');
-    return;
-  }
-  
-  // Show success message
-  showNotification('✅ Laptop rental order submitted successfully!');
-  
-  // Calculate total price
-  const totalPrice = selectedRentalPrice * (selectedRentalHours / 2);
-  
-  // Create WhatsApp message
-  let message = `💻 *NEW LAPTOP RENTAL ORDER - Step'sEazy*%0A%0A`;
-  message += `*Laptop Model:* ${selectedLaptop.name}%0A`;
-  message += `*Rental Period:* ${selectedRentalHours} hours%0A`;
-  message += `*Total Price:* ₹${totalPrice}%0A`;
-  message += `*Customer Name:* ${name}%0A`;
-  message += `*WhatsApp Number:* ${phone}%0A`;
-  message += `*Delivery Option:* ${deliveryOption === 'home' ? '🏠 Home Delivery' : '🏪 Shop Pickup'}%0A`;
-  
-  if (deliveryOption === 'home') {
-    message += `*Delivery Address:* ${address}%0A`;
-    
-    if (laptopLocation) {
-      message += `*📍 Live Location Shared:*%0A`;
-      message += `Latitude: ${laptopLocation.lat}%0A`;
-      message += `Longitude: ${laptopLocation.lon}%0A`;
-      message += `Google Maps: https://maps.google.com/?q=${laptopLocation.lat},${laptopLocation.lon}%0A`;
-    }
-  }
-  
-  message += `%0A*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
-  message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
-  message += `Please confirm availability and delivery/pickup time. I have placed the order through website.`;
-  
-  // Open WhatsApp
-  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-  
-  // Close form first
-  closeLaptopRental();
-  
-  // Open WhatsApp after delay
-  setTimeout(() => {
-    window.open(whatsappURL, '_blank');
-  }, 1500);
-});
-
-// ========== ✅ HELPER FUNCTIONS ==========
-function getAddressFromCoords(lat, lon, elementId) {
-  const textElement = document.getElementById(elementId);
-  
-  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.display_name) {
-        const address = data.display_name.split(',').slice(0, 3).join(', ');
-        textElement.innerHTML = `
-          <div>
-            <strong>📍 Your Location:</strong><br>
-            ${address}<br>
-            <small style="color:#666; font-size:12px;">
-              <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
-                View on Google Maps
-              </a>
-            </small>
-          </div>
-        `;
-      } else {
-        textElement.innerHTML = `
-          <div>
-            <strong>📍 Your Location:</strong><br>
-            Latitude: ${lat.toFixed(6)}<br>
-            Longitude: ${lon.toFixed(6)}<br>
-            <small style="color:#666; font-size:12px;">
-              <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
-                View on Google Maps
-              </a>
-            </small>
-          </div>
-        `;
-      }
-    })
-    .catch(error => {
-      textElement.innerHTML = `
-        <div>
-          <strong>📍 Your Location:</strong><br>
-          Latitude: ${lat.toFixed(6)}<br>
-          Longitude: ${lon.toFixed(6)}<br>
-          <small style="color:#666; font-size:12px;">
-            <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
-              View on Google Maps
-            </a>
-          </small>
-        </div>
-      `;
-    });
-}
-
-// ========== ✅ ACCESSORIES SHOP FUNCTIONS ==========
-let accessories = [
-  { id: 1, name: "Fast USB Charger", price: 499, category: "charging", img: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-  { id: 2, name: "Premium Earphones", price: 699, category: "audio", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-  { id: 3, name: "Designer Mobile Cover", price: 299, category: "protection", img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-  { id: 4, name: "Tempered Glass", price: 199, category: "protection", img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-  { id: 5, name: "Power Bank 10000mAh", price: 1299, category: "charging", img: "https://images.unsplash.com/photo-1594736797933-d455f5d42e54?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-  { id: 6, name: "Type-C Cable", price: 249, category: "cables", img: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
-];
-
-function loadAccessoriesShop() {
+// ✅ Display Products Function
+function displayProducts(products) {
   const grid = document.getElementById('accessoriesGrid');
   if (!grid) return;
   
   grid.innerHTML = '';
   
-  accessories.forEach(product => {
+  if (products.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available. Please add products in admin panel.</div>';
+    return;
+  }
+  
+  products.forEach(product => {
     const productCard = document.createElement('div');
     productCard.className = 'product-card-ecom';
     productCard.innerHTML = `
-      <img src="${product.img}" alt="${product.name}" class="product-image">
+      <img src="${product.image_url || 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'}" 
+           alt="${product.name}" 
+           class="product-image"
+           onerror="this.src='https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'">
       <div class="product-info">
         <div class="product-title">${product.name}</div>
         <div class="product-price">₹${product.price}</div>
-        <div class="product-delivery">🚚 15-20 min delivery</div>
+        <div class="product-delivery">🚚 ${product.delivery_time || '15-20 min'} delivery</div>
         
         <div class="quantity-selector">
-          <button class="quantity-btn" onclick="updateAccessoryQuantity(${product.id}, -1)">-</button>
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
           <input type="text" class="quantity-input" id="qty-${product.id}" value="0" readonly>
-          <button class="quantity-btn" onclick="updateAccessoryQuantity(${product.id}, 1)">+</button>
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
         </div>
         
         <button class="buy-now-btn" onclick="addToCart(${product.id})">
@@ -2987,9 +2902,75 @@ function loadAccessoriesShop() {
     `;
     grid.appendChild(productCard);
   });
+  
+  updateOrderSummary();
 }
 
-function updateAccessoryQuantity(productId, change) {
+// ✅ Add to Cart Function
+async function addToCart(productId) {
+  const input = document.getElementById(`qty-${productId}`);
+  if (!input) {
+    showNotification('❌ Product not found!');
+    return;
+  }
+  
+  const quantity = parseInt(input.value) || 0;
+  
+  if(quantity === 0) {
+    showNotification('Please select quantity first!');
+    return;
+  }
+  
+  try {
+    // Get product from database
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', productId)
+      .single();
+    
+    let product;
+    
+    if (!error && data) {
+      product = data;
+    } else {
+      // Fallback
+      const fallbackProducts = getFallbackProducts();
+      product = fallbackProducts.find(p => p.id === productId);
+      
+      if (!product) {
+        showNotification('❌ Product not found!');
+        return;
+      }
+    }
+    
+    // Add to cart
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if(existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity,
+        img: product.image_url
+      });
+    }
+    
+    input.value = '0';
+    updateOrderSummary();
+    showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
+    
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+    showNotification('⚠️ Error adding product to cart.');
+  }
+}
+
+// ✅ Update Quantity Function
+function updateQuantity(productId, change) {
   const input = document.getElementById(`qty-${productId}`);
   if (!input) return;
   
@@ -2998,52 +2979,7 @@ function updateAccessoryQuantity(productId, change) {
   input.value = currentQty;
 }
 
-function addToCart(productId) {
-  const input = document.getElementById(`qty-${productId}`);
-  if (!input) return;
-  
-  const quantity = parseInt(input.value) || 0;
-  
-  if (quantity === 0) {
-    showNotification('Please select quantity first!');
-    return;
-  }
-  
-  const product = accessories.find(p => p.id === productId);
-  if (!product) return;
-  
-  const existingItem = cart.find(item => item.id === productId);
-  
-  if (existingItem) {
-    existingItem.quantity += quantity;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: quantity,
-      img: product.img
-    });
-  }
-  
-  input.value = '0';
-  updateOrderSummary();
-  showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
-}
-
-function updateCartItem(index, change) {
-  if (index < 0 || index >= cart.length) return;
-  
-  cart[index].quantity += change;
-  
-  if (cart[index].quantity <= 0) {
-    cart.splice(index, 1);
-  }
-  
-  loadAccessoriesCart();
-  updateOrderSummary();
-}
-
+// ✅ Update Order Summary
 function updateOrderSummary() {
   const orderSummary = document.getElementById('orderSummary');
   const orderItems = document.getElementById('orderItems');
@@ -3051,7 +2987,7 @@ function updateOrderSummary() {
   
   if (!orderSummary || !orderItems || !orderTotal) return;
   
-  if (cart.length === 0) {
+  if(cart.length === 0) {
     orderSummary.style.display = 'none';
     return;
   }
@@ -3072,175 +3008,7 @@ function updateOrderSummary() {
   orderTotal.textContent = `₹${total}`;
 }
 
-function filterProducts(searchTerm) {
-  const products = document.querySelectorAll('.product-card-ecom');
-  products.forEach(product => {
-    const title = product.querySelector('.product-title').textContent.toLowerCase();
-    if (title.includes(searchTerm.toLowerCase()) || searchTerm === '') {
-      product.style.display = 'block';
-    } else {
-      product.style.display = 'none';
-    }
-  });
-}
-
-// ========== ✅ ADMIN PANEL FUNCTIONS ==========
-function loadAdminData() {
-  // Demo data for admin panel
-  document.getElementById('adminTotalOrders').textContent = '156';
-  document.getElementById('adminPendingOrders').textContent = '12';
-  document.getElementById('adminTodayOrders').textContent = '8';
-  document.getElementById('adminRevenue').textContent = '₹45,680';
-  
-  const ordersList = document.getElementById('adminOrdersList');
-  ordersList.innerHTML = `
-    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:8px;">
-      <strong>#ORD001</strong> - Display Repair - ₹1200 - <span style="color:#25D366;">Completed</span>
-    </div>
-    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:8px;">
-      <strong>#ORD002</strong> - Battery Replacement - ₹700 - <span style="color:#ffa726;">In Progress</span>
-    </div>
-    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:8px;">
-      <strong>#ORD003</strong> - Accessories Order - ₹1498 - <span style="color:#667eea;">Pending</span>
-    </div>
-    <div style="padding:10px; background:white; border-radius:8px;">
-      <strong>#ORD004</strong> - Laptop Rental - ₹2999 - <span style="color:#25D366;">Completed</span>
-    </div>
-  `;
-}
-
-function addNewProduct() {
-  showNotification('➕ Add Product feature coming soon!');
-}
-
-function viewAllOrders() {
-  showNotification('📦 View All Orders feature coming soon!');
-}
-
-function updateInventory() {
-  showNotification('📊 Update Inventory feature coming soon!');
-}
-
-function generateReport() {
-  showNotification('📄 Generate Report feature coming soon!');
-}
-
-// ========== ✅ PAGE NAVIGATION ==========
-function showPage(id){ 
-  // Check if trying to access admin panel without login
-  if (id === 'adminPanel' && !isAdminLoggedIn) {
-    openSimpleLogin();
-    return;
-  }
-  
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
-  
-  // Handle admin panel separately
-  if (id === 'adminPanel') {
-    document.getElementById('adminPanel').classList.add('active');
-    document.getElementById('mainContent').style.display = 'none';
-  } else {
-    document.getElementById(id).classList.add('active');
-    document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('adminPanel').classList.remove('active');
-  }
-  
-  window.scrollTo(0,0); 
-  
-  // Close sidebar when navigating
-  closeSidebar();
-  
-  // Load accessories shop if on that page
-  if (id === 'accessoriesShop') {
-    loadAccessoriesShop();
-    updateOrderSummary();
-  }
-  
-  // Load admin data if on admin panel
-  if (id === 'adminPanel' && isAdminLoggedIn) {
-    loadAdminData();
-  }
-}
-
-// ========== ✅ USER MENU FUNCTIONS ==========
-function updateUserMenu() {
-  if(currentUser) {
-    document.getElementById('userName').textContent = currentUser.name;
-    const menuContent = document.getElementById('menuContent');
-    
-    if (currentUser.type === 'admin') {
-      menuContent.innerHTML = `
-        <div style="margin-bottom:10px;">
-          <strong>👑 ${currentUser.name}</strong>
-        </div>
-        <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showPage('adminPanel')">🔧 Admin Panel</button>
-        <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
-        <button class="admin-btn danger" style="width:100%; margin:5px 0;" onclick="logoutUser()">🚪 Logout</button>
-      `;
-    } else {
-      menuContent.innerHTML = `
-        <div style="margin-bottom:10px;">
-          <strong>👤 ${currentUser.name}</strong>
-        </div>
-        <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
-        <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showMyOrders()">📋 My Orders</button>
-        <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="logoutUser()">🚪 Logout</button>
-      `;
-    }
-  }
-}
-
-function toggleUserMenu() {
-  const menu = document.getElementById('userMenu');
-  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-}
-
-function logoutUser() {
-  currentUser = null;
-  isAdminLoggedIn = false;
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('isAdminLoggedIn');
-  updateUserMenu();
-  showPage('home');
-  showNotification('👋 Logged out successfully');
-}
-
-function showMyOrders() {
-  if (!currentUser) {
-    openSimpleLogin();
-    return;
-  }
-  
-  showNotification('📋 Your orders will appear here after login');
-}
-
-// ========== ✅ NOTIFICATION FUNCTION ==========
-function showNotification(message) {
-  const notification = document.createElement('div');
-  notification.className = 'notification';
-  notification.innerHTML = message;
-  document.body.appendChild(notification);
-  
-  setTimeout(() => notification.classList.add('show'), 100);
-  setTimeout(() => {
-    notification.classList.remove('show');
-    setTimeout(() => document.body.removeChild(notification), 400);
-  }, 3000);
-}
-
-// ========== ✅ MAP INITIALIZATION ==========
-function initSmallMap(){
-  const map = L.map('smallMap').setView([19.800,72.760],12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
-  
-  L.marker([19.805,72.756]).addTo(map).bindPopup('<b>Step\'sEazy Boisar</b><br>Shop no. 5, Station Road').openPopup();
-  L.marker([19.795,72.764]).addTo(map).bindPopup('<b>Step\'sEazy Palghar</b><br>Main Market Area');
-  
-  L.circle([19.800,72.760],{radius:3000,color:'#667eea',fillColor:'#667eea',fillOpacity:0.1}).addTo(map).bindPopup('Service Area');
-}
-document.addEventListener('DOMContentLoaded',initSmallMap);
-
-// ========== ✅ OTHER FUNCTIONS ==========
+// ========== QUICK ORDER SERVICE ==========
 function quickOrderService() {
   const device = document.getElementById('quickDevice').value;
   const problem = document.getElementById('quickProblem').value;
@@ -3275,11 +3043,489 @@ function quickOrderService() {
   message += `Urgent: Yes%0A`;
   message += `Thank you!`;
   
-  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
   window.open(whatsappURL, '_blank');
   showNotification('✅ Quick order request sent via WhatsApp!');
 }
 
+// ========== CUSTOMER ORDER VIA WHATSAPP ==========
+function customerOrderWhatsApp() {
+  if(cart.length === 0) {
+    showNotification('❌ Your cart is empty!');
+    return;
+  }
+  
+  let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
+  });
+  
+  message += `%0A*Total: ₹${total}*%0A%0A`;
+  message += `Please deliver to my address in Boisar/Palghar.%0A`;
+  message += `Expected delivery: 15-20 minutes.%0A%0A`;
+  message += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  
+  cart = [];
+  updateOrderSummary();
+  showNotification('✅ Order placed successfully! Check WhatsApp.');
+}
+
+// ========== PAGE NAVIGATION ==========
+function showPage(id){ 
+  if(id === 'admin' && !isAdminLoggedIn) {
+    showAdminLogin();
+    return;
+  }
+  
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
+  document.getElementById(id).classList.add('active'); 
+  window.scrollTo(0,0); 
+  
+  const floatingButtons = document.getElementById('floatingButtons');
+  const quickActionButton = document.getElementById('quickActionButton');
+  
+  if(id === 'admin') {
+    floatingButtons.style.display = 'none';
+    quickActionButton.style.display = 'none';
+    hideQuickActions();
+  } else {
+    floatingButtons.style.display = 'flex';
+    quickActionButton.style.display = 'block';
+  }
+  
+  if(id === 'accessoriesShop') {
+    loadAccessoriesShop();
+  }
+  
+  if(id === 'admin' && isAdminLoggedIn) {
+    initializeAdminPanel();
+  }
+  
+  // Close sidebar when navigating
+  closeSidebar();
+}
+
+// ========== USER MENU FUNCTIONS ==========
+function updateUserMenu() {
+  if(currentUser) {
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('menuContent').innerHTML = `
+      <div style="margin-bottom:10px;">
+        <strong>👤 ${currentUser.name}</strong>
+      </div>
+      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
+      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showMyOrders()">📋 My Orders</button>
+      <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="logoutUser()">🚪 Logout</button>
+    `;
+  }
+}
+
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+function logoutUser() {
+  currentUser = null;
+  localStorage.removeItem('currentUser');
+  updateUserMenu();
+  showNotification('👋 Logged out successfully');
+}
+
+// ========== NOTIFICATION FUNCTION ==========
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.innerHTML = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 100);
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => document.body.removeChild(notification), 400);
+  }, 3000);
+}
+
+// ========== MAP INITIALIZATION ==========
+function initSmallMap(){
+  const map = L.map('smallMap').setView([19.800,72.760],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+  
+  L.marker([19.805,72.756]).addTo(map).bindPopup('<b>Step\'sEazy Boisar</b><br>Shop no. 5, Station Road').openPopup();
+  L.marker([19.795,72.764]).addTo(map).bindPopup('<b>Step\'sEazy Palghar</b><br>Main Market Area');
+  
+  L.circle([19.800,72.760],{radius:3000,color:'#667eea',fillColor:'#667eea',fillOpacity:0.1}).addTo(map).bindPopup('Service Area');
+}
+document.addEventListener('DOMContentLoaded',initSmallMap);
+
+// ========== QUICK ACTIONS FUNCTIONS ==========
+function toggleQuickActions() {
+  const panel = document.getElementById('quickActionsPanel');
+  panel.classList.toggle('active');
+  isQuickActionsOpen = !isQuickActionsOpen;
+}
+
+function hideQuickActions() {
+  const panel = document.getElementById('quickActionsPanel');
+  panel.classList.remove('active');
+  isQuickActionsOpen = false;
+}
+
+function sendQuickMessage(message) {
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
+  hideQuickActions();
+  showNotification('Quick message sent via WhatsApp!');
+}
+
+// ========== ADMIN PANEL FUNCTIONS ==========
+function toggleAdminSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const overlay = document.querySelector('.admin-sidebar-overlay');
+  const adminContent = document.getElementById('adminContent');
+  
+  sidebar.classList.toggle('active');
+  overlay.classList.toggle('active');
+  adminContent.classList.toggle('sidebar-open');
+}
+
+async function initializeAdminPanel() {
+  console.log("Initializing admin panel...");
+  
+  // Test database connection
+  const connected = await testDatabaseConnection();
+  
+  if (connected) {
+    // Load orders from database
+    const orders = await loadOrdersFromDatabase();
+    if (orders.length > 0) {
+      adminData.orders = orders;
+      loadOrdersTable();
+      updateDashboardStats();
+      showNotification(`✅ Loaded ${orders.length} orders from database`);
+    }
+  }
+  
+  // Show overview tab by default
+  showAdminTab('overview');
+}
+
+function showAdminTab(tabName) {
+  // Update active tab in sidebar
+  document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+  const activeLink = document.querySelector(`a[onclick*="${tabName}"]`);
+  if (activeLink) activeLink.classList.add('active');
+  
+  const contentArea = document.getElementById('adminContentArea');
+  
+  switch(tabName) {
+    case 'overview':
+      contentArea.innerHTML = generateAdminOverview();
+      break;
+    case 'orders':
+      contentArea.innerHTML = generateAdminOrders();
+      loadOrdersTable();
+      break;
+    case 'products':
+      contentArea.innerHTML = generateAdminProducts();
+      break;
+    case 'customers':
+      contentArea.innerHTML = generateAdminCustomers();
+      break;
+    case 'inventory':
+      contentArea.innerHTML = generateAdminInventory();
+      break;
+    case 'services':
+      contentArea.innerHTML = generateAdminServices();
+      break;
+    case 'employees':
+      contentArea.innerHTML = generateAdminEmployees();
+      break;
+    case 'analytics':
+      contentArea.innerHTML = generateAdminAnalytics();
+      break;
+    case 'reports':
+      contentArea.innerHTML = generateAdminReports();
+      break;
+    case 'settings':
+      contentArea.innerHTML = generateAdminSettings();
+      break;
+  }
+}
+
+function generateAdminOverview() {
+  const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
+  const today = new Date().toLocaleDateString();
+  
+  return `
+    <h3 style="margin-top:0;">📊 Admin Dashboard</h3>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">${adminData.orders.length}</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">${pendingOrders}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Today's Revenue</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Active Customers</div>
+      </div>
+    </div>
+    
+    <div class="admin-section">
+      <h4>📈 Quick Stats</h4>
+      <p>Today: ${today}</p>
+      <p>Database Status: <span style="color:#25D366;">✅ Connected</span></p>
+      <p>Total Orders in DB: ${adminData.orders.length}</p>
+    </div>
+    
+    <div class="admin-section">
+      <h4>⚡ Quick Actions</h4>
+      <button class="admin-btn" onclick="showAdminTab('orders')">View All Orders</button>
+      <button class="admin-btn success" onclick="addNewOrder()">Add New Order</button>
+      <button class="admin-btn" onclick="testDatabaseConnection()">Test Database</button>
+    </div>
+  `;
+}
+
+function generateAdminOrders() {
+  return `
+    <h3 style="margin-top:0;">📦 Order Management</h3>
+    
+    <div style="margin-bottom:20px;">
+      <button class="admin-btn" onclick="refreshOrders()">🔄 Refresh Orders</button>
+      <button class="admin-btn success" onclick="addNewOrder()">➕ Add New Order</button>
+    </div>
+    
+    <div class="orders-table-container">
+      <div id="ordersTableContent">
+        Loading orders from database...
+      </div>
+    </div>
+  `;
+}
+
+async function loadOrdersTable() {
+  const contentDiv = document.getElementById('ordersTableContent');
+  
+  if (!contentDiv) return;
+  
+  // Load fresh data from database
+  const orders = await loadOrdersFromDatabase();
+  adminData.orders = orders;
+  
+  if (orders.length === 0) {
+    contentDiv.innerHTML = '<p>No orders found in database.</p>';
+    return;
+  }
+  
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  
+  orders.forEach(order => {
+    const date = new Date(order.created_at).toLocaleDateString('en-IN');
+    const statusBadge = getStatusBadge(order.status);
+    
+    html += `
+      <tr>
+        <td>${order.id}</td>
+        <td>${order.customer_name}<br><small>${order.customer_phone}</small></td>
+        <td>${order.product_name}</td>
+        <td>₹${order.price}</td>
+        <td>${statusBadge}</td>
+        <td>${date}</td>
+        <td>
+          <button class="admin-btn" onclick="viewOrder(${order.id})">👁️ View</button>
+          <button class="admin-btn success" onclick="updateOrderStatus(${order.id})">✏️ Update</button>
+        </td>
+      </tr>
+    `;
+  });
+  
+  html += `</tbody></table>`;
+  contentDiv.innerHTML = html;
+  
+  // Update sidebar badge
+  const pendingCount = orders.filter(o => o.status === 'pending').length;
+  const badgeElement = document.getElementById('sidebarOrderBadge');
+  if (badgeElement) badgeElement.textContent = pendingCount;
+}
+
+function getStatusBadge(status) {
+  const statusMap = {
+    'pending': 'status-pending',
+    'confirmed': 'status-confirmed',
+    'in_progress': 'status-in_progress',
+    'ready': 'status-ready',
+    'completed': 'status-completed',
+    'cancelled': 'status-cancelled'
+  };
+  
+  const statusText = {
+    'pending': 'Pending',
+    'confirmed': 'Confirmed',
+    'in_progress': 'In Progress',
+    'ready': 'Ready',
+    'completed': 'Completed',
+    'cancelled': 'Cancelled'
+  };
+  
+  return `<span class="status-badge ${statusMap[status] || 'status-pending'}">${statusText[status] || 'Pending'}</span>`;
+}
+
+async function refreshOrders() {
+  showNotification('🔄 Refreshing orders...');
+  await loadOrdersTable();
+  showNotification('✅ Orders refreshed!');
+}
+
+async function updateOrderStatus(orderId) {
+  const order = adminData.orders.find(o => o.id === orderId);
+  if (!order) return;
+  
+  const newStatus = prompt(`Update status for order ${orderId}:\nCurrent: ${order.status}\n\nEnter new status (pending/confirmed/in_progress/ready/completed/cancelled):`, order.status);
+  
+  if (newStatus && ['pending','confirmed','in_progress','ready','completed','cancelled'].includes(newStatus)) {
+    const success = await updateOrderStatusDB(orderId, newStatus);
+    if (success) {
+      showNotification(`✅ Order ${orderId} updated to ${newStatus}`);
+      await refreshOrders();
+    } else {
+      showNotification('❌ Failed to update order');
+    }
+  }
+}
+
+function addNewOrder() {
+  showNotification('Opening order form...');
+  showPage('home');
+  setTimeout(() => {
+    openOrderForm('Custom Service', 1000);
+  }, 500);
+}
+
+function viewOrder(orderId) {
+  const order = adminData.orders.find(o => o.id === orderId);
+  if (!order) return;
+  
+  const modalHtml = `
+    <div class="admin-modal">
+      <div class="admin-modal-content">
+        <h3>Order Details #${order.id}</h3>
+        <p><strong>Customer:</strong> ${order.customer_name}</p>
+        <p><strong>Phone:</strong> ${order.customer_phone}</p>
+        <p><strong>Product:</strong> ${order.product_name}</p>
+        <p><strong>Price:</strong> ₹${order.price}</p>
+        <p><strong>Status:</strong> ${getStatusBadge(order.status)}</p>
+        <p><strong>Location:</strong> ${order.location || 'Not shared'}</p>
+        <p><strong>Created:</strong> ${new Date(order.created_at).toLocaleString('en-IN')}</p>
+        <div style="margin-top:20px;">
+          <button class="admin-btn" onclick="closeModal()">Close</button>
+          <button class="admin-btn success" onclick="updateOrderStatus(${order.id})">Update Status</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function closeModal() {
+  const modal = document.querySelector('.admin-modal');
+  if (modal) modal.remove();
+}
+
+function updateDashboardStats() {
+  const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
+  const badgeElement = document.getElementById('sidebarOrderBadge');
+  if (badgeElement) badgeElement.textContent = pendingOrders;
+}
+
+// Other admin panel sections
+function generateAdminProducts() {
+  return `<h3>🛍️ Product Management</h3>
+  <div class="admin-section">
+    <h4>Manage Products</h4>
+    <p>Add, edit or remove products from your store.</p>
+    <button class="admin-btn success" onclick="addNewProduct()">➕ Add New Product</button>
+    <button class="admin-btn" onclick="refreshProducts()">🔄 Refresh Products</button>
+  </div>
+  <div id="productsList"></div>`;
+}
+
+function generateAdminCustomers() {
+  return `<h3>👥 Customer Management (Coming Soon)</h3><p>Customer management features will be added soon.</p>`;
+}
+
+function generateAdminInventory() {
+  return `<h3>📦 Inventory Management (Coming Soon)</h3><p>Inventory management features will be added soon.</p>`;
+}
+
+function generateAdminServices() {
+  return `<h3>🔧 Service Management (Coming Soon)</h3><p>Service management features will be added soon.</p>`;
+}
+
+function generateAdminEmployees() {
+  return `<h3>👨‍🔧 Employee Management (Coming Soon)</h3><p>Employee management features will be added soon.</p>`;
+}
+
+function generateAdminAnalytics() {
+  return `<h3>📈 Analytics Dashboard (Coming Soon)</h3><p>Analytics features will be added soon.</p>`;
+}
+
+function generateAdminReports() {
+  return `<h3>📄 Reports (Coming Soon)</h3><p>Reporting features will be added soon.</p>`;
+}
+
+function generateAdminSettings() {
+  return `
+    <h3>⚙️ Settings</h3>
+    <div class="admin-section">
+      <h4>Business Settings</h4>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" value="${adminData.settings.businessName}" readonly>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number</label>
+        <input type="text" value="${adminData.settings.whatsappNumber}" readonly>
+      </div>
+      <div class="form-group">
+        <label>Business Phone</label>
+        <input type="text" value="${adminData.settings.businessPhone}" readonly>
+      </div>
+    </div>
+  `;
+}
+
+// ========== OTHER FUNCTIONS ==========
 function trackOrder() {
   const trackingId = document.getElementById('trackingId').value;
   if (!trackingId) {
@@ -3287,23 +3533,42 @@ function trackOrder() {
     return;
   }
   
+  // For now, show demo message
   showNotification('🔍 Searching for order...');
   setTimeout(() => {
     showNotification('✅ Order found! Status: In Progress. Estimated completion: 30 minutes');
   }, 1000);
 }
 
-// ========== ✅ INITIALIZATION ==========
+function showMyOrders() {
+  if (!currentUser) {
+    openSimpleLogin();
+    return;
+  }
+  
+  // For now, show demo
+  showNotification('📋 Your orders will appear here after login');
+}
+
+function filterProducts(searchTerm) {
+  // Basic search functionality
+  const products = document.querySelectorAll('.product-card-ecom');
+  products.forEach(product => {
+    const title = product.querySelector('.product-title').textContent.toLowerCase();
+    if (title.includes(searchTerm.toLowerCase()) || searchTerm === '') {
+      product.style.display = 'block';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+}
+
+// ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', function() {
   // Check if user is already logged in
   const savedUser = localStorage.getItem('currentUser');
-  const savedAdmin = localStorage.getItem('isAdminLoggedIn');
-  
   if (savedUser) {
     currentUser = JSON.parse(savedUser);
-    if (savedAdmin === 'true') {
-      isAdminLoggedIn = true;
-    }
     updateUserMenu();
   }
   
@@ -3312,26 +3577,22 @@ document.addEventListener('DOMContentLoaded', function() {
     loadAccessoriesShop();
   }
   
-  // Close modals when clicking outside
-  document.querySelectorAll('.order-modal').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-  });
-  
-  // Close sidebar when clicking on overlay
-  document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
-  
-  // Close login modal when clicking outside
-  document.getElementById('loginModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeLogin();
-    }
-  });
+  // Auto-test database connection
+  setTimeout(() => {
+    testDatabaseConnection();
+  }, 2000);
 });
+
+// CSS Animation
+document.head.insertAdjacentHTML('beforeend', `
+  <style>
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-10px);}
+      60% {transform: translateY(-5px);}
+    }
+  </style>
+`);
 </script>
 </body>
 </html>
