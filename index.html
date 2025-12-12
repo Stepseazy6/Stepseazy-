@@ -9,7 +9,7 @@
 <meta name="author" content="Step'sEazy">
 
 <!-- ✅ Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
 <!-- ========== START CSS ========== -->
 <style>
@@ -35,7 +35,10 @@ body {
   -moz-osx-font-smoothing:grayscale;
   font-weight: 400;
   line-height: 1.6;
+  overflow-x: hidden;
 }
+
+/* ========== ✅ 1. UPDATED HEADER - 3 LINE HAMBURGER MENU (LIKE ADMIN) ========== */
 header { 
   background:var(--premium-gradient); 
   padding:12px 24px; 
@@ -54,26 +57,150 @@ header h1 {
   font-size:20px; 
   letter-spacing:0.5px;
   font-weight: 700;
+  margin-left: 50px;
 }
-nav a { 
-  color:rgba(255,255,255,0.95); 
-  margin:0 12px; 
-  text-decoration:none; 
-  font-weight:600; 
-  font-size:13px; 
-  transition: all 0.3s ease; 
-  padding:8px 16px; 
-  border-radius:8px; 
+
+/* Hide old horizontal nav */
+nav.desktop-nav { 
+  display: none; 
 }
-nav a:hover { 
-  text-decoration:none; 
-  background:rgba(255,255,255,0.15); 
-  transform: translateY(-2px); 
+
+/* 3 Line Hamburger Menu (LEFT SIDE) - Like Admin */
+.hamburger-menu-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1002;
+  gap: 4px;
+  padding: 0;
 }
+.hamburger-menu-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-50%) scale(1.05);
+}
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+/* When menu is open - show cross */
+.hamburger-menu-btn.open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger-menu-btn.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-menu-btn.open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Vertical sidebar menu (LEFT SIDE) */
+.vertical-sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: 10px 0 40px rgba(0,0,0,0.1);
+  z-index: 1001;
+  padding: 80px 25px 30px;
+  transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow-y: auto;
+}
+.vertical-sidebar.active {
+  left: 0;
+}
+/* ✅ DARK EFFECT REMOVED - Only light overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3); /* Light overlay */
+  z-index: 1000;
+  display: none;
+}
+.sidebar-overlay.active {
+  display: block;
+}
+.vertical-sidebar a {
+  display: block;
+  padding: 15px 20px;
+  margin: 8px 0;
+  background: #f8faff;
+  color: #2d3748;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+.vertical-sidebar a:hover {
+  background: var(--premium-gradient);
+  color: white;
+  transform: translateX(5px);
+  border-left-color: white;
+}
+.close-sidebar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--muted);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.close-sidebar:hover {
+  background: #f8faff;
+}
+/* ========== END HEADER UPDATE ========== */
+
 .page { display:none; animation: fadeIn 0.5s ease; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .active { display:block; }
 .container{max-width:1100px;margin:0 auto;padding:0 18px}
+
+/* ========== ✅ 2. "FAST AND AFFORDABLE" TEXT - CLEAN ========== */
+.hero h2 { 
+  font-size:36px; 
+  margin-bottom:14px; 
+  line-height:1.1; 
+  position:relative; 
+  z-index:2;
+  font-weight: 800;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  letter-spacing: -0.5px;
+  text-align: center;
+  padding: 0 20px;
+}
+/* ========== END TEXT UPDATE ========== */
+
 .phone-box {
   background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,255,0.98));
   border-radius: 20px;
@@ -372,61 +499,91 @@ nav a:hover {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-/* ✅ UPDATED: SAARE BUTTONS COLORFUL */
+
+/* ========== ✅ 3. UPDATED 3D PREMIUM BUTTONS ========== */
 .hero-btn-primary {
   background: var(--premium-gradient);
   color: white;
   border: none;
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 16px 32px;
+  border-radius: 15px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(99,102,241,0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    0 15px 35px rgba(99,102,241,0.4),
+    inset 0 2px 0 rgba(255,255,255,0.3),
+    0 8px 0 rgba(99,102,241,0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  margin: 0 10px;
+  margin: 0 12px 20px;
   letter-spacing: 0.3px;
+  transform: translateY(0);
+  border-bottom: 4px solid rgba(99,102,241,0.6);
 }
 .hero-btn-secondary {
   background: linear-gradient(135deg, #25D366, #128C7E);
   color: white;
   border: none;
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 16px 32px;
+  border-radius: 15px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    0 15px 35px rgba(37, 211, 102, 0.4),
+    inset 0 2px 0 rgba(255,255,255,0.3),
+    0 8px 0 rgba(29, 168, 81, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  margin: 0 10px;
+  margin: 0 12px 20px;
   letter-spacing: 0.3px;
+  transform: translateY(0);
+  border-bottom: 4px solid rgba(29, 168, 81, 0.6);
 }
 .hero-btn-rental {
   background: linear-gradient(135deg, #f6d365, #fda085);
   color: white;
   border: none;
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 16px 32px;
+  border-radius: 15px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255,107,107,0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    0 15px 35px rgba(255,107,107,0.4),
+    inset 0 2px 0 rgba(255,255,255,0.3),
+    0 8px 0 rgba(253, 160, 133, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  margin: 0 10px;
+  margin: 0 12px 20px;
   letter-spacing: 0.3px;
+  transform: translateY(0);
+  border-bottom: 4px solid rgba(253, 160, 133, 0.6);
 }
 .hero-btn-primary:hover,
 .hero-btn-secondary:hover,
 .hero-btn-rental:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  transform: translateY(-8px);
+  box-shadow: 
+    0 25px 45px rgba(0,0,0,0.25),
+    inset 0 2px 0 rgba(255,255,255,0.3),
+    0 5px 0 rgba(99,102,241,0.3);
 }
+.hero-btn-primary:active,
+.hero-btn-secondary:active,
+.hero-btn-rental:active {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px rgba(0,0,0,0.2),
+    inset 0 2px 0 rgba(255,255,255,0.2),
+    0 3px 0 rgba(99,102,241,0.3);
+}
+/* ========== END 3D BUTTONS ========== */
+
 /* ✅ UPDATED: FLOATING BUTTONS (ONLY ON CUSTOMER PAGES) */
 .floating-buttons {
   position: fixed;
@@ -471,29 +628,61 @@ nav a:hover {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+
+/* ========== HERO SECTION ========== */
 .hero {
   text-align:center;
   padding:80px 20px;
   margin-top:18px;
   border-radius:24px;
   color:white;
-  background: var(--premium-gradient);
-  box-shadow: 0 20px 40px rgba(99,102,241,0.15), inset 0 -6px 30px rgba(255,255,255,0.06);
+  background: 
+    /* Base gradient */
+    linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.85) 100%),
+    /* Cracked glass effect overlay */
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E"),
+    /* Subtle moving particles */
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255,255,255,0.03) 0%, transparent 50%);
+  box-shadow: 
+    0 20px 40px rgba(99,102,241,0.15), 
+    inset 0 -6px 30px rgba(255,255,255,0.06);
   transform: translateY(0);
   transition: transform 0.25s ease;
   position:relative;
   overflow:hidden;
+  animation: backgroundShift 20s infinite alternate ease-in-out;
+  border: 1px solid rgba(255,255,255,0.1);
 }
+
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 0%, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0% 0%, 100px 100px, 50px 30px, 80px 60px;
+  }
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+  transform: rotate(45deg);
+  animation: shine 8s infinite linear;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
 .hero:hover{ transform: translateY(-4px); }
-.hero h2 { 
-  font-size:36px; 
-  margin-bottom:14px; 
-  line-height:1.1; 
-  text-shadow:0 4px 18px rgba(0,0,0,0.08); 
-  position:relative; 
-  z-index:2;
-  font-weight: 800;
-}
 .hero p { 
   font-size:16px; 
   margin-bottom:22px; 
@@ -623,6 +812,7 @@ h3::after {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+/* ✅ MAP CONTAINER - WAPAS AAYA */
 .small-map-container {
   background:white;
   padding:35px;
@@ -843,9 +1033,8 @@ footer p {
 @media (max-width:740px){ 
   .hero h2{font-size:28px} 
   .hero{padding:48px 16px} 
-  header{padding:10px 14px; flex-direction:column; gap:10px;}
-  nav{display:flex; flex-wrap:wrap; justify-content:center; gap:8px;}
-  nav a{margin:0 6px; font-size:12px; padding:6px 12px;}
+  header{padding:10px 14px;}
+  .vertical-sidebar { width: 250px; }
   .hero-cta{flex-direction:column; align-items:center;}
   .stats-container{grid-template-columns:1fr;}
   .small-map{height:200px;}
@@ -855,6 +1044,24 @@ footer p {
   .services, .product-grid, .team-container, .laptops-grid { 
     grid-template-columns: 1fr; 
     gap: 20px; 
+  }
+  .hero-btn-primary,
+  .hero-btn-secondary,
+  .hero-btn-rental {
+    margin: 0 0 15px;
+    width: 90%;
+  }
+  .hamburger-menu-btn {
+    left: 15px;
+    width: 40px;
+    height: 40px;
+  }
+  .hamburger-line {
+    width: 18px;
+  }
+  header h1 {
+    margin-left: 40px;
+    font-size: 18px;
   }
 }
 
@@ -929,7 +1136,7 @@ footer p {
 .user-account {
   position: absolute;
   top: 12px;
-  right: 20px;
+  right: 70px;
   z-index: 1001;
 }
 .user-btn {
@@ -1178,17 +1385,17 @@ footer p {
 .admin-content.sidebar-open {
   margin-left: 250px;
 }
-.sidebar-overlay {
+.admin-sidebar-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.3);
   z-index: 9998;
   display: none;
 }
-.sidebar-overlay.active {
+.admin-sidebar-overlay.active {
   display: block;
 }
 
@@ -1494,6 +1701,19 @@ footer p {
 </head>
 <body>
 
+<!-- ✅ ADDED: VERTICAL SIDEBAR MENU (LEFT SIDE) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="vertical-sidebar" id="verticalSidebar">
+  <button class="close-sidebar" onclick="closeSidebar()">&times;</button>
+  <a href="#" onclick="showPage('home'); closeSidebar();">🏠 Home</a>
+  <a href="#" onclick="showPage('services'); closeSidebar();">🔧 Services</a>
+  <a href="#" onclick="showPage('accessoriesShop'); closeSidebar();">🛍️ Accessories Shop</a>
+  <a href="#" onclick="showPage('about'); closeSidebar();">👥 About Us</a>
+  <a href="#" onclick="showPage('laptopRental'); closeSidebar();">💻 Laptop Rental</a>
+  <a href="#" onclick="showPage('orderTracking'); closeSidebar();">📦 Track</a>
+  <a href="#" onclick="openSimpleLogin(); closeSidebar();" style="background:var(--premium-gradient); color:white;">👤 Account</a>
+</div>
+
 <!-- ✅ UPDATED: SIMPLE LOGIN MODAL -->
 <div id="loginModal" class="login-modal">
   <div class="login-content">
@@ -1635,18 +1855,16 @@ footer p {
   🎯 No stress - Take rest | Repair in 30-45 min | Accessories in 15-20 min
 </div>
 
+<!-- ✅ UPDATED HEADER WITH 3 LINE HAMBURGER (LEFT SIDE) -->
 <header>
+  <!-- 3 Line Hamburger Menu (LEFT SIDE) -->
+  <button class="hamburger-menu-btn" id="hamburgerMenuBtn" onclick="toggleSidebar()">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </button>
+  
   <h1>Step'sEazy</h1>
-  <nav>
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="showPage('services')">Services</a>
-    <a href="#" onclick="showPage('accessoriesShop')">Accessories Shop</a>
-    <a href="#" onclick="showPage('about')">About Us</a>
-    <a href="#" onclick="showPage('laptopRental')">💻 Laptop Rental</a>
-    <!-- ❌ REMOVED: Service Calculator Option -->
-    <a href="#" onclick="showPage('orderTracking')">📦 Track</a>
-    <a href="#" onclick="openSimpleLogin()" style="background:rgba(255,255,255,0.2);">👤 Account</a>
-  </nav>
   
   <!-- User Account -->
   <div class="user-account">
@@ -1669,7 +1887,8 @@ footer p {
 
 <div id="home" class="page active">
   <div class="hero container">
-    <h2>Fast & Affordable Mobile Repairs — <span class="badge">Free Pickup</span></h2>
+    <!-- ✅ FIXED: "FAST AND AFFORDABLE" TEXT - CLEAN -->
+    <h2>Fast & Affordable Mobile Repairs</h2>
     <p>Display, Battery, Back Panel & Accessories — Free Pickup & Delivery in Boisar & Palghar</p>
     
     <div style="display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap">
@@ -1697,8 +1916,6 @@ footer p {
         </div>
       </div>
     </div>
-
-    <!-- ❌ REMOVED: Clickable Arrow Section (Shift kiya niche) -->
   </div>
 
   <div class="trust-badges">
@@ -1708,6 +1925,20 @@ footer p {
     <div class="trust-badge">🔧 6 Months Warranty</div>
   </div>
 
+  <!-- ✅ UPDATED: 3D PREMIUM BUTTONS (UPPER SECTION) -->
+  <div style="text-align:center; margin: 30px 0;">
+    <button class="hero-btn-primary" onclick="showPage('services')">
+      📱 Our Services
+    </button>
+    <button class="hero-btn-secondary" onclick="showPage('accessoriesShop')">
+      🛍️ Accessories Shop
+    </button>
+    <button class="hero-btn-rental" onclick="showPage('laptopRental')">
+      💻 Laptop Rental
+    </button>
+  </div>
+
+  <!-- ✅ UPDATED: HAPPY CUSTOMER STATS MOVED DOWN -->
   <div class="stats-container">
     <div class="stat-card">
       <div class="stat-number" id="happyCustomers">500+</div>
@@ -1727,30 +1958,7 @@ footer p {
     </div>
   </div>
 
-  <!-- ✅ UPDATED: Animation 3 Buttons ke upar -->
-  <div style="text-align:center; margin:30px 0;">
-    <div style="display:inline-block; animation:bounce 2s infinite; cursor:pointer;">
-      <div style="font-size:24px; color:var(--primary-2);">👇</div>
-      <div style="font-size:13px; color:var(--muted); margin-top:5px;">Click on buttons below to explore</div>
-    </div>
-  </div>
-
-  <!-- ✅ UPDATED: 3 Colorful Buttons -->
-  <div style="text-align:center; margin: 30px 0;">
-    <button class="hero-btn-primary" onclick="showPage('services')">
-      📱 Our Services
-    </button>
-    <button class="hero-btn-secondary" onclick="showPage('accessoriesShop')">
-      🛍️ Accessories Shop
-    </button>
-    <button class="hero-btn-rental" onclick="showPage('laptopRental')">
-      💻 Laptop Rental
-    </button>
-  </div>
-
-  <!-- ❌ REMOVED: "Our Services" Heading & Services Section -->
-  
-  <!-- ✅ ADDED: Our Service Areas Map (Return Kara) -->
+  <!-- ✅ MAP WAPAS AAYA -->
   <section class="small-map-container">
     <h3>Our Service Areas</h3>
     <p style="text-align:center; color:var(--muted); margin-bottom:20px; font-size:14px;">Serving Boisar & Palghar with free pickup and delivery</p>
@@ -1894,7 +2102,6 @@ footer p {
 
     <div class="search-filter">
       <input type="text" class="search-box" placeholder="🔍 Search accessories..." onkeyup="filterProducts(this.value)">
-      <!-- ❌ REMOVED: Filter Buttons (All, Charging, Audio, Protection, Accessories, Price) -->
     </div>
 
     <div class="product-grid container" id="accessoriesGrid"></div>
@@ -1954,8 +2161,6 @@ footer p {
   </section>
 </div>
 
-<!-- ❌ REMOVED: Service Calculator Page (Pura section hata diya) -->
-
 <div id="orderTracking" class="page">
   <section>
     <h3>📦 Track Your Order</h3>
@@ -1981,10 +2186,10 @@ footer p {
 <!-- ✅ UPDATED: ADMIN PANEL WITH VERTICAL SIDEBAR -->
 <div id="admin" class="page">
   <!-- MENU TOGGLE BUTTON -->
-  <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
+  <button class="menu-toggle-btn" onclick="toggleAdminSidebar()">☰</button>
   
   <!-- SIDEBAR OVERLAY (MOBILE) -->
-  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <div class="admin-sidebar-overlay" onclick="toggleAdminSidebar()"></div>
   
   <!-- VERTICAL SIDEBAR -->
   <div class="admin-sidebar" id="adminSidebar">
@@ -1995,45 +2200,45 @@ footer p {
     
     <ul class="sidebar-menu">
       <li>
-        <a href="#" onclick="showAdminTab('overview'); toggleSidebar();" class="active">
+        <a href="#" onclick="showAdminTab('overview'); toggleAdminSidebar();" class="active">
           <span class="icon">📊</span>
           <span>Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('orders'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('orders'); toggleAdminSidebar();">
           <span class="icon">📦</span>
           <span>Orders</span>
           <span class="badge" id="sidebarOrderBadge" style="margin-left:auto; background:#ff6b6b; color:white; font-size:11px; padding:2px 8px; border-radius:10px;">0</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('products'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('products'); toggleAdminSidebar();">
           <span class="icon">🛍️</span>
           <span>Products</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('customers'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('customers'); toggleAdminSidebar();">
           <span class="icon">👥</span>
           <span>Customers</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('inventory'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('inventory'); toggleAdminSidebar();">
           <span class="icon">📦</span>
           <span>Inventory</span>
           <span class="badge" id="sidebarInventoryBadge" style="margin-left:auto; background:#f6d365; color:#000; font-size:11px; padding:2px 8px; border-radius:10px;">0</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('services'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('services'); toggleAdminSidebar();">
           <span class="icon">🔧</span>
           <span>Services</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('employees'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('employees'); toggleAdminSidebar();">
           <span class="icon">👨‍🔧</span>
           <span>Employees</span>
         </a>
@@ -2042,19 +2247,19 @@ footer p {
       <div class="sidebar-divider"></div>
       
       <li>
-        <a href="#" onclick="showAdminTab('analytics'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('analytics'); toggleAdminSidebar();">
           <span class="icon">📈</span>
           <span>Analytics</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('reports'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('reports'); toggleAdminSidebar();">
           <span class="icon">📄</span>
           <span>Reports</span>
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAdminTab('settings'); toggleSidebar();">
+        <a href="#" onclick="showAdminTab('settings'); toggleAdminSidebar();">
           <span class="icon">⚙️</span>
           <span>Settings</span>
         </a>
@@ -2139,6 +2344,36 @@ let selectedProduct = {
 
 let userLocation = null;
 let locationObtained = false;
+
+// ========== ✅ UPDATED: HAMBURGER MENU FUNCTIONS ==========
+function toggleSidebar() {
+  const sidebar = document.getElementById('verticalSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
+  
+  isSidebarOpen = !isSidebarOpen;
+  sidebar.classList.toggle('active');
+  overlay.classList.toggle('active');
+  hamburgerBtn.classList.toggle('open');
+  
+  // NO DARK EFFECT - Only light overlay
+  document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('verticalSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
+  
+  sidebar.classList.remove('active');
+  overlay.classList.remove('active');
+  hamburgerBtn.classList.remove('open');
+  document.body.style.overflow = 'auto';
+  isSidebarOpen = false;
+}
+
+// Close sidebar when clicking on overlay
+document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
 
 // ========== SUPABASE CONFIGURATION ==========
 // ✅ SUPABASE URL & KEY (YAHI RAHEGA)
@@ -2861,6 +3096,9 @@ function showPage(id){
   if(id === 'admin' && isAdminLoggedIn) {
     initializeAdminPanel();
   }
+  
+  // Close sidebar when navigating
+  closeSidebar();
 }
 
 // ========== USER MENU FUNCTIONS ==========
@@ -2937,12 +3175,11 @@ function sendQuickMessage(message) {
 }
 
 // ========== ADMIN PANEL FUNCTIONS ==========
-function toggleSidebar() {
+function toggleAdminSidebar() {
   const sidebar = document.getElementById('adminSidebar');
-  const overlay = document.querySelector('.sidebar-overlay');
+  const overlay = document.querySelector('.admin-sidebar-overlay');
   const adminContent = document.getElementById('adminContent');
   
-  isSidebarOpen = !isSidebarOpen;
   sidebar.classList.toggle('active');
   overlay.classList.toggle('active');
   adminContent.classList.toggle('sidebar-open');
