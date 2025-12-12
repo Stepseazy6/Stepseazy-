@@ -2141,7 +2141,7 @@ let userLocation = null;
 let locationObtained = false;
 
 // ========== SUPABASE CONFIGURATION ==========
-// 🔥 YAHAN APNA SUPABASE CLIENT API KEY DALNA HAI
+// ✅ SUPABASE URL & KEY (YAHI RAHEGA)
 const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5dWJzZXNydHd2b2x1d29tbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxOTM3MzcsImV4cCI6MjA1ODc2OTczN30.ywS4HLH44FJwGexP-_eAlGSOYbS9emhGq0kZ0kRfCMo";
 
@@ -2248,55 +2248,66 @@ async function testDatabaseConnection() {
   }
 }
 
-// ✅ 5. Add Sample Products (One-time)
-async function addSampleProducts() {
-  const products = [
+// ✅ 5. Load Products from Database (NEW FUNCTION)
+async function loadProductsFromDatabase() {
+  try {
+    console.log("🛍️ Loading products from database...");
+    
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('is_active', true)
+      .order('id', { ascending: true });
+    
+    if (error) {
+      console.error("❌ Products fetch error:", error);
+      return getFallbackProducts();
+    }
+    
+    console.log(`✅ ${data.length} products loaded from DB`);
+    return data;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return getFallbackProducts();
+  }
+}
+
+// ✅ 6. Fallback Products (if DB fails)
+function getFallbackProducts() {
+  return [
     {
+      id: 1,
       name: "Fast USB Charger",
       price: 499,
       category: "charging",
-      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1",
+      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjaGFyZ2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
       delivery_time: "15 min"
     },
     {
-      name: "Premium Earphones", 
+      id: 2,
+      name: "Premium Earphones",
       price: 699,
       category: "audio",
-      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
+      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
       delivery_time: "15 min"
     },
     {
+      id: 3,
       name: "Designer Mobile Cover",
       price: 299,
       category: "protection",
-      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8",
+      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBjb3ZlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
       delivery_time: "20 min"
     },
     {
+      id: 4,
       name: "Tempered Glass",
       price: 199,
       category: "protection",
-      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91",
+      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGhvbmUlMjBzY3JlZW4lMjBwcm90ZWN0b3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
       delivery_time: "15 min"
     }
   ];
-  
-  try {
-    const { data, error } = await supabase
-      .from('products')
-      .insert(products);
-    
-    if (error) {
-      console.error("❌ Add products error:", error);
-      return false;
-    }
-    
-    console.log("✅ Sample products added to database");
-    return true;
-  } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    return false;
-  }
 }
 
 // ========== ORDER FORM FUNCTIONS ==========
@@ -2479,7 +2490,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     const successMessage = document.getElementById('successMessage');
     successMessage.style.display = 'block';
     
-    // ✅ NEW: Save to Database
+    // ✅ Save to Database
     const orderData = {
         name: name,
         phone: phone,
@@ -2589,6 +2600,168 @@ function logoutAdmin() {
   showNotification('👋 Logged out from Admin Panel');
 }
 
+// ========== ACCESSORIES SHOP FUNCTIONS (UPDATED) ==========
+
+// ✅ UPDATED: Load Accessories Shop from Database
+async function loadAccessoriesShop() {
+  const grid = document.getElementById('accessoriesGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ Loading products from database...</div>';
+  
+  try {
+    const products = await loadProductsFromDatabase();
+    displayProducts(products);
+  } catch (err) {
+    console.error("Error loading products:", err);
+    displayProducts(getFallbackProducts());
+  }
+}
+
+// ✅ Display Products Function
+function displayProducts(products) {
+  const grid = document.getElementById('accessoriesGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  
+  if (products.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available. Please check back later.</div>';
+    return;
+  }
+  
+  products.forEach(product => {
+    const productCard = document.createElement('div');
+    productCard.className = 'product-card-ecom';
+    productCard.innerHTML = `
+      <img src="${product.image_url || 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'}" 
+           alt="${product.name}" 
+           class="product-image"
+           onerror="this.src='https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'">
+      <div class="product-info">
+        <div class="product-title">${product.name}</div>
+        <div class="product-price">₹${product.price}</div>
+        <div class="product-delivery">🚚 ${product.delivery_time || '15-20 min'} delivery</div>
+        
+        <div class="quantity-selector">
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
+          <input type="text" class="quantity-input" id="qty-${product.id}" value="0" readonly>
+          <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
+        </div>
+        
+        <button class="buy-now-btn" onclick="addToCart(${product.id})">
+          🛒 Add to Cart
+        </button>
+      </div>
+    `;
+    grid.appendChild(productCard);
+  });
+  
+  updateOrderSummary();
+}
+
+// ✅ UPDATED: Add to Cart Function
+async function addToCart(productId) {
+  const input = document.getElementById(`qty-${productId}`);
+  if (!input) {
+    showNotification('❌ Product not found!');
+    return;
+  }
+  
+  const quantity = parseInt(input.value) || 0;
+  
+  if(quantity === 0) {
+    showNotification('Please select quantity first!');
+    return;
+  }
+  
+  try {
+    // Try to get product from database first
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', productId)
+      .single();
+    
+    let product;
+    
+    if (!error && data) {
+      product = data;
+    } else {
+      // Fallback to hardcoded products
+      const fallbackProducts = getFallbackProducts();
+      product = fallbackProducts.find(p => p.id === productId);
+      
+      if (!product) {
+        showNotification('❌ Product not found in database!');
+        return;
+      }
+    }
+    
+    // Add to cart
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if(existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity,
+        img: product.image_url
+      });
+    }
+    
+    input.value = '0';
+    updateOrderSummary();
+    showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
+    
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+    showNotification('⚠️ Error adding product to cart. Please try again.');
+  }
+}
+
+// ✅ Update Quantity Function
+function updateQuantity(productId, change) {
+  const input = document.getElementById(`qty-${productId}`);
+  if (!input) return;
+  
+  let currentQty = parseInt(input.value) || 0;
+  currentQty = Math.max(0, currentQty + change);
+  input.value = currentQty;
+}
+
+// ✅ Update Order Summary
+function updateOrderSummary() {
+  const orderSummary = document.getElementById('orderSummary');
+  const orderItems = document.getElementById('orderItems');
+  const orderTotal = document.getElementById('orderTotal');
+  
+  if (!orderSummary || !orderItems || !orderTotal) return;
+  
+  if(cart.length === 0) {
+    orderSummary.style.display = 'none';
+    return;
+  }
+  
+  orderSummary.style.display = 'block';
+  orderItems.innerHTML = '';
+  
+  let total = 0;
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    const orderItem = document.createElement('div');
+    orderItem.className = 'order-item';
+    orderItem.innerHTML = `<span>${item.quantity} x ${item.name}</span><span>₹${itemTotal}</span>`;
+    orderItems.appendChild(orderItem);
+  });
+  
+  orderTotal.textContent = `₹${total}`;
+}
+
 // ========== QUICK ORDER SERVICE ==========
 function quickOrderService() {
   const device = document.getElementById('quickDevice').value;
@@ -2681,7 +2854,10 @@ function showPage(id){
     quickActionButton.style.display = 'block';
   }
   
-  if(id === 'accessoriesShop') loadAccessoriesShop();
+  if(id === 'accessoriesShop') {
+    loadAccessoriesShop();
+  }
+  
   if(id === 'admin' && isAdminLoggedIn) {
     initializeAdminPanel();
   }
@@ -2712,105 +2888,6 @@ function logoutUser() {
   localStorage.removeItem('currentUser');
   updateUserMenu();
   showNotification('👋 Logged out successfully');
-}
-
-// ========== ACCESSORIES SHOP ==========
-const accessories = [
-  {id: 1, name: "Fast USB Charger", price: 499, img: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjaGFyZ2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "charging"},
-  {id: 2, name: "Premium Earphones", price: 699, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "audio"},
-  {id: 3, name: "Designer Mobile Cover", price: 299, img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmUlMjBjb3ZlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60", delivery: "20 min", category: "protection"},
-  {id: 4, name: "Tempered Glass", price: 199, img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGhvbmUlMjBzY3JlZW4lMjBwcm90ZWN0b3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", delivery: "15 min", category: "protection"},
-];
-
-function loadAccessoriesShop() {
-  const grid = document.getElementById('accessoriesGrid');
-  grid.innerHTML = '';
-  
-  accessories.forEach(product => {
-    const productCard = document.createElement('div');
-    productCard.className = 'product-card-ecom';
-    productCard.innerHTML = `
-      <img src="${product.img}" alt="${product.name}" class="product-image">
-      <div class="product-info">
-        <div class="product-title">${product.name}</div>
-        <div class="product-price">₹${product.price}</div>
-        <div class="product-delivery">🚚 ${product.delivery} delivery</div>
-        
-        <div class="quantity-selector">
-          <button class="quantity-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
-          <input type="text" class="quantity-input" id="qty-${product.id}" value="0" readonly>
-          <button class="quantity-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
-        </div>
-        
-        <button class="buy-now-btn" onclick="addToCart(${product.id})">
-          🛒 Add to Cart
-        </button>
-      </div>
-    `;
-    grid.appendChild(productCard);
-  });
-}
-
-function updateQuantity(productId, change) {
-  const input = document.getElementById(`qty-${productId}`);
-  let currentQty = parseInt(input.value) || 0;
-  currentQty = Math.max(0, currentQty + change);
-  input.value = currentQty;
-}
-
-function addToCart(productId) {
-  const input = document.getElementById(`qty-${productId}`);
-  const quantity = parseInt(input.value) || 0;
-  
-  if(quantity === 0) {
-    showNotification('Please select quantity first!');
-    return;
-  }
-  
-  const product = accessories.find(p => p.id === productId);
-  const existingItem = cart.find(item => item.id === productId);
-  
-  if(existingItem) {
-    existingItem.quantity += quantity;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: quantity,
-      img: product.img
-    });
-  }
-  
-  input.value = '0';
-  updateOrderSummary();
-  showNotification(`🛒 ${quantity} x ${product.name} added to cart!`);
-}
-
-function updateOrderSummary() {
-  const orderSummary = document.getElementById('orderSummary');
-  const orderItems = document.getElementById('orderItems');
-  const orderTotal = document.getElementById('orderTotal');
-  
-  if(cart.length === 0) {
-    orderSummary.style.display = 'none';
-    return;
-  }
-  
-  orderSummary.style.display = 'block';
-  orderItems.innerHTML = '';
-  
-  let total = 0;
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    const orderItem = document.createElement('div');
-    orderItem.className = 'order-item';
-    orderItem.innerHTML = `<span>${item.quantity} x ${item.name}</span><span>₹${itemTotal}</span>`;
-    orderItems.appendChild(orderItem);
-  });
-  
-  orderTotal.textContent = `₹${total}`;
 }
 
 // ========== NOTIFICATION FUNCTION ==========
@@ -2895,7 +2972,8 @@ async function initializeAdminPanel() {
 function showAdminTab(tabName) {
   // Update active tab in sidebar
   document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
-  document.querySelector(`a[onclick*="${tabName}"]`).classList.add('active');
+  const activeLink = document.querySelector(`a[onclick*="${tabName}"]`);
+  if (activeLink) activeLink.classList.add('active');
   
   const contentArea = document.getElementById('adminContentArea');
   
@@ -3048,7 +3126,8 @@ async function loadOrdersTable() {
   
   // Update sidebar badge
   const pendingCount = orders.filter(o => o.status === 'pending').length;
-  document.getElementById('sidebarOrderBadge').textContent = pendingCount;
+  const badgeElement = document.getElementById('sidebarOrderBadge');
+  if (badgeElement) badgeElement.textContent = pendingCount;
 }
 
 function getStatusBadge(status) {
@@ -3137,7 +3216,8 @@ function closeModal() {
 
 function updateDashboardStats() {
   const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
-  document.getElementById('sidebarOrderBadge').textContent = pendingOrders;
+  const badgeElement = document.getElementById('sidebarOrderBadge');
+  if (badgeElement) badgeElement.textContent = pendingOrders;
 }
 
 // Other admin panel sections (simplified for now)
@@ -3215,6 +3295,19 @@ function showMyOrders() {
   showNotification('📋 Your orders will appear here after login');
 }
 
+function filterProducts(searchTerm) {
+  // Basic search functionality
+  const products = document.querySelectorAll('.product-card-ecom');
+  products.forEach(product => {
+    const title = product.querySelector('.product-title').textContent.toLowerCase();
+    if (title.includes(searchTerm.toLowerCase()) || searchTerm === '') {
+      product.style.display = 'block';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+}
+
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', function() {
   // Check if user is already logged in
@@ -3224,8 +3317,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUserMenu();
   }
   
-  // Load accessories shop
-  loadAccessoriesShop();
+  // Load accessories shop on page load
+  if (document.getElementById('accessoriesShop').classList.contains('active')) {
+    loadAccessoriesShop();
+  }
   
   // Auto-test database connection
   setTimeout(() => {
