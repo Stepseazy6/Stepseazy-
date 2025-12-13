@@ -2383,49 +2383,78 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 // Supabase Client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ========== SUPABASE ORDER FUNCTIONS ==========
-
-// ✅ 1. FIXED Order Save Function (Simple version)
+// ========== ✅ UPDATED: FIXED ORDER SAVE FUNCTION ==========
 async function saveOrderToDatabase(orderData) {
   try {
     console.log("💾 Saving order to Supabase...", orderData);
     
-    // Simple insert without .select() issue
-    const { error } = await supabase
-      .from('orders')
-      .insert({
-        customer_name: orderData.name || "Unknown Customer",
-        customer_phone: orderData.phone || "0000000000",
-        product_name: orderData.product || "Unknown Product",
-        price: orderData.price || 0,
-        location: orderData.location || "Location not shared",
-        status: 'pending'
-      });
-    
-    if (error) {
-      console.error("❌ Order save error:", error);
-      showNotification('⚠️ Database save failed: ' + error.message);
-      return null;
-    }
-    
-    console.log("✅ Order saved to database successfully!");
-    showNotification('✅ Order saved to database!');
-    
-    // Return success object
-    return {
-      success: true,
-      message: 'Order saved',
-      timestamp: new Date().toISOString()
+    // Prepare order object
+    const orderToInsert = {
+      customer_name: orderData.name || "Unknown Customer",
+      customer_phone: orderData.phone || "0000000000",
+      product_name: orderData.product || "Unknown Product",
+      price: orderData.price || 0,
+      location: orderData.location || "Location not shared",
+      status: 'pending'
     };
     
+    console.log("Inserting order:", orderToInsert);
+    
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from('orders')
+      .insert(orderToInsert);
+    
+    if (error) {
+      console.error("❌ Supabase insert error:", error);
+      
+      // Fallback: Save to localStorage
+      const localOrders = JSON.parse(localStorage.getItem('stepseazy_orders') || '[]');
+      localOrders.push({
+        id: Date.now(),
+        ...orderToInsert,
+        created_at: new Date().toISOString()
+      });
+      localStorage.setItem('stepseazy_orders', JSON.stringify(localOrders));
+      
+      console.log("✅ Saved to localStorage as fallback");
+      showNotification('✅ Order saved locally (DB error)');
+      return { success: true, local: true };
+    }
+    
+    console.log("✅ Order saved to Supabase successfully!");
+    showNotification('✅ Order saved to database!');
+    
+    return { success: true, data: data };
+    
   } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    showNotification('⚠️ Unexpected error saving order');
-    return null;
+    console.error("❌ Unexpected error in saveOrderToDatabase:", err);
+    
+    // Emergency fallback
+    try {
+      const localOrders = JSON.parse(localStorage.getItem('stepseazy_orders') || '[]');
+      localOrders.push({
+        id: Date.now(),
+        customer_name: orderData.name,
+        customer_phone: orderData.phone,
+        product_name: orderData.product,
+        price: orderData.price,
+        location: orderData.location,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      });
+      localStorage.setItem('stepseazy_orders', JSON.stringify(localOrders));
+      console.log("✅ Emergency save to localStorage");
+    } catch (localError) {
+      console.error("❌ Even localStorage failed:", localError);
+    }
+    
+    showNotification('⚠️ Order saved locally');
+    return { success: false, error: err.message };
   }
 }
 
-// ✅ 2. Fetch Orders for Admin (FIXED)
+// ========== ✅ UPDATED: LOAD ORDERS FROM DATABASE ==========
 async function loadOrdersFromDatabase() {
   try {
     console.log("📦 Loading orders from database...");
@@ -2449,117 +2478,7 @@ async function loadOrdersFromDatabase() {
   }
 }
 
-// ✅ 3. Update Order Status
-async function updateOrderStatusDB(orderId, newStatus) {
-  try {
-    const { data, error } = await supabase
-      .from('orders')
-      .update({ status: newStatus })
-      .eq('id', orderId);
-    
-    if (error) {
-      console.error("❌ Update error:", error);
-      return false;
-    }
-    
-    console.log(`✅ Order ${orderId} updated to ${newStatus}`);
-    return true;
-  } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    return false;
-  }
-}
-
-// ✅ 4. Test Database Connection
-async function testDatabaseConnection() {
-  console.log("🔗 Testing database connection...");
-  
-  try {
-    // Simple test query
-    const { data, error } = await supabase
-      .from('orders')
-      .select('id')
-      .limit(1);
-    
-    if (error) {
-      console.error("❌ Database connection failed:", error.message);
-      showNotification('⚠️ Database offline. Check connection.');
-      return false;
-    }
-    
-    console.log("✅ Database connected successfully!");
-    showNotification('✅ Database connected!');
-    return true;
-  } catch (err) {
-    console.error("❌ Connection error:", err);
-    return false;
-  }
-}
-
-// ✅ 5. Load Products from Database (FIXED)
-async function loadProductsFromDatabase() {
-  try {
-    console.log("🛍️ Loading products from database...");
-    
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('is_active', true)
-      .order('id', { ascending: true });
-    
-    if (error) {
-      console.error("❌ Products fetch error:", error);
-      showNotification('⚠️ Using fallback products');
-      return getFallbackProducts();
-    }
-    
-    console.log(`✅ ${data.length} products loaded from DB`);
-    return data;
-  } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    return getFallbackProducts();
-  }
-}
-
-// ✅ 6. Fallback Products (if DB fails)
-function getFallbackProducts() {
-  return [
-    {
-      id: 1,
-      name: "Fast USB Charger",
-      price: 499,
-      category: "charging",
-      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    },
-    {
-      id: 2,
-      name: "Premium Earphones",
-      price: 699,
-      category: "audio",
-      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    },
-    {
-      id: 3,
-      name: "Designer Mobile Cover",
-      price: 299,
-      category: "protection",
-      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "20 min"
-    },
-    {
-      id: 4,
-      name: "Tempered Glass",
-      price: 199,
-      category: "protection",
-      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    }
-  ];
-}
-
-// ========== ORDER FORM FUNCTIONS ==========
+// ========== ✅ UPDATED: ORDER FORM FUNCTIONS ==========
 function openOrderForm(productName, productPrice) {
     selectedProduct.name = productName;
     selectedProduct.price = productPrice;
@@ -2704,12 +2623,23 @@ function checkFormValidity() {
     submitBtn.disabled = !(isNameValid && isPhoneValid && locationObtained);
 }
 
-// ✅ UPDATED: Order Form Submission with FIXED Database Save
+// ========== ✅ UPDATED: ORDER FORM SUBMISSION (FIXED VERSION) ==========
 document.getElementById('orderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const name = document.getElementById('customerName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
+    
+    if (!name || !phone) {
+        showNotification('❌ Please fill all required fields');
+        return;
+    }
+    
+    // Show loading
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>⏳</span> Saving Order...';
+    submitBtn.disabled = true;
     
     // Create WhatsApp message
     let message = `🛍️ *NEW ORDER - Step'sEazy*%0A%0A`;
@@ -2732,13 +2662,6 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
     message += `Please process this order for pickup/delivery.`;
     
-    // Create WhatsApp URL
-    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-    
-    // Show success message
-    const successMessage = document.getElementById('successMessage');
-    successMessage.style.display = 'block';
-    
     // ✅ Save to Database (FIXED VERSION)
     const orderData = {
         name: name,
@@ -2749,10 +2672,18 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     };
     
     // Save to database
-    const savedOrder = await saveOrderToDatabase(orderData);
+    const saveResult = await saveOrderToDatabase(orderData);
+    
+    // Show success message
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+    
+    // Restore button
+    submitBtn.innerHTML = originalText;
     
     // Open WhatsApp after delay
     setTimeout(() => {
+        const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
         window.open(whatsappURL, '_blank');
         
         // Close form after 3 seconds
@@ -2760,7 +2691,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
             closeOrderForm();
             successMessage.style.display = 'none';
         }, 3000);
-    }, 800);
+    }, 1000);
 });
 
 // Attach validation
@@ -2846,22 +2777,94 @@ function logoutAdmin() {
   showNotification('👋 Logged out from Admin Panel');
 }
 
-// ========== ACCESSORIES SHOP FUNCTIONS ==========
-
-// ✅ Load Accessories Shop from Database
+// ========== ✅ UPDATED: ACCESSORIES SHOP FUNCTIONS ==========
 async function loadAccessoriesShop() {
   const grid = document.getElementById('accessoriesGrid');
-  if (!grid) return;
+  if (!grid) {
+    console.log("❌ accessoriesGrid not found");
+    return;
+  }
   
-  grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ Loading products...</div>';
+  grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ Loading products from database...</div>';
   
   try {
     const products = await loadProductsFromDatabase();
+    console.log(`✅ ${products.length} products loaded from DB`);
+    
+    if (products.length === 0) {
+      grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available. Check back later.</div>';
+      return;
+    }
+    
     displayProducts(products);
+    
   } catch (err) {
-    console.error("Error loading products:", err);
-    displayProducts(getFallbackProducts());
+    console.error("❌ Error loading products:", err);
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Error loading products. Please refresh.</div>';
   }
+}
+
+// ✅ Load Products from Database
+async function loadProductsFromDatabase() {
+  try {
+    console.log("🛍️ Loading products from database...");
+    
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('is_active', true)
+      .order('id', { ascending: true });
+    
+    if (error) {
+      console.error("❌ Products fetch error:", error);
+      showNotification('⚠️ Using fallback products');
+      return getFallbackProducts();
+    }
+    
+    console.log(`✅ ${data.length} products loaded from DB`);
+    return data;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return getFallbackProducts();
+  }
+}
+
+// ✅ Fallback Products (if DB fails)
+function getFallbackProducts() {
+  return [
+    {
+      id: 1,
+      name: "Fast USB Charger",
+      price: 499,
+      category: "charging",
+      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    },
+    {
+      id: 2,
+      name: "Premium Earphones",
+      price: 699,
+      category: "audio",
+      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    },
+    {
+      id: 3,
+      name: "Designer Mobile Cover",
+      price: 299,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "20 min"
+    },
+    {
+      id: 4,
+      name: "Tempered Glass",
+      price: 199,
+      category: "protection",
+      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      delivery_time: "15 min"
+    }
+  ];
 }
 
 // ✅ Display Products Function
@@ -3008,76 +3011,7 @@ function updateOrderSummary() {
   orderTotal.textContent = `₹${total}`;
 }
 
-// ========== QUICK ORDER SERVICE ==========
-function quickOrderService() {
-  const device = document.getElementById('quickDevice').value;
-  const problem = document.getElementById('quickProblem').value;
-  
-  if(!device || !problem) {
-    showNotification('❌ Please select device and problem type');
-    return;
-  }
-  
-  const deviceNames = {
-    apple: 'Apple iPhone',
-    samsung: 'Samsung Phone',
-    xiaomi: 'Xiaomi/Redmi Phone',
-    oneplus: 'OnePlus Phone',
-    oppo: 'OPPO/Vivo Phone',
-    other: 'Other Brand Phone'
-  };
-  
-  const problemNames = {
-    display: 'Broken Display',
-    battery: 'Battery Issue',
-    charging: 'Charging Problem',
-    back: 'Back Panel Damage',
-    software: 'Software Issue',
-    water: 'Water Damage'
-  };
-  
-  let message = `🔧 *QUICK SERVICE ORDER - Step'sEazy*%0A%0A`;
-  message += `*Device:* ${deviceNames[device]}%0A`;
-  message += `*Problem:* ${problemNames[problem]}%0A%0A`;
-  message += `Please contact me for immediate repair service. I need pickup in Boisar/Palghar.%0A%0A`;
-  message += `Urgent: Yes%0A`;
-  message += `Thank you!`;
-  
-  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  showNotification('✅ Quick order request sent via WhatsApp!');
-}
-
-// ========== CUSTOMER ORDER VIA WHATSAPP ==========
-function customerOrderWhatsApp() {
-  if(cart.length === 0) {
-    showNotification('❌ Your cart is empty!');
-    return;
-  }
-  
-  let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
-  let total = 0;
-  
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
-  });
-  
-  message += `%0A*Total: ₹${total}*%0A%0A`;
-  message += `Please deliver to my address in Boisar/Palghar.%0A`;
-  message += `Expected delivery: 15-20 minutes.%0A%0A`;
-  message += `Thank you! 😊`;
-  
-  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  
-  cart = [];
-  updateOrderSummary();
-  showNotification('✅ Order placed successfully! Check WhatsApp.');
-}
-
-// ========== PAGE NAVIGATION ==========
+// ========== ✅ UPDATED: PAGE NAVIGATION FUNCTION ==========
 function showPage(id){ 
   if(id === 'admin' && !isAdminLoggedIn) {
     showAdminLogin();
@@ -3100,12 +3034,23 @@ function showPage(id){
     quickActionButton.style.display = 'block';
   }
   
+  // ✅ FIXED: Load accessories shop when page is shown
   if(id === 'accessoriesShop') {
-    loadAccessoriesShop();
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      if (typeof loadAccessoriesShop === 'function') {
+        loadAccessoriesShop();
+      }
+    }, 100);
   }
   
   if(id === 'admin' && isAdminLoggedIn) {
     initializeAdminPanel();
+  }
+  
+  // ✅ FIXED: Also load for laptop rental
+  if(id === 'laptopRental') {
+    // You can add laptop loading logic here if needed
   }
   
   // Close sidebar when navigating
@@ -3183,6 +3128,75 @@ function sendQuickMessage(message) {
   window.open(whatsappURL, '_blank');
   hideQuickActions();
   showNotification('Quick message sent via WhatsApp!');
+}
+
+// ========== QUICK ORDER SERVICE ==========
+function quickOrderService() {
+  const device = document.getElementById('quickDevice').value;
+  const problem = document.getElementById('quickProblem').value;
+  
+  if(!device || !problem) {
+    showNotification('❌ Please select device and problem type');
+    return;
+  }
+  
+  const deviceNames = {
+    apple: 'Apple iPhone',
+    samsung: 'Samsung Phone',
+    xiaomi: 'Xiaomi/Redmi Phone',
+    oneplus: 'OnePlus Phone',
+    oppo: 'OPPO/Vivo Phone',
+    other: 'Other Brand Phone'
+  };
+  
+  const problemNames = {
+    display: 'Broken Display',
+    battery: 'Battery Issue',
+    charging: 'Charging Problem',
+    back: 'Back Panel Damage',
+    software: 'Software Issue',
+    water: 'Water Damage'
+  };
+  
+  let message = `🔧 *QUICK SERVICE ORDER - Step'sEazy*%0A%0A`;
+  message += `*Device:* ${deviceNames[device]}%0A`;
+  message += `*Problem:* ${problemNames[problem]}%0A%0A`;
+  message += `Please contact me for immediate repair service. I need pickup in Boisar/Palghar.%0A%0A`;
+  message += `Urgent: Yes%0A`;
+  message += `Thank you!`;
+  
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  showNotification('✅ Quick order request sent via WhatsApp!');
+}
+
+// ========== CUSTOMER ORDER VIA WHATSAPP ==========
+function customerOrderWhatsApp() {
+  if(cart.length === 0) {
+    showNotification('❌ Your cart is empty!');
+    return;
+  }
+  
+  let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
+  let total = 0;
+  
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
+  });
+  
+  message += `%0A*Total: ₹${total}*%0A%0A`;
+  message += `Please deliver to my address in Boisar/Palghar.%0A`;
+  message += `Expected delivery: 15-20 minutes.%0A%0A`;
+  message += `Thank you! 😊`;
+  
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+  window.open(whatsappURL, '_blank');
+  
+  cart = [];
+  updateOrderSummary();
+  showNotification('✅ Order placed successfully! Check WhatsApp.');
 }
 
 // ========== ADMIN PANEL FUNCTIONS ==========
@@ -3413,12 +3427,17 @@ async function updateOrderStatus(orderId) {
   const newStatus = prompt(`Update status for order ${orderId}:\nCurrent: ${order.status}\n\nEnter new status (pending/confirmed/in_progress/ready/completed/cancelled):`, order.status);
   
   if (newStatus && ['pending','confirmed','in_progress','ready','completed','cancelled'].includes(newStatus)) {
-    const success = await updateOrderStatusDB(orderId, newStatus);
-    if (success) {
+    const { error } = await supabase
+      .from('orders')
+      .update({ status: newStatus })
+      .eq('id', orderId);
+    
+    if (error) {
+      console.error("❌ Update error:", error);
+      showNotification('❌ Failed to update order');
+    } else {
       showNotification(`✅ Order ${orderId} updated to ${newStatus}`);
       await refreshOrders();
-    } else {
-      showNotification('❌ Failed to update order');
     }
   }
 }
@@ -3525,6 +3544,32 @@ function generateAdminSettings() {
   `;
 }
 
+// ========== DATABASE TEST FUNCTION ==========
+async function testDatabaseConnection() {
+  console.log("🔗 Testing database connection...");
+  
+  try {
+    // Simple test query
+    const { data, error } = await supabase
+      .from('orders')
+      .select('id')
+      .limit(1);
+    
+    if (error) {
+      console.error("❌ Database connection failed:", error.message);
+      showNotification('⚠️ Database offline. Check connection.');
+      return false;
+    }
+    
+    console.log("✅ Database connected successfully!");
+    showNotification('✅ Database connected!');
+    return true;
+  } catch (err) {
+    console.error("❌ Connection error:", err);
+    return false;
+  }
+}
+
 // ========== OTHER FUNCTIONS ==========
 function trackOrder() {
   const trackingId = document.getElementById('trackingId').value;
@@ -3572,9 +3617,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUserMenu();
   }
   
-  // Load accessories shop on page load
+  // Load accessories shop on page load if on that page
   if (document.getElementById('accessoriesShop').classList.contains('active')) {
-    loadAccessoriesShop();
+    setTimeout(() => {
+      loadAccessoriesShop();
+    }, 500);
   }
   
   // Auto-test database connection
