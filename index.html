@@ -433,7 +433,7 @@ nav.desktop-nav {
   color: #374151;
   font-size: 13px;
 }
-.form-group input {
+.form-group input, .form-group select, .form-group textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
@@ -1472,11 +1472,13 @@ footer p {
   border-radius: 20px;
   padding: 30px;
   width: 90%;
-  max-width: 450px;
+  max-width: 500px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
   position: relative;
   animation: slideIn 0.5s ease;
   border: 1px solid rgba(255,255,255,0.1);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .order-close-btn {
@@ -1524,7 +1526,7 @@ footer p {
   font-size: 14px;
 }
 
-.order-form-group input {
+.order-form-group input, .order-form-group select {
   width: 100%;
   padding: 14px 15px;
   border: 2px solid #e2e8f0;
@@ -1535,7 +1537,7 @@ footer p {
   background: #f8faff;
 }
 
-.order-form-group input:focus {
+.order-form-group input:focus, .order-form-group select:focus {
   border-color: var(--primary-2);
   outline: none;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
@@ -1671,6 +1673,123 @@ footer p {
   font-size: 18px;
 }
 
+/* OTP Section Styles */
+.otp-section {
+  display: none;
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8faff;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+.otp-input-group {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.otp-input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+}
+
+.otp-input:focus {
+  border-color: var(--primary-2);
+  outline: none;
+}
+
+.otp-timer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* Radio Button Group */
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.radio-option {
+  flex: 1;
+  text-align: center;
+}
+
+.radio-option input {
+  display: none;
+}
+
+.radio-option label {
+  display: block;
+  padding: 12px;
+  background: #f8faff;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.radio-option input:checked + label {
+  background: var(--premium-gradient);
+  color: white;
+  border-color: var(--primary-2);
+}
+
+/* Conditional Fields */
+.conditional-field {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+/* File Upload */
+.file-upload {
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #f8faff;
+}
+
+.file-upload:hover {
+  border-color: var(--primary-2);
+  background: white;
+}
+
+.file-upload input {
+  display: none;
+}
+
+.file-upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.file-preview {
+  margin-top: 10px;
+  display: none;
+}
+
+.file-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 8px;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .admin-sidebar {
@@ -1693,6 +1812,11 @@ footer p {
   }
   .order-form-title {
     font-size: 20px;
+  }
+  .otp-input {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
   }
 }
 /* ========== CSS ENDS HERE ========== */
@@ -1790,53 +1914,254 @@ footer p {
   </button>
 </div>
 
-<!-- ✅ ORDER FORM POPUP -->
-<div class="order-popup-container" id="orderPopupForm">
+<!-- ✅ ORDER FORM POPUP - FOR SERVICES -->
+<div class="order-popup-container" id="serviceOrderPopupForm">
     <div class="order-form-container">
-        <button class="order-close-btn" onclick="closeOrderForm()">×</button>
-        <h2 class="order-form-title">📱 Complete Your Order</h2>
+        <button class="order-close-btn" onclick="closeServiceOrderForm()">×</button>
+        <h2 class="order-form-title">📱 Mobile Repair Service</h2>
         
-        <!-- Selected Product Display -->
-        <div class="selected-product-display" id="selectedProductDisplay">
-            <strong>Product:</strong> <span id="productName">Loading...</span>
+        <!-- Selected Service Display -->
+        <div class="selected-product-display" id="selectedServiceDisplay">
+            <strong>Service:</strong> <span id="serviceName">Loading...</span>
         </div>
         
-        <form id="orderForm">
+        <form id="serviceOrderForm">
             <div class="order-form-group">
-                <label for="customerName">Your Name *</label>
-                <input type="text" id="customerName" placeholder="Enter your full name" required>
+                <label for="serviceCustomerName">Your Name *</label>
+                <input type="text" id="serviceCustomerName" placeholder="Enter your full name" required>
             </div>
             
             <div class="order-form-group">
-                <label for="customerPhone">WhatsApp Number *</label>
-                <input type="tel" id="customerPhone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" maxlength="10">
+                <label for="serviceCustomerPhone">Phone Number *</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="tel" id="serviceCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10" style="flex: 1;">
+                    <button type="button" class="whatsapp-btn" onclick="sendServiceOTP()" style="padding: 12px 15px; width: auto;">Send OTP</button>
+                </div>
+            </div>
+            
+            <!-- OTP Verification Section -->
+            <div class="otp-section" id="serviceOtpSection">
+                <div class="order-form-group">
+                    <label>Enter OTP *</label>
+                    <div class="otp-input-group">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp1">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp2">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp3">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp4">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp5">
+                        <input type="text" maxlength="1" class="otp-input" id="serviceOtp6">
+                    </div>
+                    <div class="otp-timer" id="serviceOtpTimer">OTP valid for: 05:00</div>
+                </div>
             </div>
             
             <div class="order-form-group">
-                <label>Live Location *</label>
-                <button type="button" class="order-location-btn" onclick="getLocation()">
+                <label for="phoneModel">Phone Model *</label>
+                <input type="text" id="phoneModel" placeholder="e.g., iPhone 13, Samsung S22" required>
+            </div>
+            
+            <div class="order-form-group">
+                <label>Location *</label>
+                <input type="text" id="manualLocation" placeholder="Enter your address manually" style="margin-bottom: 10px;">
+                <button type="button" class="order-location-btn" onclick="getServiceLocation()">
                     <span class="order-location-icon"></span> Share Your Live Location
                 </button>
-                <div class="order-location-display" id="locationDisplay">
+                <div class="order-location-display" id="serviceLocationDisplay">
                     <strong>📍 Your Location:</strong> <br>
-                    <span id="locationText">Location not shared yet</span>
-                </div>
-                <div class="order-error-message" id="locationError">
-                    Location access denied. Please allow location to continue.
+                    <span id="serviceLocationText">Location not shared yet</span>
                 </div>
             </div>
             
-            <button type="submit" class="order-submit-btn" id="submitBtn" disabled>
+            <button type="submit" class="order-submit-btn" id="serviceSubmitBtn" disabled>
                 <span>💬</span> Send Order via WhatsApp
             </button>
             
-            <div class="order-success-message" id="successMessage">
+            <div class="order-success-message" id="serviceSuccessMessage">
                 ✅ Order sent to WhatsApp! Check your messages.
             </div>
         </form>
         
         <div class="order-form-note">
-            <p>📍 We'll pickup from your location within 15-20 minutes</p>
+            <p>📍 Free pickup & delivery within 15-20 minutes</p>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ ACCESSORIES SHOP ORDER FORM -->
+<div class="order-popup-container" id="accessoriesOrderPopupForm">
+    <div class="order-form-container">
+        <button class="order-close-btn" onclick="closeAccessoriesOrderForm()">×</button>
+        <h2 class="order-form-title">🛍️ Accessories Shop Order</h2>
+        
+        <!-- Order Summary -->
+        <div class="selected-product-display" id="accessoriesOrderSummary">
+            <strong>Your Order:</strong> <span id="accessoriesItems">Loading...</span>
+        </div>
+        
+        <form id="accessoriesOrderForm">
+            <div class="order-form-group">
+                <label for="accessoriesCustomerName">Your Name *</label>
+                <input type="text" id="accessoriesCustomerName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="order-form-group">
+                <label for="accessoriesCustomerPhone">Phone Number *</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="tel" id="accessoriesCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10" style="flex: 1;">
+                    <button type="button" class="whatsapp-btn" onclick="sendAccessoriesOTP()" style="padding: 12px 15px; width: auto;">Send OTP</button>
+                </div>
+            </div>
+            
+            <!-- OTP Verification Section -->
+            <div class="otp-section" id="accessoriesOtpSection">
+                <div class="order-form-group">
+                    <label>Enter OTP *</label>
+                    <div class="otp-input-group">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp1">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp2">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp3">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp4">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp5">
+                        <input type="text" maxlength="1" class="otp-input" id="accessoriesOtp6">
+                    </div>
+                    <div class="otp-timer" id="accessoriesOtpTimer">OTP valid for: 05:00</div>
+                </div>
+            </div>
+            
+            <div class="order-form-group">
+                <label>Delivery Location *</label>
+                <input type="text" id="accessoriesManualLocation" placeholder="Enter your delivery address" style="margin-bottom: 10px;">
+                <button type="button" class="order-location-btn" onclick="getAccessoriesLocation()">
+                    <span class="order-location-icon"></span> Share Your Live Location
+                </button>
+                <div class="order-location-display" id="accessoriesLocationDisplay">
+                    <strong>📍 Your Location:</strong> <br>
+                    <span id="accessoriesLocationText">Location not shared yet</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="order-submit-btn" id="accessoriesSubmitBtn" disabled>
+                <span>💬</span> Send Order via WhatsApp
+            </button>
+            
+            <div class="order-success-message" id="accessoriesSuccessMessage">
+                ✅ Order sent to WhatsApp! Check your messages.
+            </div>
+        </form>
+        
+        <div class="order-form-note">
+            <p>🚚 Delivery within 15-20 minutes</p>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ LAPTOP RENTAL ORDER FORM -->
+<div class="order-popup-container" id="laptopOrderPopupForm">
+    <div class="order-form-container">
+        <button class="order-close-btn" onclick="closeLaptopOrderForm()">×</button>
+        <h2 class="order-form-title">💻 Laptop Rental</h2>
+        
+        <!-- Selected Laptop Display -->
+        <div class="selected-product-display" id="selectedLaptopDisplay">
+            <strong>Laptop:</strong> <span id="laptopName">Loading...</span>
+        </div>
+        
+        <form id="laptopOrderForm">
+            <div class="order-form-group">
+                <label for="laptopCustomerName">Your Name *</label>
+                <input type="text" id="laptopCustomerName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="order-form-group">
+                <label for="laptopCustomerPhone">Phone Number *</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="tel" id="laptopCustomerPhone" placeholder="10-digit number" required pattern="[0-9]{10}" maxlength="10" style="flex: 1;">
+                    <button type="button" class="whatsapp-btn" onclick="sendLaptopOTP()" style="padding: 12px 15px; width: auto;">Send OTP</button>
+                </div>
+            </div>
+            
+            <!-- OTP Verification Section -->
+            <div class="otp-section" id="laptopOtpSection">
+                <div class="order-form-group">
+                    <label>Enter OTP *</label>
+                    <div class="otp-input-group">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp1">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp2">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp3">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp4">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp5">
+                        <input type="text" maxlength="1" class="otp-input" id="laptopOtp6">
+                    </div>
+                    <div class="otp-timer" id="laptopOtpTimer">OTP valid for: 05:00</div>
+                </div>
+            </div>
+            
+            <div class="order-form-group">
+                <label for="rentalPeriod">Rental Period *</label>
+                <select id="rentalPeriod" required>
+                    <option value="">Select rental duration</option>
+                    <option value="2_hours">2 Hours - ₹299</option>
+                    <option value="4_hours">4 Hours - ₹499</option>
+                    <option value="8_hours">8 Hours (1 Day) - ₹799</option>
+                    <option value="3_days">3 Days - ₹1999</option>
+                    <option value="7_days">7 Days - ₹3999</option>
+                </select>
+            </div>
+            
+            <div class="order-form-group">
+                <label>Delivery/Pickup Option *</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="pickupStore" name="deliveryOption" value="store" onchange="toggleLaptopLocationFields()">
+                        <label for="pickupStore">🏪 Pickup from Store</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="homeDelivery" name="deliveryOption" value="home" onchange="toggleLaptopLocationFields()">
+                        <label for="homeDelivery">🏠 Home Delivery</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conditional Location Fields -->
+            <div class="conditional-field" id="laptopLocationFields">
+                <div class="order-form-group">
+                    <label>Delivery Location *</label>
+                    <input type="text" id="laptopManualLocation" placeholder="Enter your delivery address" style="margin-bottom: 10px;">
+                    <button type="button" class="order-location-btn" onclick="getLaptopLocation()">
+                        <span class="order-location-icon"></span> Share Your Live Location
+                    </button>
+                    <div class="order-location-display" id="laptopLocationDisplay">
+                        <strong>📍 Your Location:</strong> <br>
+                        <span id="laptopLocationText">Location not shared yet</span>
+                    </div>
+                </div>
+                
+                <div class="order-form-group">
+                    <label>ID Proof Upload *</label>
+                    <div class="file-upload" onclick="document.getElementById('idProofUpload').click()">
+                        <input type="file" id="idProofUpload" accept="image/*" onchange="previewIdProof(event)">
+                        <div class="file-upload-label">
+                            <span>📁 Upload ID Proof</span>
+                            <small>Aadhaar, PAN, Driving License, etc.</small>
+                        </div>
+                    </div>
+                    <div class="file-preview" id="idProofPreview">
+                        <img id="idProofImage" src="" alt="ID Proof Preview">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="order-submit-btn" id="laptopSubmitBtn" disabled>
+                <span>💬</span> Send Rental Request
+            </button>
+            
+            <div class="order-success-message" id="laptopSuccessMessage">
+                ✅ Rental request sent! Check WhatsApp for confirmation.
+            </div>
+        </form>
+        
+        <div class="order-form-note">
+            <p>🔒 ID proof required for home delivery | Store pickup requires original ID verification</p>
         </div>
     </div>
 </div>
@@ -1980,8 +2305,8 @@ footer p {
           <li>30-45 minutes repair</li>
           <li>6 months warranty</li>
         </ul>
-        <!-- ✅ UPDATED: Now opens order form directly -->
-        <button class="whatsapp-btn" onclick="openOrderForm('Display Replacement', 1200)">
+        <!-- ✅ UPDATED: Now opens service order form -->
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Display Replacement', 1200)">
           💬 Order Now
         </button>
       </div>
@@ -1994,7 +2319,7 @@ footer p {
           <li>30 minutes replacement</li>
           <li>6 months warranty</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openOrderForm('Battery Replacement', 700)">
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Battery Replacement', 700)">
           💬 Order Now
         </button>
       </div>
@@ -2007,7 +2332,7 @@ footer p {
           <li>Color matching</li>
           <li>45 minutes service</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openOrderForm('Back Panel Repair', 800)">
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Back Panel Repair', 800)">
           💬 Order Now
         </button>
       </div>
@@ -2020,7 +2345,7 @@ footer p {
           <li>30 minutes service</li>
           <li>Warranty included</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openOrderForm('Charging Port Repair', 600)">
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Charging Port Repair', 600)">
           💬 Order Now
         </button>
       </div>
@@ -2033,7 +2358,7 @@ footer p {
           <li>Software update</li>
           <li>Data backup</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openOrderForm('Software Repair', 500)">
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Software Repair', 500)">
           💬 Order Now
         </button>
       </div>
@@ -2046,7 +2371,7 @@ footer p {
           <li>Ultrasonic cleaning</li>
           <li>Component replacement</li>
         </ul>
-        <button class="whatsapp-btn" onclick="openOrderForm('Water Damage Repair', 1500)">
+        <button class="whatsapp-btn" onclick="openServiceOrderForm('Water Damage Repair', 1500)">
           💬 Order Now
         </button>
       </div>
@@ -2114,8 +2439,8 @@ footer p {
         <span>Total:</span>
         <span id="orderTotal">₹0</span>
       </div>
-      <!-- ✅ FIXED: Now uses customerOrderWhatsApp instead of openSimpleLogin -->
-      <button class="customer-order-btn" onclick="customerOrderWhatsApp()">
+      <!-- ✅ FIXED: Now opens accessories order form -->
+      <button class="customer-order-btn" onclick="openAccessoriesOrderForm()">
         💬 Complete Order
       </button>
       <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:10px;">
@@ -2140,7 +2465,7 @@ footer p {
           <div class="laptop-title">Dell Inspiron 15</div>
           <div class="laptop-specs">Intel i5 • 8GB RAM • 256GB SSD</div>
           <div class="laptop-price">₹299 / 2 hours</div>
-          <button class="rent-now-btn" onclick="openOrderForm('Dell Inspiron 15 Laptop Rental', 299)">
+          <button class="rent-now-btn" onclick="openLaptopOrderForm('Dell Inspiron 15', 299)">
             💻 Rent Now
           </button>
         </div>
@@ -2152,7 +2477,7 @@ footer p {
           <div class="laptop-title">HP Pavilion 14</div>
           <div class="laptop-specs">AMD Ryzen 5 • 16GB RAM • 512GB SSD</div>
           <div class="laptop-price">₹399 / 2 hours</div>
-          <button class="rent-now-btn" onclick="openOrderForm('HP Pavilion 14 Laptop Rental', 399)">
+          <button class="rent-now-btn" onclick="openLaptopOrderForm('HP Pavilion 14', 399)">
             💻 Rent Now
           </button>
         </div>
@@ -2320,9 +2645,59 @@ let isSidebarOpen = false;
 let isQuickActionsOpen = false;
 
 // WhatsApp number for orders
-const ORDER_WHATSAPP_NUMBER = "+91-8050269752";
+const ORDER_WHATSAPP_NUMBER = "+919359122677";
 
-// Admin Data Structure
+// ✅ SUPABASE CONFIGURATION
+const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5dWJzZXNydHd2b2x1d29tbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0Njk0ODYsImV4cCI6MjA3OTA0NTQ4Nn0.ZYW3tEUJILzwGbEY9Kl0whbT8VmK73yA83tfAduaRvk";
+
+// Supabase Client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// OTP Variables
+let serviceOtp = "";
+let accessoriesOtp = "";
+let laptopOtp = "";
+let otpTimer = null;
+
+// Order Form Variables
+let serviceOrderData = {
+    name: "",
+    phone: "",
+    service: "",
+    price: 0,
+    phoneModel: "",
+    location: null,
+    otpVerified: false
+};
+
+let accessoriesOrderData = {
+    name: "",
+    phone: "",
+    items: [],
+    total: 0,
+    location: null,
+    otpVerified: false
+};
+
+let laptopOrderData = {
+    name: "",
+    phone: "",
+    laptop: "",
+    price: 0,
+    rentalPeriod: "",
+    deliveryOption: "",
+    location: null,
+    idProof: null,
+    otpVerified: false
+};
+
+// Location Variables
+let serviceLocation = null;
+let accessoriesLocation = null;
+let laptopLocation = null;
+
+// Admin Data
 let adminData = {
   orders: [],
   customers: [],
@@ -2331,19 +2706,10 @@ let adminData = {
   employees: [],
   settings: {
     businessName: "Step'sEazy",
-    whatsappNumber: "+91-9359122677",
-    businessPhone: "+91-8050269752"
+    whatsappNumber: "+919359122677",
+    businessPhone: "+919359122677"
   }
 };
-
-// Order Form Variables
-let selectedProduct = {
-    name: "Unknown Product",
-    price: 0
-};
-
-let userLocation = null;
-let locationObtained = false;
 
 // ========== ✅ UPDATED: HAMBURGER MENU FUNCTIONS ==========
 function toggleSidebar() {
@@ -2356,7 +2722,6 @@ function toggleSidebar() {
   overlay.classList.toggle('active');
   hamburgerBtn.classList.toggle('open');
   
-  // NO DARK EFFECT - Only light overlay
   document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
 }
 
@@ -2372,199 +2737,376 @@ function closeSidebar() {
   isSidebarOpen = false;
 }
 
-// Close sidebar when clicking on overlay
-document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
-
-// ========== SUPABASE CONFIGURATION ==========
-// ✅ SUPABASE URL & KEY (YAHI RAHEGA)
-const SUPABASE_URL = "https://byubsesrtwvoluwomnjv.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5dWJzZXNydHd2b2x1d29tbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0Njk0ODYsImV4cCI6MjA3OTA0NTQ4Nn0.ZYW3tEUJILzwGbEY9Kl0whbT8VmK73yA83tfAduaRvk";
-
-// Supabase Client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ========== ✅ UPDATED: FIXED ORDER SAVE FUNCTION ==========
-async function saveOrderToDatabase(orderData) {
-  try {
-    console.log("💾 Saving order to Supabase...", orderData);
+// ========== ✅ SERVICE ORDER FORM FUNCTIONS ==========
+function openServiceOrderForm(serviceName, servicePrice) {
+    serviceOrderData.service = serviceName;
+    serviceOrderData.price = servicePrice;
     
-    // Prepare order object
-    const orderToInsert = {
-      customer_name: orderData.name || "Unknown Customer",
-      customer_phone: orderData.phone || "0000000000",
-      product_name: orderData.product || "Unknown Product",
-      price: orderData.price || 0,
-      location: orderData.location || "Location not shared",
-      status: 'pending'
-    };
-    
-    console.log("Inserting order:", orderToInsert);
-    
-    // Insert into Supabase
-    const { data, error } = await supabase
-      .from('orders')
-      .insert(orderToInsert);
-    
-    if (error) {
-      console.error("❌ Supabase insert error:", error);
-      
-      // Fallback: Save to localStorage
-      const localOrders = JSON.parse(localStorage.getItem('stepseazy_orders') || '[]');
-      localOrders.push({
-        id: Date.now(),
-        ...orderToInsert,
-        created_at: new Date().toISOString()
-      });
-      localStorage.setItem('stepseazy_orders', JSON.stringify(localOrders));
-      
-      console.log("✅ Saved to localStorage as fallback");
-      showNotification('✅ Order saved locally (DB error)');
-      return { success: true, local: true };
-    }
-    
-    console.log("✅ Order saved to Supabase successfully!");
-    showNotification('✅ Order saved to database!');
-    
-    return { success: true, data: data };
-    
-  } catch (err) {
-    console.error("❌ Unexpected error in saveOrderToDatabase:", err);
-    
-    // Emergency fallback
-    try {
-      const localOrders = JSON.parse(localStorage.getItem('stepseazy_orders') || '[]');
-      localOrders.push({
-        id: Date.now(),
-        customer_name: orderData.name,
-        customer_phone: orderData.phone,
-        product_name: orderData.product,
-        price: orderData.price,
-        location: orderData.location,
-        status: 'pending',
-        created_at: new Date().toISOString()
-      });
-      localStorage.setItem('stepseazy_orders', JSON.stringify(localOrders));
-      console.log("✅ Emergency save to localStorage");
-    } catch (localError) {
-      console.error("❌ Even localStorage failed:", localError);
-    }
-    
-    showNotification('⚠️ Order saved locally');
-    return { success: false, error: err.message };
-  }
-}
-
-// ========== ✅ UPDATED: LOAD ORDERS FROM DATABASE ==========
-async function loadOrdersFromDatabase() {
-  try {
-    console.log("📦 Loading orders from database...");
-    
-    const { data, error } = await supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error("❌ Load orders error:", error);
-      showNotification('⚠️ Failed to load orders');
-      return [];
-    }
-    
-    console.log(`✅ ${data.length} orders loaded from database`);
-    return data;
-  } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    return [];
-  }
-}
-
-// ========== ✅ UPDATED: ORDER FORM FUNCTIONS ==========
-function openOrderForm(productName, productPrice) {
-    selectedProduct.name = productName;
-    selectedProduct.price = productPrice;
-    
-    document.getElementById('productName').textContent = `${productName} - ₹${productPrice}`;
-    document.getElementById('orderPopupForm').style.display = 'flex';
+    document.getElementById('serviceName').textContent = `${serviceName} - ₹${servicePrice}`;
+    document.getElementById('serviceOrderPopupForm').style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    resetForm();
+    resetServiceForm();
 }
 
-function closeOrderForm() {
-    document.getElementById('orderPopupForm').style.display = 'none';
+function closeServiceOrderForm() {
+    document.getElementById('serviceOrderPopupForm').style.display = 'none';
     document.body.style.overflow = 'auto';
-    resetForm();
+    resetServiceForm();
 }
 
-function resetForm() {
-    document.getElementById('orderForm').reset();
-    document.getElementById('locationDisplay').style.display = 'none';
-    document.getElementById('locationError').style.display = 'none';
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('submitBtn').disabled = true;
-    userLocation = null;
-    locationObtained = false;
+function resetServiceForm() {
+    document.getElementById('serviceOrderForm').reset();
+    document.getElementById('serviceLocationDisplay').style.display = 'none';
+    document.getElementById('serviceOtpSection').style.display = 'none';
+    document.getElementById('serviceSuccessMessage').style.display = 'none';
+    document.getElementById('serviceSubmitBtn').disabled = true;
+    serviceOrderData.otpVerified = false;
+    clearOTPTimer();
 }
 
-function getLocation() {
-    const locationDisplay = document.getElementById('locationDisplay');
-    const locationText = document.getElementById('locationText');
-    const locationError = document.getElementById('locationError');
-    const submitBtn = document.getElementById('submitBtn');
+function sendServiceOTP() {
+    const phone = document.getElementById('serviceCustomerPhone').value;
     
-    locationError.style.display = 'none';
-    
-    if (!navigator.geolocation) {
-        locationText.textContent = "Browser doesn't support location";
-        locationError.style.display = 'block';
-        locationDisplay.style.display = 'block';
+    if (!phone || !/^[0-9]{10}$/.test(phone)) {
+        showNotification('❌ Please enter a valid 10-digit phone number');
         return;
     }
     
+    // Generate random OTP (for demo)
+    serviceOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Show OTP section
+    document.getElementById('serviceOtpSection').style.display = 'block';
+    
+    // Start OTP timer
+    startOTPTimer('serviceOtpTimer');
+    
+    // Auto-fill OTP for demo (in real app, send via SMS)
+    setTimeout(() => {
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`serviceOtp${i+1}`).value = serviceOtp[i];
+        }
+        showNotification(`✅ OTP sent to ${phone}: ${serviceOtp} (Demo)`);
+    }, 500);
+    
+    // Focus on first OTP input
+    document.getElementById('serviceOtp1').focus();
+}
+
+function verifyServiceOTP() {
+    let enteredOtp = "";
+    for (let i = 1; i <= 6; i++) {
+        enteredOtp += document.getElementById(`serviceOtp${i}`).value;
+    }
+    
+    if (enteredOtp === serviceOtp) {
+        serviceOrderData.otpVerified = true;
+        showNotification('✅ OTP verified successfully!');
+        checkServiceFormValidity();
+        return true;
+    } else {
+        showNotification('❌ Invalid OTP. Please try again.');
+        return false;
+    }
+}
+
+function getServiceLocation() {
+    const locationDisplay = document.getElementById('serviceLocationDisplay');
+    const locationText = document.getElementById('serviceLocationText');
+    
     locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
     locationDisplay.style.display = 'block';
+    
+    if (!navigator.geolocation) {
+        locationText.textContent = "Browser doesn't support location";
+        return;
+    }
     
     navigator.geolocation.getCurrentPosition(
         function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            userLocation = { lat, lon };
-            locationObtained = true;
+            serviceLocation = { lat, lon };
             
-            getAddressFromCoords(lat, lon);
-            checkFormValidity();
+            getAddressFromCoords(lat, lon, 'serviceLocationText');
+            checkServiceFormValidity();
         },
         function(error) {
-            let errorMessage = "Location access denied. ";
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    errorMessage += "Please allow location access to continue.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    errorMessage += "Location information unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    errorMessage += "Location request timed out.";
-                    break;
-                default:
-                    errorMessage += "Unknown error occurred.";
-            }
-            
-            locationText.textContent = errorMessage;
-            locationError.style.display = 'block';
-            locationDisplay.style.display = 'block';
-            submitBtn.disabled = true;
-        },
-        {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
+            locationText.textContent = "Location access denied. Please enter address manually.";
         }
     );
 }
 
-function getAddressFromCoords(lat, lon) {
-    const locationText = document.getElementById('locationText');
+function checkServiceFormValidity() {
+    const name = document.getElementById('serviceCustomerName').value.trim();
+    const phone = document.getElementById('serviceCustomerPhone').value.trim();
+    const phoneModel = document.getElementById('phoneModel').value.trim();
+    const manualLocation = document.getElementById('manualLocation').value.trim();
+    const submitBtn = document.getElementById('serviceSubmitBtn');
+    
+    const isNameValid = name.length > 0;
+    const isPhoneValid = /^[0-9]{10}$/.test(phone);
+    const isPhoneModelValid = phoneModel.length > 0;
+    const hasLocation = serviceLocation || manualLocation.length > 0;
+    
+    submitBtn.disabled = !(isNameValid && isPhoneValid && isPhoneModelValid && hasLocation && serviceOrderData.otpVerified);
+}
+
+// ========== ✅ ACCESSORIES ORDER FORM FUNCTIONS ==========
+function openAccessoriesOrderForm() {
+    if (cart.length === 0) {
+        showNotification('❌ Your cart is empty!');
+        return;
+    }
+    
+    // Update order summary
+    let itemsText = "";
+    let total = 0;
+    accessoriesOrderData.items = [];
+    
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        itemsText += `${item.quantity} x ${item.name}, `;
+        accessoriesOrderData.items.push({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price
+        });
+    });
+    
+    accessoriesOrderData.total = total;
+    
+    document.getElementById('accessoriesItems').textContent = itemsText.slice(0, -2);
+    document.getElementById('accessoriesOrderPopupForm').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    resetAccessoriesForm();
+}
+
+function closeAccessoriesOrderForm() {
+    document.getElementById('accessoriesOrderPopupForm').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetAccessoriesForm();
+}
+
+function resetAccessoriesForm() {
+    document.getElementById('accessoriesOrderForm').reset();
+    document.getElementById('accessoriesLocationDisplay').style.display = 'none';
+    document.getElementById('accessoriesOtpSection').style.display = 'none';
+    document.getElementById('accessoriesSuccessMessage').style.display = 'none';
+    document.getElementById('accessoriesSubmitBtn').disabled = true;
+    accessoriesOrderData.otpVerified = false;
+    clearOTPTimer();
+}
+
+function sendAccessoriesOTP() {
+    const phone = document.getElementById('accessoriesCustomerPhone').value;
+    
+    if (!phone || !/^[0-9]{10}$/.test(phone)) {
+        showNotification('❌ Please enter a valid 10-digit phone number');
+        return;
+    }
+    
+    // Generate random OTP (for demo)
+    accessoriesOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Show OTP section
+    document.getElementById('accessoriesOtpSection').style.display = 'block';
+    
+    // Start OTP timer
+    startOTPTimer('accessoriesOtpTimer');
+    
+    // Auto-fill OTP for demo
+    setTimeout(() => {
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`accessoriesOtp${i+1}`).value = accessoriesOtp[i];
+        }
+        showNotification(`✅ OTP sent to ${phone}: ${accessoriesOtp} (Demo)`);
+    }, 500);
+    
+    document.getElementById('accessoriesOtp1').focus();
+}
+
+function getAccessoriesLocation() {
+    const locationDisplay = document.getElementById('accessoriesLocationDisplay');
+    const locationText = document.getElementById('accessoriesLocationText');
+    
+    locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
+    locationDisplay.style.display = 'block';
+    
+    if (!navigator.geolocation) {
+        locationText.textContent = "Browser doesn't support location";
+        return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            accessoriesLocation = { lat, lon };
+            
+            getAddressFromCoords(lat, lon, 'accessoriesLocationText');
+            checkAccessoriesFormValidity();
+        },
+        function(error) {
+            locationText.textContent = "Location access denied. Please enter address manually.";
+        }
+    );
+}
+
+function checkAccessoriesFormValidity() {
+    const name = document.getElementById('accessoriesCustomerName').value.trim();
+    const phone = document.getElementById('accessoriesCustomerPhone').value.trim();
+    const manualLocation = document.getElementById('accessoriesManualLocation').value.trim();
+    const submitBtn = document.getElementById('accessoriesSubmitBtn');
+    
+    const isNameValid = name.length > 0;
+    const isPhoneValid = /^[0-9]{10}$/.test(phone);
+    const hasLocation = accessoriesLocation || manualLocation.length > 0;
+    
+    submitBtn.disabled = !(isNameValid && isPhoneValid && hasLocation && accessoriesOrderData.otpVerified);
+}
+
+// ========== ✅ LAPTOP ORDER FORM FUNCTIONS ==========
+function openLaptopOrderForm(laptopName, laptopPrice) {
+    laptopOrderData.laptop = laptopName;
+    laptopOrderData.price = laptopPrice;
+    
+    document.getElementById('laptopName').textContent = `${laptopName} - ₹${laptopPrice}/2hrs`;
+    document.getElementById('laptopOrderPopupForm').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    resetLaptopForm();
+}
+
+function closeLaptopOrderForm() {
+    document.getElementById('laptopOrderPopupForm').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetLaptopForm();
+}
+
+function resetLaptopForm() {
+    document.getElementById('laptopOrderForm').reset();
+    document.getElementById('laptopLocationDisplay').style.display = 'none';
+    document.getElementById('laptopOtpSection').style.display = 'none';
+    document.getElementById('laptopSuccessMessage').style.display = 'none';
+    document.getElementById('laptopLocationFields').style.display = 'none';
+    document.getElementById('idProofPreview').style.display = 'none';
+    document.getElementById('laptopSubmitBtn').disabled = true;
+    laptopOrderData.otpVerified = false;
+    clearOTPTimer();
+}
+
+function sendLaptopOTP() {
+    const phone = document.getElementById('laptopCustomerPhone').value;
+    
+    if (!phone || !/^[0-9]{10}$/.test(phone)) {
+        showNotification('❌ Please enter a valid 10-digit phone number');
+        return;
+    }
+    
+    // Generate random OTP (for demo)
+    laptopOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Show OTP section
+    document.getElementById('laptopOtpSection').style.display = 'block';
+    
+    // Start OTP timer
+    startOTPTimer('laptopOtpTimer');
+    
+    // Auto-fill OTP for demo
+    setTimeout(() => {
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`laptopOtp${i+1}`).value = laptopOtp[i];
+        }
+        showNotification(`✅ OTP sent to ${phone}: ${laptopOtp} (Demo)`);
+    }, 500);
+    
+    document.getElementById('laptopOtp1').focus();
+}
+
+function toggleLaptopLocationFields() {
+    const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+    const locationFields = document.getElementById('laptopLocationFields');
+    
+    if (deliveryOption && deliveryOption.value === 'home') {
+        locationFields.style.display = 'block';
+        laptopOrderData.deliveryOption = 'home';
+    } else {
+        locationFields.style.display = 'none';
+        laptopOrderData.deliveryOption = 'store';
+    }
+    checkLaptopFormValidity();
+}
+
+function getLaptopLocation() {
+    const locationDisplay = document.getElementById('laptopLocationDisplay');
+    const locationText = document.getElementById('laptopLocationText');
+    
+    locationText.innerHTML = `<span style="color:#667eea;">📍 Getting your location...</span>`;
+    locationDisplay.style.display = 'block';
+    
+    if (!navigator.geolocation) {
+        locationText.textContent = "Browser doesn't support location";
+        return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            laptopLocation = { lat, lon };
+            
+            getAddressFromCoords(lat, lon, 'laptopLocationText');
+            checkLaptopFormValidity();
+        },
+        function(error) {
+            locationText.textContent = "Location access denied. Please enter address manually.";
+        }
+    );
+}
+
+function previewIdProof(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('idProofImage').src = e.target.result;
+            document.getElementById('idProofPreview').style.display = 'block';
+            laptopOrderData.idProof = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function checkLaptopFormValidity() {
+    const name = document.getElementById('laptopCustomerName').value.trim();
+    const phone = document.getElementById('laptopCustomerPhone').value.trim();
+    const rentalPeriod = document.getElementById('rentalPeriod').value;
+    const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+    const manualLocation = document.getElementById('laptopManualLocation').value.trim();
+    const submitBtn = document.getElementById('laptopSubmitBtn');
+    
+    const isNameValid = name.length > 0;
+    const isPhoneValid = /^[0-9]{10}$/.test(phone);
+    const isRentalPeriodValid = rentalPeriod.length > 0;
+    const isDeliveryOptionValid = deliveryOption !== null;
+    
+    let hasLocation = true;
+    let hasIdProof = true;
+    
+    if (deliveryOption && deliveryOption.value === 'home') {
+        hasLocation = laptopLocation || manualLocation.length > 0;
+        hasIdProof = laptopOrderData.idProof !== null;
+    }
+    
+    submitBtn.disabled = !(isNameValid && isPhoneValid && isRentalPeriodValid && 
+                          isDeliveryOptionValid && hasLocation && hasIdProof && 
+                          laptopOrderData.otpVerified);
+}
+
+// ========== ✅ UTILITY FUNCTIONS ==========
+function getAddressFromCoords(lat, lon, elementId) {
+    const locationText = document.getElementById(elementId);
     
     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
         .then(response => response.json())
@@ -2580,18 +3122,12 @@ function getAddressFromCoords(lat, lon) {
                         </small>
                     </div>
                 `;
-                userLocation.address = address;
             } else {
                 locationText.innerHTML = `
                     <div>
                         <strong>📍 Your Location:</strong><br>
                         Latitude: ${lat.toFixed(6)}<br>
-                        Longitude: ${lon.toFixed(6)}<br>
-                        <small style="color:#666; font-size:12px;">
-                            <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
-                                View on Google Maps
-                            </a>
-                        </small>
+                        Longitude: ${lon.toFixed(6)}
                     </div>
                 `;
             }
@@ -2601,273 +3137,377 @@ function getAddressFromCoords(lat, lon) {
                 <div>
                     <strong>📍 Your Location:</strong><br>
                     Latitude: ${lat.toFixed(6)}<br>
-                    Longitude: ${lon.toFixed(6)}<br>
-                    <small style="color:#666; font-size:12px;">
-                        <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank" style="color:#667eea;">
-                            View on Google Maps
-                        </a>
-                    </small>
+                    Longitude: ${lon.toFixed(6)}
                 </div>
             `;
         });
 }
 
-function checkFormValidity() {
-    const name = document.getElementById('customerName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
-    const submitBtn = document.getElementById('submitBtn');
+function startOTPTimer(timerId) {
+    clearOTPTimer();
+    let timeLeft = 300; // 5 minutes in seconds
+    const timerElement = document.getElementById(timerId);
     
-    const isNameValid = name.length > 0;
-    const isPhoneValid = /^[0-9]{10}$/.test(phone);
-    
-    submitBtn.disabled = !(isNameValid && isPhoneValid && locationObtained);
+    otpTimer = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerElement.textContent = `OTP valid for: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 0) {
+            clearOTPTimer();
+            timerElement.textContent = "OTP expired!";
+            timerElement.style.color = "#ff6b6b";
+        }
+        timeLeft--;
+    }, 1000);
 }
 
-// ========== ✅ UPDATED: ORDER FORM SUBMISSION (FIXED VERSION) ==========
-document.getElementById('orderForm').addEventListener('submit', async function(e) {
+function clearOTPTimer() {
+    if (otpTimer) {
+        clearInterval(otpTimer);
+        otpTimer = null;
+    }
+}
+
+// ========== ✅ FORM SUBMISSION FUNCTIONS ==========
+// Service Form Submission
+document.getElementById('serviceOrderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const name = document.getElementById('customerName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
-    
-    if (!name || !phone) {
-        showNotification('❌ Please fill all required fields');
+    // Verify OTP first
+    if (!verifyServiceOTP()) {
         return;
     }
     
-    // Show loading
-    const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span>⏳</span> Saving Order...';
-    submitBtn.disabled = true;
+    const name = document.getElementById('serviceCustomerName').value.trim();
+    const phone = document.getElementById('serviceCustomerPhone').value.trim();
+    const phoneModel = document.getElementById('phoneModel').value.trim();
+    const manualLocation = document.getElementById('manualLocation').value.trim();
+    
+    // ✅ Save to Database
+    try {
+        const orderData = {
+            customer_name: name,
+            customer_phone: phone,
+            product_name: serviceOrderData.service,
+            price: serviceOrderData.price,
+            location: manualLocation || (serviceLocation ? JSON.stringify(serviceLocation) : 'Not shared'),
+            status: 'pending',
+            type: 'service',
+            details: `Phone Model: ${phoneModel}`
+        };
+        
+        const { data, error } = await supabase
+            .from('orders')
+            .insert(orderData);
+        
+        if (error) {
+            console.error("Database error:", error);
+        } else {
+            console.log("Order saved to database:", data);
+        }
+    } catch (err) {
+        console.error("Error saving order:", err);
+    }
     
     // Create WhatsApp message
-    let message = `🛍️ *NEW ORDER - Step'sEazy*%0A%0A`;
-    message += `*Product:* ${selectedProduct.name}%0A`;
-    message += `*Price:* ₹${selectedProduct.price}%0A`;
+    let message = `🔧 *MOBILE REPAIR ORDER - Step'sEazy*%0A%0A`;
+    message += `*Service:* ${serviceOrderData.service}%0A`;
+    message += `*Price:* ₹${serviceOrderData.price}%0A`;
     message += `*Customer Name:* ${name}%0A`;
-    message += `*WhatsApp:* ${phone}%0A%0A`;
+    message += `*Phone:* ${phone}%0A`;
+    message += `*Phone Model:* ${phoneModel}%0A%0A`;
     
-    if (userLocation && userLocation.address) {
-        message += `*📍 Location:* ${userLocation.address}%0A`;
-        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
-    } else if (userLocation) {
-        message += `*📍 Location Coordinates:*%0A`;
-        message += `Latitude: ${userLocation.lat}%0A`;
-        message += `Longitude: ${userLocation.lon}%0A`;
-        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}%0A%0A`;
+    if (serviceLocation) {
+        message += `*📍 Location:* ${document.getElementById('serviceLocationText').textContent}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${serviceLocation.lat},${serviceLocation.lon}%0A%0A`;
+    } else if (manualLocation) {
+        message += `*📍 Location:* ${manualLocation}%0A%0A`;
     }
     
     message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
-    message += `*🏪 Shop:* Step'sEazy - Boisar/Palghar%0A%0A`;
-    message += `Please process this order for pickup/delivery.`;
+    message += `*🔒 OTP Verified:* ✅ Yes%0A%0A`;
+    message += `Please arrange pickup for this repair service.`;
     
-    // ✅ Save to Database (FIXED VERSION)
-    const orderData = {
-        name: name,
-        phone: phone,
-        product: selectedProduct.name,
-        price: selectedProduct.price,
-        location: userLocation ? JSON.stringify(userLocation) : 'Not shared'
-    };
-    
-    // Save to database
-    const saveResult = await saveOrderToDatabase(orderData);
+    // Open WhatsApp
+    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+    window.open(whatsappURL, '_blank');
     
     // Show success message
-    const successMessage = document.getElementById('successMessage');
-    successMessage.style.display = 'block';
+    document.getElementById('serviceSuccessMessage').style.display = 'block';
     
-    // Restore button
-    submitBtn.innerHTML = originalText;
+    // Clear cart if any
+    cart = [];
+    updateOrderSummary();
     
-    // Open WhatsApp after delay
+    // Close form after delay
     setTimeout(() => {
-        const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-        window.open(whatsappURL, '_blank');
+        closeServiceOrderForm();
+    }, 2000);
+});
+
+// Accessories Form Submission
+document.getElementById('accessoriesOrderForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Verify OTP
+    let enteredOtp = "";
+    for (let i = 1; i <= 6; i++) {
+        enteredOtp += document.getElementById(`accessoriesOtp${i}`).value;
+    }
+    
+    if (enteredOtp !== accessoriesOtp) {
+        showNotification('❌ Invalid OTP. Please try again.');
+        return;
+    }
+    
+    const name = document.getElementById('accessoriesCustomerName').value.trim();
+    const phone = document.getElementById('accessoriesCustomerPhone').value.trim();
+    const manualLocation = document.getElementById('accessoriesManualLocation').value.trim();
+    
+    // ✅ Save to Database
+    try {
+        const orderData = {
+            customer_name: name,
+            customer_phone: phone,
+            product_name: `Accessories Order (${accessoriesOrderData.items.length} items)`,
+            price: accessoriesOrderData.total,
+            location: manualLocation || (accessoriesLocation ? JSON.stringify(accessoriesLocation) : 'Not shared'),
+            status: 'pending',
+            type: 'accessories',
+            details: JSON.stringify(accessoriesOrderData.items)
+        };
         
-        // Close form after 3 seconds
-        setTimeout(() => {
-            closeOrderForm();
-            successMessage.style.display = 'none';
-        }, 3000);
-    }, 1000);
-});
-
-// Attach validation
-document.getElementById('customerName').addEventListener('input', checkFormValidity);
-document.getElementById('customerPhone').addEventListener('input', checkFormValidity);
-document.getElementById('customerPhone').addEventListener('blur', function() {
-    if (!/^[0-9]{10}$/.test(this.value)) {
-        this.style.borderColor = '#ff6b6b';
-    } else {
-        this.style.borderColor = '#e2e8f0';
+        const { data, error } = await supabase
+            .from('orders')
+            .insert(orderData);
+        
+        if (error) {
+            console.error("Database error:", error);
+        } else {
+            console.log("Order saved to database:", data);
+        }
+    } catch (err) {
+        console.error("Error saving order:", err);
     }
-});
-
-// Close form on escape
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeOrderForm();
+    
+    // Create WhatsApp message
+    let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
+    message += `*Customer Name:* ${name}%0A`;
+    message += `*Phone:* ${phone}%0A%0A`;
+    message += `*Order Items:*%0A`;
+    
+    accessoriesOrderData.items.forEach(item => {
+        message += `• ${item.quantity} x ${item.name} - ₹${item.price * item.quantity}%0A`;
+    });
+    
+    message += `%0A*Total: ₹${accessoriesOrderData.total}*%0A%0A`;
+    
+    if (accessoriesLocation) {
+        message += `*📍 Location:* ${document.getElementById('accessoriesLocationText').textContent}%0A`;
+        message += `*🗺️ Google Maps:* https://maps.google.com/?q=${accessoriesLocation.lat},${accessoriesLocation.lon}%0A%0A`;
+    } else if (manualLocation) {
+        message += `*📍 Location:* ${manualLocation}%0A%0A`;
     }
+    
+    message += `*📅 Order Time:* ${new Date().toLocaleString('en-IN')}%0A`;
+    message += `*🔒 OTP Verified:* ✅ Yes%0A%0A`;
+    message += `Please deliver within 15-20 minutes.`;
+    
+    // Open WhatsApp
+    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+    window.open(whatsappURL, '_blank');
+    
+    // Show success message
+    document.getElementById('accessoriesSuccessMessage').style.display = 'block';
+    
+    // Clear cart
+    cart = [];
+    updateOrderSummary();
+    
+    // Close form after delay
+    setTimeout(() => {
+        closeAccessoriesOrderForm();
+    }, 2000);
 });
 
-// Close form when clicking outside
-document.getElementById('orderPopupForm').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeOrderForm();
+// Laptop Form Submission
+document.getElementById('laptopOrderForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Verify OTP
+    let enteredOtp = "";
+    for (let i = 1; i <= 6; i++) {
+        enteredOtp += document.getElementById(`laptopOtp${i}`).value;
     }
+    
+    if (enteredOtp !== laptopOtp) {
+        showNotification('❌ Invalid OTP. Please try again.');
+        return;
+    }
+    
+    const name = document.getElementById('laptopCustomerName').value.trim();
+    const phone = document.getElementById('laptopCustomerPhone').value.trim();
+    const rentalPeriod = document.getElementById('rentalPeriod').value;
+    const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
+    const manualLocation = document.getElementById('laptopManualLocation').value.trim();
+    
+    const periodMap = {
+        '2_hours': '2 Hours',
+        '4_hours': '4 Hours',
+        '8_hours': '8 Hours (1 Day)',
+        '3_days': '3 Days',
+        '7_days': '7 Days'
+    };
+    
+    // ✅ Save to Database
+    try {
+        const orderData = {
+            customer_name: name,
+            customer_phone: phone,
+            product_name: laptopOrderData.laptop,
+            price: laptopOrderData.price,
+            location: manualLocation || (laptopLocation ? JSON.stringify(laptopLocation) : 'Store Pickup'),
+            status: 'pending',
+            type: 'laptop_rental',
+            details: `Rental Period: ${periodMap[rentalPeriod]}, Delivery: ${deliveryOption === 'home' ? 'Home Delivery' : 'Store Pickup'}`
+        };
+        
+        const { data, error } = await supabase
+            .from('orders')
+            .insert(orderData);
+        
+        if (error) {
+            console.error("Database error:", error);
+        } else {
+            console.log("Order saved to database:", data);
+        }
+    } catch (err) {
+        console.error("Error saving order:", err);
+    }
+    
+    // Create WhatsApp message
+    let message = `💻 *LAPTOP RENTAL REQUEST - Step'sEazy*%0A%0A`;
+    message += `*Laptop:* ${laptopOrderData.laptop}%0A`;
+    message += `*Rental Period:* ${periodMap[rentalPeriod]}%0A`;
+    message += `*Price:* ₹${laptopOrderData.price}%0A`;
+    message += `*Customer Name:* ${name}%0A`;
+    message += `*Phone:* ${phone}%0A`;
+    message += `*Delivery Option:* ${deliveryOption === 'home' ? '🏠 Home Delivery' : '🏪 Store Pickup'}%0A%0A`;
+    
+    if (deliveryOption === 'home') {
+        if (laptopLocation) {
+            message += `*📍 Delivery Location:* ${document.getElementById('laptopLocationText').textContent}%0A`;
+            message += `*🗺️ Google Maps:* https://maps.google.com/?q=${laptopLocation.lat},${laptopLocation.lon}%0A%0A`;
+        } else if (manualLocation) {
+            message += `*📍 Delivery Location:* ${manualLocation}%0A%0A`;
+        }
+        message += `*🆔 ID Proof:* ✅ Uploaded%0A`;
+    }
+    
+    message += `*📅 Request Time:* ${new Date().toLocaleString('en-IN')}%0A`;
+    message += `*🔒 OTP Verified:* ✅ Yes%0A%0A`;
+    message += `Please process this rental request.`;
+    
+    // Open WhatsApp
+    const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
+    window.open(whatsappURL, '_blank');
+    
+    // Show success message
+    document.getElementById('laptopSuccessMessage').style.display = 'block';
+    
+    // Close form after delay
+    setTimeout(() => {
+        closeLaptopOrderForm();
+    }, 2000);
 });
 
-// ========== LOGIN FUNCTIONS ==========
-function openSimpleLogin() {
-  document.getElementById('loginModal').style.display = 'flex';
+// ========== ✅ OTP INPUT AUTO FOCUS ==========
+function setupOTPAutoFocus(formType) {
+    for (let i = 1; i <= 6; i++) {
+        const otpInput = document.getElementById(`${formType}Otp${i}`);
+        if (otpInput) {
+            otpInput.addEventListener('input', function(e) {
+                if (this.value.length === 1 && i < 6) {
+                    document.getElementById(`${formType}Otp${i+1}`).focus();
+                }
+                
+                // Check if all OTP entered
+                let allFilled = true;
+                for (let j = 1; j <= 6; j++) {
+                    if (!document.getElementById(`${formType}Otp${j}`).value) {
+                        allFilled = false;
+                        break;
+                    }
+                }
+                
+                if (allFilled) {
+                    if (formType === 'service') {
+                        verifyServiceOTP();
+                    } else if (formType === 'accessories') {
+                        accessoriesOrderData.otpVerified = true;
+                        checkAccessoriesFormValidity();
+                        showNotification('✅ OTP entered!');
+                    } else if (formType === 'laptop') {
+                        laptopOrderData.otpVerified = true;
+                        checkLaptopFormValidity();
+                        showNotification('✅ OTP entered!');
+                    }
+                }
+            });
+            
+            otpInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && i > 1) {
+                    document.getElementById(`${formType}Otp${i-1}`).focus();
+                }
+            });
+        }
+    }
 }
 
-function closeLogin() {
-  document.getElementById('loginModal').style.display = 'none';
-}
-
-function showAdminLogin() {
-  closeLogin();
-  document.getElementById('adminLoginModal').style.display = 'flex';
-}
-
-function closeAdminLogin() {
-  document.getElementById('adminLoginModal').style.display = 'none';
-}
-
-function loginAsCustomer() {
-  currentUser = { type: 'customer', name: 'Customer' };
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  closeLogin();
-  updateUserMenu();
-  showNotification('👋 Welcome! You can now place orders.');
-}
-
-function loginWithWhatsApp() {
-  const message = "Hi Step'sEazy, I want to login to my account.";
-  window.open(`https://wa.me/919359122677?text=${encodeURIComponent(message)}`, '_blank');
-  closeLogin();
-  showNotification('Opening WhatsApp for login...');
-}
-
-function loginToAdmin() {
-  const email = document.getElementById('adminEmail').value;
-  const password = document.getElementById('adminPassword').value;
-  
-  if(email === 'admin@gmail.com' && password === '1234') {
-    isAdminLoggedIn = true;
-    closeAdminLogin();
-    showPage('admin');
-    showNotification('✅ Welcome to Admin Panel!');
-    initializeAdminPanel();
-  } else {
-    showNotification('❌ Invalid email or password!');
-  }
-}
-
-function forgotPassword() {
-  showNotification('📧 Please contact support to reset your password.');
-}
-
-function logoutAdmin() {
-  isAdminLoggedIn = false;
-  showPage('home');
-  showNotification('👋 Logged out from Admin Panel');
-}
-
-// ========== ✅ UPDATED: ACCESSORIES SHOP FUNCTIONS ==========
+// ========== ✅ ACCESSORIES SHOP FUNCTIONS WITH DATABASE ==========
 async function loadAccessoriesShop() {
   const grid = document.getElementById('accessoriesGrid');
-  if (!grid) {
-    console.log("❌ accessoriesGrid not found");
-    return;
-  }
+  if (!grid) return;
   
   grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ Loading products from database...</div>';
   
   try {
-    const products = await loadProductsFromDatabase();
-    console.log(`✅ ${products.length} products loaded from DB`);
-    
-    if (products.length === 0) {
-      grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available. Check back later.</div>';
-      return;
-    }
-    
-    displayProducts(products);
-    
-  } catch (err) {
-    console.error("❌ Error loading products:", err);
-    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Error loading products. Please refresh.</div>';
-  }
-}
-
-// ✅ Load Products from Database
-async function loadProductsFromDatabase() {
-  try {
-    console.log("🛍️ Loading products from database...");
-    
-    const { data, error } = await supabase
+    // ✅ Load from Supabase Database
+    const { data: products, error } = await supabase
       .from('products')
       .select('*')
       .eq('is_active', true)
       .order('id', { ascending: true });
     
     if (error) {
-      console.error("❌ Products fetch error:", error);
+      console.error("Error loading products:", error);
       showNotification('⚠️ Using fallback products');
-      return getFallbackProducts();
+      displayProducts(getFallbackProducts());
+      return;
     }
     
-    console.log(`✅ ${data.length} products loaded from DB`);
-    return data;
+    if (products && products.length > 0) {
+      console.log(`✅ ${products.length} products loaded from database`);
+      displayProducts(products);
+    } else {
+      displayProducts(getFallbackProducts());
+    }
   } catch (err) {
-    console.error("❌ Unexpected error:", err);
-    return getFallbackProducts();
+    console.error("Database error:", err);
+    displayProducts(getFallbackProducts());
   }
 }
 
-// ✅ Fallback Products (if DB fails)
 function getFallbackProducts() {
   return [
-    {
-      id: 1,
-      name: "Fast USB Charger",
-      price: 499,
-      category: "charging",
-      image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    },
-    {
-      id: 2,
-      name: "Premium Earphones",
-      price: 699,
-      category: "audio",
-      image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    },
-    {
-      id: 3,
-      name: "Designer Mobile Cover",
-      price: 299,
-      category: "protection",
-      image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "20 min"
-    },
-    {
-      id: 4,
-      name: "Tempered Glass",
-      price: 199,
-      category: "protection",
-      image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      delivery_time: "15 min"
-    }
+    { id: 1, name: "Fast USB Charger", price: 499, image_url: "https://images.unsplash.com/photo-1609592071310-3d8cde5612e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", delivery_time: "15 min" },
+    { id: 2, name: "Premium Earphones", price: 699, image_url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", delivery_time: "15 min" },
+    { id: 3, name: "Designer Mobile Cover", price: 299, image_url: "https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", delivery_time: "20 min" },
+    { id: 4, name: "Tempered Glass", price: 199, image_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", delivery_time: "15 min" }
   ];
 }
 
-// ✅ Display Products Function
 function displayProducts(products) {
   const grid = document.getElementById('accessoriesGrid');
   if (!grid) return;
@@ -2875,7 +3515,7 @@ function displayProducts(products) {
   grid.innerHTML = '';
   
   if (products.length === 0) {
-    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available. Please add products in admin panel.</div>';
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No products available in database.</div>';
     return;
   }
   
@@ -2909,7 +3549,6 @@ function displayProducts(products) {
   updateOrderSummary();
 }
 
-// ✅ Add to Cart Function
 async function addToCart(productId) {
   const input = document.getElementById(`qty-${productId}`);
   if (!input) {
@@ -2926,40 +3565,25 @@ async function addToCart(productId) {
   
   try {
     // Get product from database
-    const { data, error } = await supabase
+    const { data: product, error } = await supabase
       .from('products')
       .select('*')
       .eq('id', productId)
       .single();
     
-    let product;
-    
-    if (!error && data) {
-      product = data;
-    } else {
-      // Fallback
+    if (error || !product) {
+      // Fallback to local products
       const fallbackProducts = getFallbackProducts();
-      product = fallbackProducts.find(p => p.id === productId);
+      const product = fallbackProducts.find(p => p.id === productId);
       
       if (!product) {
         showNotification('❌ Product not found!');
         return;
       }
-    }
-    
-    // Add to cart
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if(existingItem) {
-      existingItem.quantity += quantity;
+      
+      addProductToCart(product, quantity);
     } else {
-      cart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: quantity,
-        img: product.image_url
-      });
+      addProductToCart(product, quantity);
     }
     
     input.value = '0';
@@ -2972,7 +3596,22 @@ async function addToCart(productId) {
   }
 }
 
-// ✅ Update Quantity Function
+function addProductToCart(product, quantity) {
+  const existingItem = cart.find(item => item.id === product.id);
+  
+  if(existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      img: product.image_url
+    });
+  }
+}
+
 function updateQuantity(productId, change) {
   const input = document.getElementById(`qty-${productId}`);
   if (!input) return;
@@ -2982,7 +3621,6 @@ function updateQuantity(productId, change) {
   input.value = currentQty;
 }
 
-// ✅ Update Order Summary
 function updateOrderSummary() {
   const orderSummary = document.getElementById('orderSummary');
   const orderItems = document.getElementById('orderItems');
@@ -3011,195 +3649,41 @@ function updateOrderSummary() {
   orderTotal.textContent = `₹${total}`;
 }
 
-// ========== ✅ UPDATED: PAGE NAVIGATION FUNCTION ==========
-function showPage(id){ 
-  if(id === 'admin' && !isAdminLoggedIn) {
-    showAdminLogin();
-    return;
-  }
+// ========== ✅ ADMIN PANEL FUNCTIONS ==========
+function showAdminLogin() {
+  closeLogin();
+  document.getElementById('adminLoginModal').style.display = 'flex';
+}
+
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').style.display = 'none';
+}
+
+function loginToAdmin() {
+  const email = document.getElementById('adminEmail').value;
+  const password = document.getElementById('adminPassword').value;
   
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
-  document.getElementById(id).classList.add('active'); 
-  window.scrollTo(0,0); 
-  
-  const floatingButtons = document.getElementById('floatingButtons');
-  const quickActionButton = document.getElementById('quickActionButton');
-  
-  if(id === 'admin') {
-    floatingButtons.style.display = 'none';
-    quickActionButton.style.display = 'none';
-    hideQuickActions();
-  } else {
-    floatingButtons.style.display = 'flex';
-    quickActionButton.style.display = 'block';
-  }
-  
-  // ✅ FIXED: Load accessories shop when page is shown
-  if(id === 'accessoriesShop') {
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
-      if (typeof loadAccessoriesShop === 'function') {
-        loadAccessoriesShop();
-      }
-    }, 100);
-  }
-  
-  if(id === 'admin' && isAdminLoggedIn) {
+  if(email === 'admin@gmail.com' && password === '1234') {
+    isAdminLoggedIn = true;
+    closeAdminLogin();
+    showPage('admin');
+    showNotification('✅ Welcome to Admin Panel!');
     initializeAdminPanel();
-  }
-  
-  // ✅ FIXED: Also load for laptop rental
-  if(id === 'laptopRental') {
-    // You can add laptop loading logic here if needed
-  }
-  
-  // Close sidebar when navigating
-  closeSidebar();
-}
-
-// ========== USER MENU FUNCTIONS ==========
-function updateUserMenu() {
-  if(currentUser) {
-    document.getElementById('userName').textContent = currentUser.name;
-    document.getElementById('menuContent').innerHTML = `
-      <div style="margin-bottom:10px;">
-        <strong>👤 ${currentUser.name}</strong>
-      </div>
-      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showPage('orderTracking')">📦 Track Order</button>
-      <button class="admin-btn" style="width:100%; margin:5px 0;" onclick="showMyOrders()">📋 My Orders</button>
-      <button class="admin-btn secondary" style="width:100%; margin:5px 0;" onclick="logoutUser()">🚪 Logout</button>
-    `;
+  } else {
+    showNotification('❌ Invalid email or password!');
   }
 }
 
-function toggleUserMenu() {
-  const menu = document.getElementById('userMenu');
-  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+function forgotPassword() {
+  showNotification('📧 Please contact support to reset your password.');
 }
 
-function logoutUser() {
-  currentUser = null;
-  localStorage.removeItem('currentUser');
-  updateUserMenu();
-  showNotification('👋 Logged out successfully');
+function logoutAdmin() {
+  isAdminLoggedIn = false;
+  showPage('home');
+  showNotification('👋 Logged out from Admin Panel');
 }
 
-// ========== NOTIFICATION FUNCTION ==========
-function showNotification(message) {
-  const notification = document.createElement('div');
-  notification.className = 'notification';
-  notification.innerHTML = message;
-  document.body.appendChild(notification);
-  
-  setTimeout(() => notification.classList.add('show'), 100);
-  setTimeout(() => {
-    notification.classList.remove('show');
-    setTimeout(() => document.body.removeChild(notification), 400);
-  }, 3000);
-}
-
-// ========== MAP INITIALIZATION ==========
-function initSmallMap(){
-  const map = L.map('smallMap').setView([19.800,72.760],12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
-  
-  L.marker([19.805,72.756]).addTo(map).bindPopup('<b>Step\'sEazy Boisar</b><br>Shop no. 5, Station Road').openPopup();
-  L.marker([19.795,72.764]).addTo(map).bindPopup('<b>Step\'sEazy Palghar</b><br>Main Market Area');
-  
-  L.circle([19.800,72.760],{radius:3000,color:'#667eea',fillColor:'#667eea',fillOpacity:0.1}).addTo(map).bindPopup('Service Area');
-}
-document.addEventListener('DOMContentLoaded',initSmallMap);
-
-// ========== QUICK ACTIONS FUNCTIONS ==========
-function toggleQuickActions() {
-  const panel = document.getElementById('quickActionsPanel');
-  panel.classList.toggle('active');
-  isQuickActionsOpen = !isQuickActionsOpen;
-}
-
-function hideQuickActions() {
-  const panel = document.getElementById('quickActionsPanel');
-  panel.classList.remove('active');
-  isQuickActionsOpen = false;
-}
-
-function sendQuickMessage(message) {
-  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(whatsappURL, '_blank');
-  hideQuickActions();
-  showNotification('Quick message sent via WhatsApp!');
-}
-
-// ========== QUICK ORDER SERVICE ==========
-function quickOrderService() {
-  const device = document.getElementById('quickDevice').value;
-  const problem = document.getElementById('quickProblem').value;
-  
-  if(!device || !problem) {
-    showNotification('❌ Please select device and problem type');
-    return;
-  }
-  
-  const deviceNames = {
-    apple: 'Apple iPhone',
-    samsung: 'Samsung Phone',
-    xiaomi: 'Xiaomi/Redmi Phone',
-    oneplus: 'OnePlus Phone',
-    oppo: 'OPPO/Vivo Phone',
-    other: 'Other Brand Phone'
-  };
-  
-  const problemNames = {
-    display: 'Broken Display',
-    battery: 'Battery Issue',
-    charging: 'Charging Problem',
-    back: 'Back Panel Damage',
-    software: 'Software Issue',
-    water: 'Water Damage'
-  };
-  
-  let message = `🔧 *QUICK SERVICE ORDER - Step'sEazy*%0A%0A`;
-  message += `*Device:* ${deviceNames[device]}%0A`;
-  message += `*Problem:* ${problemNames[problem]}%0A%0A`;
-  message += `Please contact me for immediate repair service. I need pickup in Boisar/Palghar.%0A%0A`;
-  message += `Urgent: Yes%0A`;
-  message += `Thank you!`;
-  
-  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  showNotification('✅ Quick order request sent via WhatsApp!');
-}
-
-// ========== CUSTOMER ORDER VIA WHATSAPP ==========
-function customerOrderWhatsApp() {
-  if(cart.length === 0) {
-    showNotification('❌ Your cart is empty!');
-    return;
-  }
-  
-  let message = `🛍️ *ACCESSORIES ORDER - Step'sEazy*%0A%0A`;
-  let total = 0;
-  
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    message += `• ${item.quantity} x ${item.name} - ₹${itemTotal}%0A`;
-  });
-  
-  message += `%0A*Total: ₹${total}*%0A%0A`;
-  message += `Please deliver to my address in Boisar/Palghar.%0A`;
-  message += `Expected delivery: 15-20 minutes.%0A%0A`;
-  message += `Thank you! 😊`;
-  
-  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${message}`;
-  window.open(whatsappURL, '_blank');
-  
-  cart = [];
-  updateOrderSummary();
-  showNotification('✅ Order placed successfully! Check WhatsApp.');
-}
-
-// ========== ADMIN PANEL FUNCTIONS ==========
 function toggleAdminSidebar() {
   const sidebar = document.getElementById('adminSidebar');
   const overlay = document.querySelector('.admin-sidebar-overlay');
@@ -3218,17 +3702,61 @@ async function initializeAdminPanel() {
   
   if (connected) {
     // Load orders from database
-    const orders = await loadOrdersFromDatabase();
-    if (orders.length > 0) {
-      adminData.orders = orders;
-      loadOrdersTable();
-      updateDashboardStats();
-      showNotification(`✅ Loaded ${orders.length} orders from database`);
-    }
+    await loadOrdersFromDatabase();
+    showAdminTab('overview');
   }
-  
-  // Show overview tab by default
-  showAdminTab('overview');
+}
+
+async function loadOrdersFromDatabase() {
+  try {
+    console.log("📦 Loading orders from database...");
+    
+    const { data: orders, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error("❌ Load orders error:", error);
+      showNotification('⚠️ Failed to load orders from database');
+      return [];
+    }
+    
+    adminData.orders = orders || [];
+    console.log(`✅ ${orders.length} orders loaded from database`);
+    
+    // Update sidebar badge
+    const pendingCount = orders.filter(o => o.status === 'pending').length;
+    const badgeElement = document.getElementById('sidebarOrderBadge');
+    if (badgeElement) badgeElement.textContent = pendingCount;
+    
+    return orders;
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return [];
+  }
+}
+
+async function testDatabaseConnection() {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('id')
+      .limit(1);
+    
+    if (error) {
+      console.error("❌ Database connection failed:", error.message);
+      showNotification('⚠️ Database offline. Check connection.');
+      return false;
+    }
+    
+    console.log("✅ Database connected successfully!");
+    showNotification('✅ Database connected!');
+    return true;
+  } catch (err) {
+    console.error("❌ Connection error:", err);
+    return false;
+  }
 }
 
 function showAdminTab(tabName) {
@@ -3291,12 +3819,12 @@ function generateAdminOverview() {
         <div class="stat-label">Pending</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">0</div>
-        <div class="stat-label">Today's Revenue</div>
+        <div class="stat-value">${adminData.orders.reduce((sum, o) => sum + (o.price || 0), 0)}</div>
+        <div class="stat-label">Total Revenue</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">0</div>
-        <div class="stat-label">Active Customers</div>
+        <div class="stat-value">${new Set(adminData.orders.map(o => o.customer_phone)).size}</div>
+        <div class="stat-label">Unique Customers</div>
       </div>
     </div>
     
@@ -3311,7 +3839,7 @@ function generateAdminOverview() {
       <h4>⚡ Quick Actions</h4>
       <button class="admin-btn" onclick="showAdminTab('orders')">View All Orders</button>
       <button class="admin-btn success" onclick="addNewOrder()">Add New Order</button>
-      <button class="admin-btn" onclick="testDatabaseConnection()">Test Database</button>
+      <button class="admin-btn" onclick="refreshOrders()">🔄 Refresh Data</button>
     </div>
   `;
 }
@@ -3323,6 +3851,7 @@ function generateAdminOrders() {
     <div style="margin-bottom:20px;">
       <button class="admin-btn" onclick="refreshOrders()">🔄 Refresh Orders</button>
       <button class="admin-btn success" onclick="addNewOrder()">➕ Add New Order</button>
+      <button class="admin-btn" onclick="exportOrders()">📥 Export Orders</button>
     </div>
     
     <div class="orders-table-container">
@@ -3340,7 +3869,6 @@ async function loadOrdersTable() {
   
   // Load fresh data from database
   const orders = await loadOrdersFromDatabase();
-  adminData.orders = orders;
   
   if (orders.length === 0) {
     contentDiv.innerHTML = '<p>No orders found in database.</p>';
@@ -3353,10 +3881,11 @@ async function loadOrdersTable() {
         <tr>
           <th>ID</th>
           <th>Customer</th>
-          <th>Product</th>
+          <th>Product/Service</th>
           <th>Amount</th>
           <th>Status</th>
           <th>Date</th>
+          <th>Type</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -3375,6 +3904,7 @@ async function loadOrdersTable() {
         <td>₹${order.price}</td>
         <td>${statusBadge}</td>
         <td>${date}</td>
+        <td>${order.type || 'service'}</td>
         <td>
           <button class="admin-btn" onclick="viewOrder(${order.id})">👁️ View</button>
           <button class="admin-btn success" onclick="updateOrderStatus(${order.id})">✏️ Update</button>
@@ -3385,11 +3915,6 @@ async function loadOrdersTable() {
   
   html += `</tbody></table>`;
   contentDiv.innerHTML = html;
-  
-  // Update sidebar badge
-  const pendingCount = orders.filter(o => o.status === 'pending').length;
-  const badgeElement = document.getElementById('sidebarOrderBadge');
-  if (badgeElement) badgeElement.textContent = pendingCount;
 }
 
 function getStatusBadge(status) {
@@ -3416,6 +3941,7 @@ function getStatusBadge(status) {
 
 async function refreshOrders() {
   showNotification('🔄 Refreshing orders...');
+  await loadOrdersFromDatabase();
   await loadOrdersTable();
   showNotification('✅ Orders refreshed!');
 }
@@ -3442,14 +3968,6 @@ async function updateOrderStatus(orderId) {
   }
 }
 
-function addNewOrder() {
-  showNotification('Opening order form...');
-  showPage('home');
-  setTimeout(() => {
-    openOrderForm('Custom Service', 1000);
-  }, 500);
-}
-
 function viewOrder(orderId) {
   const order = adminData.orders.find(o => o.id === orderId);
   if (!order) return;
@@ -3460,9 +3978,11 @@ function viewOrder(orderId) {
         <h3>Order Details #${order.id}</h3>
         <p><strong>Customer:</strong> ${order.customer_name}</p>
         <p><strong>Phone:</strong> ${order.customer_phone}</p>
-        <p><strong>Product:</strong> ${order.product_name}</p>
+        <p><strong>Product/Service:</strong> ${order.product_name}</p>
         <p><strong>Price:</strong> ₹${order.price}</p>
         <p><strong>Status:</strong> ${getStatusBadge(order.status)}</p>
+        <p><strong>Type:</strong> ${order.type || 'service'}</p>
+        <p><strong>Details:</strong> ${order.details || 'No additional details'}</p>
         <p><strong>Location:</strong> ${order.location || 'Not shared'}</p>
         <p><strong>Created:</strong> ${new Date(order.created_at).toLocaleString('en-IN')}</p>
         <div style="margin-top:20px;">
@@ -3481,13 +4001,14 @@ function closeModal() {
   if (modal) modal.remove();
 }
 
-function updateDashboardStats() {
-  const pendingOrders = adminData.orders.filter(o => o.status === 'pending').length;
-  const badgeElement = document.getElementById('sidebarOrderBadge');
-  if (badgeElement) badgeElement.textContent = pendingOrders;
+function addNewOrder() {
+  showNotification('Opening order form...');
+  showPage('home');
+  setTimeout(() => {
+    openServiceOrderForm('Custom Service', 1000);
+  }, 500);
 }
 
-// Other admin panel sections
 function generateAdminProducts() {
   return `<h3>🛍️ Product Management</h3>
   <div class="admin-section">
@@ -3496,31 +4017,50 @@ function generateAdminProducts() {
     <button class="admin-btn success" onclick="addNewProduct()">➕ Add New Product</button>
     <button class="admin-btn" onclick="refreshProducts()">🔄 Refresh Products</button>
   </div>
-  <div id="productsList"></div>`;
+  <div id="productsList">Product management coming soon...</div>`;
 }
 
 function generateAdminCustomers() {
-  return `<h3>👥 Customer Management (Coming Soon)</h3><p>Customer management features will be added soon.</p>`;
+  return `<h3>👥 Customer Management</h3>
+  <div class="admin-section">
+    <p>Total Customers: ${new Set(adminData.orders.map(o => o.customer_phone)).size}</p>
+    <p>Customer management features will be enhanced soon.</p>
+  </div>`;
 }
 
 function generateAdminInventory() {
-  return `<h3>📦 Inventory Management (Coming Soon)</h3><p>Inventory management features will be added soon.</p>`;
+  return `<h3>📦 Inventory Management</h3>
+  <div class="admin-section">
+    <p>Inventory tracking coming soon...</p>
+  </div>`;
 }
 
 function generateAdminServices() {
-  return `<h3>🔧 Service Management (Coming Soon)</h3><p>Service management features will be added soon.</p>`;
+  return `<h3>🔧 Service Management</h3>
+  <div class="admin-section">
+    <p>Service management features coming soon...</p>
+  </div>`;
 }
 
 function generateAdminEmployees() {
-  return `<h3>👨‍🔧 Employee Management (Coming Soon)</h3><p>Employee management features will be added soon.</p>`;
+  return `<h3>👨‍🔧 Employee Management</h3>
+  <div class="admin-section">
+    <p>Employee management features coming soon...</p>
+  </div>`;
 }
 
 function generateAdminAnalytics() {
-  return `<h3>📈 Analytics Dashboard (Coming Soon)</h3><p>Analytics features will be added soon.</p>`;
+  return `<h3>📈 Analytics Dashboard</h3>
+  <div class="admin-section">
+    <p>Analytics features coming soon...</p>
+  </div>`;
 }
 
 function generateAdminReports() {
-  return `<h3>📄 Reports (Coming Soon)</h3><p>Reporting features will be added soon.</p>`;
+  return `<h3>📄 Reports</h3>
+  <div class="admin-section">
+    <p>Reporting features coming soon...</p>
+  </div>`;
 }
 
 function generateAdminSettings() {
@@ -3544,33 +4084,148 @@ function generateAdminSettings() {
   `;
 }
 
-// ========== DATABASE TEST FUNCTION ==========
-async function testDatabaseConnection() {
-  console.log("🔗 Testing database connection...");
+// ========== ✅ INITIALIZE ==========
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize OTP auto focus
+  setupOTPAutoFocus('service');
+  setupOTPAutoFocus('accessories');
+  setupOTPAutoFocus('laptop');
   
-  try {
-    // Simple test query
-    const { data, error } = await supabase
-      .from('orders')
-      .select('id')
-      .limit(1);
-    
-    if (error) {
-      console.error("❌ Database connection failed:", error.message);
-      showNotification('⚠️ Database offline. Check connection.');
-      return false;
-    }
-    
-    console.log("✅ Database connected successfully!");
-    showNotification('✅ Database connected!');
-    return true;
-  } catch (err) {
-    console.error("❌ Connection error:", err);
-    return false;
-  }
+  // Add input listeners for form validation
+  document.getElementById('serviceCustomerName').addEventListener('input', checkServiceFormValidity);
+  document.getElementById('serviceCustomerPhone').addEventListener('input', checkServiceFormValidity);
+  document.getElementById('phoneModel').addEventListener('input', checkServiceFormValidity);
+  document.getElementById('manualLocation').addEventListener('input', checkServiceFormValidity);
+  
+  document.getElementById('accessoriesCustomerName').addEventListener('input', checkAccessoriesFormValidity);
+  document.getElementById('accessoriesCustomerPhone').addEventListener('input', checkAccessoriesFormValidity);
+  document.getElementById('accessoriesManualLocation').addEventListener('input', checkAccessoriesFormValidity);
+  
+  document.getElementById('laptopCustomerName').addEventListener('input', checkLaptopFormValidity);
+  document.getElementById('laptopCustomerPhone').addEventListener('input', checkLaptopFormValidity);
+  document.getElementById('rentalPeriod').addEventListener('change', checkLaptopFormValidity);
+  document.getElementById('laptopManualLocation').addEventListener('input', checkLaptopFormValidity);
+  
+  // Initialize map
+  initSmallMap();
+  
+  // Test database connection
+  setTimeout(() => {
+    testDatabaseConnection();
+  }, 2000);
+});
+
+// ========== ✅ EXISTING FUNCTIONS ==========
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.innerHTML = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 100);
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => document.body.removeChild(notification), 400);
+  }, 3000);
 }
 
-// ========== OTHER FUNCTIONS ==========
+function showPage(id){ 
+  if(id === 'admin' && !isAdminLoggedIn) {
+    showAdminLogin();
+    return;
+  }
+  
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
+  document.getElementById(id).classList.add('active'); 
+  window.scrollTo(0,0); 
+  
+  const floatingButtons = document.getElementById('floatingButtons');
+  const quickActionButton = document.getElementById('quickActionButton');
+  
+  if(id === 'admin') {
+    floatingButtons.style.display = 'none';
+    quickActionButton.style.display = 'none';
+    hideQuickActions();
+  } else {
+    floatingButtons.style.display = 'flex';
+    quickActionButton.style.display = 'block';
+  }
+  
+  if(id === 'accessoriesShop') {
+    setTimeout(() => {
+      loadAccessoriesShop();
+    }, 100);
+  }
+  
+  if(id === 'admin' && isAdminLoggedIn) {
+    initializeAdminPanel();
+  }
+  
+  closeSidebar();
+}
+
+function filterProducts(searchTerm) {
+  const products = document.querySelectorAll('.product-card-ecom');
+  products.forEach(product => {
+    const title = product.querySelector('.product-title').textContent.toLowerCase();
+    if (title.includes(searchTerm.toLowerCase()) || searchTerm === '') {
+      product.style.display = 'block';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+}
+
+function quickOrderService() {
+  const device = document.getElementById('quickDevice').value;
+  const problem = document.getElementById('quickProblem').value;
+  
+  if(!device || !problem) {
+    showNotification('❌ Please select device and problem type');
+    return;
+  }
+  
+  openServiceOrderForm(`${device} ${problem} Repair`, 500);
+}
+
+function initSmallMap(){
+  const map = L.map('smallMap').setView([19.800,72.760],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+  
+  L.marker([19.805,72.756]).addTo(map).bindPopup('<b>Step\'sEazy Boisar</b><br>Shop no. 5, Station Road').openPopup();
+  L.marker([19.795,72.764]).addTo(map).bindPopup('<b>Step\'sEazy Palghar</b><br>Main Market Area');
+  
+  L.circle([19.800,72.760],{radius:3000,color:'#667eea',fillColor:'#667eea',fillOpacity:0.1}).addTo(map).bindPopup('Service Area');
+}
+
+// ========== ✅ LOGIN FUNCTIONS ==========
+function openSimpleLogin() {
+  document.getElementById('loginModal').style.display = 'flex';
+}
+
+function closeLogin() {
+  document.getElementById('loginModal').style.display = 'none';
+}
+
+function loginAsCustomer() {
+  currentUser = { type: 'customer', name: 'Customer' };
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  closeLogin();
+  showNotification('👋 Welcome! You can now place orders.');
+}
+
+function loginWithWhatsApp() {
+  const message = "Hi Step'sEazy, I want to login to my account.";
+  window.open(`https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+  closeLogin();
+  showNotification('Opening WhatsApp for login...');
+}
+
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
 function trackOrder() {
   const trackingId = document.getElementById('trackingId').value;
   if (!trackingId) {
@@ -3578,7 +4233,6 @@ function trackOrder() {
     return;
   }
   
-  // For now, show demo message
   showNotification('🔍 Searching for order...');
   setTimeout(() => {
     showNotification('✅ Order found! Status: In Progress. Estimated completion: 30 minutes');
@@ -3591,55 +4245,52 @@ function showMyOrders() {
     return;
   }
   
-  // For now, show demo
   showNotification('📋 Your orders will appear here after login');
 }
 
-function filterProducts(searchTerm) {
-  // Basic search functionality
-  const products = document.querySelectorAll('.product-card-ecom');
-  products.forEach(product => {
-    const title = product.querySelector('.product-title').textContent.toLowerCase();
-    if (title.includes(searchTerm.toLowerCase()) || searchTerm === '') {
-      product.style.display = 'block';
-    } else {
-      product.style.display = 'none';
-    }
-  });
+function toggleQuickActions() {
+  const panel = document.getElementById('quickActionsPanel');
+  panel.classList.toggle('active');
+  isQuickActionsOpen = !isQuickActionsOpen;
 }
 
-// ========== INITIALIZATION ==========
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if user is already logged in
-  const savedUser = localStorage.getItem('currentUser');
-  if (savedUser) {
-    currentUser = JSON.parse(savedUser);
-    updateUserMenu();
-  }
-  
-  // Load accessories shop on page load if on that page
-  if (document.getElementById('accessoriesShop').classList.contains('active')) {
-    setTimeout(() => {
-      loadAccessoriesShop();
-    }, 500);
-  }
-  
-  // Auto-test database connection
-  setTimeout(() => {
-    testDatabaseConnection();
-  }, 2000);
+function hideQuickActions() {
+  const panel = document.getElementById('quickActionsPanel');
+  panel.classList.remove('active');
+  isQuickActionsOpen = false;
+}
+
+function sendQuickMessage(message) {
+  const whatsappURL = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
+  hideQuickActions();
+  showNotification('Quick message sent via WhatsApp!');
+}
+
+// Close modals when clicking outside
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('order-popup-container')) {
+        if (e.target.id === 'serviceOrderPopupForm') closeServiceOrderForm();
+        if (e.target.id === 'accessoriesOrderPopupForm') closeAccessoriesOrderForm();
+        if (e.target.id === 'laptopOrderPopupForm') closeLaptopOrderForm();
+    }
+    
+    if (e.target.classList.contains('login-modal')) {
+        if (e.target.id === 'loginModal') closeLogin();
+        if (e.target.id === 'adminLoginModal') closeAdminLogin();
+    }
 });
 
-// CSS Animation
-document.head.insertAdjacentHTML('beforeend', `
-  <style>
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-10px);}
-      60% {transform: translateY(-5px);}
+// Close modals with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeServiceOrderForm();
+        closeAccessoriesOrderForm();
+        closeLaptopOrderForm();
+        closeLogin();
+        closeAdminLogin();
     }
-  </style>
-`);
+});
 </script>
 </body>
 </html>
