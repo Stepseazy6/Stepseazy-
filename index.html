@@ -13,7 +13,406 @@
 
 <!-- ========== START CSS ========== -->
 <style>
-/* ---------- CSS STARTS HERE ---------- */
+/* ========== ✅ PREMIUM DOOR ANIMATION STYLES ========== */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    overflow: hidden;
+}
+
+.door-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Slim Door Styling */
+.door {
+    position: absolute;
+    width: 350px;
+    height: 600px;
+    background: linear-gradient(145deg, #8b4513 0%, #654321 100%);
+    border: 12px solid #5d2906;
+    border-radius: 8px;
+    box-shadow: 
+        inset 0 0 25px rgba(0, 0, 0, 0.8),
+        0 8px 25px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.left-door {
+    left: 50px;
+    transform-origin: left center;
+    border-right: 4px solid #3a2006;
+}
+
+.right-door {
+    right: 50px;
+    transform-origin: right center;
+    border-left: 4px solid #3a2006;
+}
+
+/* Door Details */
+.door-panel {
+    width: 85%;
+    height: 80%;
+    background: linear-gradient(145deg, #a0522d 0%, #8b4513 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+.door-handle {
+    position: absolute;
+    width: 45px;
+    height: 15px;
+    background: linear-gradient(to right, #d4af37 0%, #ffd700 100%);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.left-door .door-handle {
+    right: 25px;
+    top: 50%;
+}
+
+.right-door .door-handle {
+    left: 25px;
+    top: 50%;
+}
+
+.door-knob {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 30% 30%, #ffd700 0%, #b8860b 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.left-door .door-knob {
+    right: 15px;
+    top: calc(50% - 10px);
+}
+
+.right-door .door-knob {
+    left: 15px;
+    top: calc(50% - 10px);
+}
+
+.door-ornament {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #d4af37 0%, #b8860b 100%);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.door-ornament.top {
+    top: 120px;
+}
+
+.door-ornament.bottom {
+    bottom: 120px;
+}
+
+/* Center Content */
+.center-content {
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease 0.5s;
+}
+
+.welcome-text {
+    color: white;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hey-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    font-size: 26px;
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: fadeInDown 0.6s ease forwards 0.8s;
+}
+
+.wave-emoji {
+    color: #ffd700;
+    font-size: 34px;
+    animation: wave 1.5s infinite;
+}
+
+.hey {
+    color: #ffd700;
+    font-weight: 600;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards 1s;
+}
+
+.brand {
+    color: #00d4ff;
+    background: linear-gradient(90deg, #00d4ff, #0088ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+/* Smile Emoji */
+.smile-emoji {
+    margin: 30px auto;
+    width: 140px;
+    height: 140px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards 1.2s;
+}
+
+.emoji-face {
+    width: 100%;
+    height: 100%;
+    background: #ffcc00;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        0 0 25px rgba(255, 204, 0, 0.7),
+        inset 0 -8px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.emoji-eyes {
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.eye {
+    width: 25px;
+    height: 35px;
+    background: #333;
+    border-radius: 50%;
+    position: relative;
+    animation: blink 2s infinite;
+}
+
+.eye::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+}
+
+.emoji-smile {
+    position: absolute;
+    width: 70px;
+    height: 35px;
+    border: 12px solid #333;
+    border-color: transparent transparent #333 transparent;
+    border-radius: 50%;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: smile 1.5s infinite alternate;
+}
+
+.tagline {
+    font-size: 20px;
+    color: #aaa;
+    margin-top: 15px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards 1.4s;
+}
+
+/* Loading Dots */
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    gap: 12px;
+}
+
+.loading-dots span {
+    width: 18px;
+    height: 18px;
+    background: #00d4ff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: bounce 1s infinite;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 1.6s;
+}
+.loading-dots span:nth-child(2) {
+    animation-delay: 1.8s;
+}
+.loading-dots span:nth-child(3) {
+    animation-delay: 2s;
+}
+
+/* Animations */
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    75% { transform: rotate(-15deg); }
+}
+
+@keyframes blink {
+    0%, 45%, 55%, 100% { height: 35px; }
+    50% { height: 4px; }
+}
+
+@keyframes smile {
+    0% { width: 65px; }
+    100% { width: 75px; }
+}
+
+@keyframes fadeInDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-15px);
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 850px) {
+    .door-container {
+        width: 95vw;
+        height: 60vh;
+    }
+    
+    .door {
+        width: 40vw;
+        height: 60vh;
+    }
+    
+    .left-door {
+        left: 30px;
+    }
+    
+    .right-door {
+        right: 30px;
+    }
+    
+    .main-title {
+        font-size: 2.2rem;
+    }
+    
+    .hey-text {
+        font-size: 18px;
+    }
+    
+    .smile-emoji {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 480px) {
+    .door {
+        width: 35vw;
+        height: 50vh;
+        border-width: 8px;
+    }
+    
+    .left-door {
+        left: 20px;
+    }
+    
+    .right-door {
+        right: 20px;
+    }
+    
+    .main-title {
+        font-size: 1.6rem;
+    }
+    
+    .hey-text {
+        font-size: 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .smile-emoji {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .tagline {
+        font-size: 16px;
+    }
+    
+    .door-handle {
+        width: 35px;
+        height: 12px;
+    }
+    
+    .door-ornament {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ========== WEBSITE CSS STARTS HERE ========== */
 :root{
   --bg:#f8faff;
   --primary-1:#6fa8f5;
@@ -36,6 +435,13 @@ body {
   font-weight: 400;
   line-height: 1.6;
   overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* ========== ✅ 1. UPDATED HEADER - 3 LINE HAMBURGER MENU (LIKE ADMIN) ========== */
@@ -1825,6 +2231,57 @@ footer p {
 </head>
 <body>
 
+<!-- ========== ✅ PREMIUM DOOR ANIMATION ========== -->
+<div class="preloader" id="preloader">
+    <div class="door-container">
+        <!-- Left Door -->
+        <div class="door left-door" id="leftDoor">
+            <div class="door-handle"></div>
+            <div class="door-knob"></div>
+            <div class="door-panel"></div>
+            <div class="door-ornament top"></div>
+            <div class="door-ornament bottom"></div>
+        </div>
+        
+        <!-- Right Door -->
+        <div class="door right-door" id="rightDoor">
+            <div class="door-handle"></div>
+            <div class="door-knob"></div>
+            <div class="door-panel"></div>
+            <div class="door-ornament top"></div>
+            <div class="door-ornament bottom"></div>
+        </div>
+        
+        <!-- Center Content (Behind doors) -->
+        <div class="center-content" id="centerContent">
+            <div class="welcome-text">
+                <div class="hey-text">
+                    <span class="wave-emoji">👋</span>
+                    <span class="hey">Hey buddy,</span>
+                </div>
+                <h1 class="main-title">welcome to <span class="brand">step'sEazy</span></h1>
+                <div class="smile-emoji">
+                    <div class="emoji-face">
+                        <div class="emoji-eyes">
+                            <div class="eye left-eye"></div>
+                            <div class="eye right-eye"></div>
+                        </div>
+                        <div class="emoji-smile"></div>
+                    </div>
+                </div>
+                <p class="tagline">Where every step becomes easy!</p>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== WEBSITE MAIN CONTENT ========== -->
+<div id="websiteContent" style="display:none;">
 <!-- ✅ ADDED: VERTICAL SIDEBAR MENU (LEFT SIDE) -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="vertical-sidebar" id="verticalSidebar">
@@ -2630,13 +3087,65 @@ footer p {
   <button class="floating-btn" style="background:#8b6cf6;" onclick="toggleQuickActions()" title="Quick Actions">⚡</button>
 </div>
 
-<!-- ========== HTML ENDS HERE ========== -->
+</div>
+<!-- ========== WEBSITE CONTENT ENDS ========== -->
 
 <!-- ========== START JAVASCRIPT ========== -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <!-- Supabase Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ========== ✅ PREMIUM DOOR ANIMATION - FAST SPEED ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Start animation immediately
+    startDoorAnimation();
+});
+
+function startDoorAnimation() {
+    // FAST ANIMATION TIMING (1.5 seconds total)
+    
+    // Open doors after 0.3 seconds (very fast)
+    setTimeout(function() {
+        document.getElementById('leftDoor').style.transform = 'perspective(1000px) rotateY(-100deg)';
+        document.getElementById('rightDoor').style.transform = 'perspective(1000px) rotateY(100deg)';
+        
+        // Show center content immediately
+        document.getElementById('centerContent').style.opacity = '1';
+        document.getElementById('centerContent').style.transform = 'scale(1)';
+    }, 300);
+    
+    // Hide preloader and show website after 1.5 seconds (fast)
+    setTimeout(function() {
+        // Fade out preloader
+        document.getElementById('preloader').style.opacity = '0';
+        document.getElementById('preloader').style.transition = 'opacity 0.5s ease';
+        
+        // Show main website content
+        const websiteContent = document.getElementById('websiteContent');
+        if (websiteContent) {
+            websiteContent.style.display = 'block';
+            document.body.style.opacity = '1';
+        }
+        
+        // Remove preloader completely after fade out
+        setTimeout(function() {
+            document.getElementById('preloader').style.display = 'none';
+        }, 500);
+    }, 1500);
+    
+    // If page takes too long to load, skip animation after 3 seconds
+    setTimeout(function() {
+        if(document.getElementById('preloader').style.display !== 'none') {
+            document.getElementById('preloader').style.display = 'none';
+            const websiteContent = document.getElementById('websiteContent');
+            if (websiteContent) {
+                websiteContent.style.display = 'block';
+                document.body.style.opacity = '1';
+            }
+        }
+    }, 3000);
+}
+
 // ========== GLOBAL VARIABLES ==========
 let cart = [];
 let currentUser = null;
